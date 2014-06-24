@@ -1,0 +1,29 @@
+SELECT
+{ 
+width:100% !important;
+ } 
+
+LABEL
+{ 
+margin-top:10px;
+ }
+.editDelBtn
+{ 
+white-space:nowrap !important;
+ }
+
+FIELDSET
+{ 
+margin-bottom:20px;
+ }
+
+#contactsMemo,
+#inpContactsMemo {
+  border: 1px solid #cccccc;
+  padding: 0.41667em !important;
+  width: 100% !important;
+  display: block;
+  font-size: -18.83333em !important;
+  color: rgba(0, 0, 0, 0.75);
+  cursor: pointer; }
+
