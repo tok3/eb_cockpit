@@ -43,7 +43,7 @@
 
 		 ?>
 
-		 <li class="<?php  echo check_active('cockpit/documents/index');?>">
+		 <li class="actLevel2"  class="<?php  echo check_active('cockpit/documents/index');?>">
    <a href="<?php echo site_url('cockpit/documents/index');?>">
    <i class="fa fa-exchange"></i><span>Dokumente</span>
    <?
@@ -60,37 +60,37 @@
    </li>
 
 
-	  <li class="<?php  echo check_active('cockpit/versorger');?>">
+	  <li  class="actLevel2" class="<?php  echo check_active('cockpit/versorger');?>">
 		<a href="<?php echo site_url('cockpit/versorger');?>">
 		  <i class="fa  fa-power-off"></i> <span>Energieversorger</span>
 		</a>
 	  </li>
 
 
-	  <li class="">
+	  <li class="noauth">
 		<a href="<?php echo site_url('cockpit/documents/index');?>">
 	<i class="fa  fa-lightbulb-o"></i> <span>Abnahmestellen Strom</span>
 		</a>
 	  </li>
 
-	  <li class="">
+	  <li class="noauth">
 	 <a href="<?php echo site_url('cockpit/documents/index');?>">
 		  <i class="fa  fa-fire"></i> <span>Abnahmestellen Gas</span>
 		</a>
 	  </li>
-	  <li class="">
+	  <li class="noauth">
 	 <a href="<?php echo site_url('cockpit/documents/index');?>">
 		  <i class="fa  fa-wrench"></i> <span>Tools</span>
 		</a>
 	  </li>
 
-	  <li class="">
+	  <li class="noauth">
 	 <a href="<?php echo site_url('cockpit/documents/index');?>">
 		  <i class="fa  fa-check-square-o"></i> <span>Checklisten</span>
 		</a>
 	  </li>
 
-	  <li class="">
+	  <li class="noauth">
 	 <a href="<?php echo site_url('cockpit/documents/index');?>">
 		  <i class="fa  fa-bar-chart-o"></i> <span>Statistiken</span>
 		</a>

@@ -126,10 +126,12 @@ class Contact_Details extends Public_Controller
 				  
 
 				  // insert/update companies
-				  $contacts = $this->input->post('contacs');
+				  $contacts = $this->input->post('details');
+				 
 				  if(is_array($this->input->post('comp')) && $contacts['typ'] == 2)
 					 {
-						$comp_data = $this->input->post('comp');
+					
+	$comp_data = $this->input->post('comp');
 
 						$comp_data['contacts_id'] = $contact_id;
 
@@ -270,6 +272,20 @@ class Contact_Details extends Public_Controller
 
 		  );
 
+	  $config['mobile'] = array
+		 (
+		  'rules'=>'',
+		  'label'=>'Kontakt --> Mobiltelefon',
+
+		  );
+
+	  $config['tel'] = array
+		 (
+		  'rules'=>'required|numeric',
+		  'label'=>'Kontakt --> Telefon',
+
+		  );
+
 
 
 
@@ -335,7 +351,7 @@ class Contact_Details extends Public_Controller
 	* 
 	*/
 
-
+   /*
    function axTest()
    {
 
@@ -352,6 +368,7 @@ class Contact_Details extends Public_Controller
 	  $this->gen_form_inputs($compData, 'comp',$config);
 
    }
+   */
    function inpComp($_data = '')
    {
 
@@ -380,6 +397,7 @@ class Contact_Details extends Public_Controller
 		  'label'=>'Firma Name',
 
 		  );
+
 
 	  $config['name_2'] = array
 		 (
@@ -553,6 +571,7 @@ class Contact_Details extends Public_Controller
 	  return $retVal;
 
    }
+
 
 
    // --------------------------------------------------------------------

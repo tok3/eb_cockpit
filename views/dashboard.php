@@ -133,7 +133,7 @@ Erforderliche Kontaktdaten wurden erstellt.          </div>
         1000+
       </h3>
       <p>
-   &Uuml;ber 1000 Versorger
+   &Uuml;ber 1000 Energieversorger
       </p>
     </div>
     <div class="icon">
@@ -149,10 +149,10 @@ Erforderliche Kontaktdaten wurden erstellt.          </div>
   <div class="small-box bg-green">
     <div class="inner">
       <h3>
-        1000+</sup>
+        3000+</sup>
       </h3>
       <p>
-   &Uuml;ber 1000 Beratungen
+   &Uuml;ber 3000 Beratungen jedes Jahr
       </p>
     </div>
     <div class="icon">
@@ -168,14 +168,14 @@ Erforderliche Kontaktdaten wurden erstellt.          </div>
   <div class="small-box bg-yellow">
     <div class="inner">
       <h3>
-        44
+        100%
       </h3>
       <p>
-        User Registrations
+        Kundenzufriedenheit
       </p>
     </div>
     <div class="icon">
-      <i class="ion ion-person-add"></i>
+      <i class="fa fa-heart"></i>
     </div>
     <a class="small-box-footer" href="#">
       Mehr info <i class="fa fa-arrow-circle-right"></i>
@@ -188,16 +188,16 @@ Erforderliche Kontaktdaten wurden erstellt.          </div>
   <div class="small-box bg-red">
     <div class="inner">
       <h3>
-        65
+        100%
       </h3>
       <p>
-        Unique Visitors
+		   Unabh&auml;ngig und Objektiv
       </p>
     </div>
     <div class="icon">
-      <i class="ion ion-pie-graph"></i>
+      <i class="fa  fa-eye"></i>
     </div>
-    <a class="small-box-footer" href="#">
+    <a class="small-box-footer" >
       Mehr info <i class="fa fa-arrow-circle-right"></i>
     </a>
   </div>
