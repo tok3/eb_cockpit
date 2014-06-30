@@ -197,14 +197,29 @@ Letzter Schritt zu Ihrer Energieausschreibung
  <i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu">
-                                   <!-- Menu Footer-->
-                                <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="<?php echo site_url('users/edit');?>" class="btn btn-default btn-flat">Profil</a>
+<li class="user-body">
+                                    <div class="col-xs-4 text-center">
+   <a href="<?php echo site_url('users/edit');?>" class="btn btn-default btn-flat">Profil</a>
                                     </div>
-                                    <div class="pull-right">
+
+                                    <div class="col-xs-4 text-center">
+<?
+				 if($this->current_user->group_id == 1){
+?>  
+                                      <a href="<?php echo site_url('admin');?>" class="btn btn-default btn-flat">Admin</a>
+<?
+				 }
+?>  
+
+                                    </div>
+
+                                    <div class="col-xs-4 text-center">
                                         <a href="<?php echo site_url('users/logout');?>" class="btn btn-default btn-flat">Logout</a>
                                     </div>
+                                </li>
+                                   <!-- Menu Footer-->
+                                <li class="user-footer">
+
                                 </li>
                     
         </ul>
