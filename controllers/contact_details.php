@@ -112,6 +112,11 @@ class Contact_Details extends Public_Controller
  
 	  if($this->input->post('save') !=  '')
 		 {
+				  $contacts_data = $this->input->post('details');
+				  echo "<pre><code>";
+				  print_r($contacts_data);
+				  echo "</code></pre>";
+				  
 			if ($this->form_validation->run() != 1)
 			   {
 				  $errors .= '<div class="medium-6 small-12 columns"><div class="alert alert-danger alert-dismissable" data-alert=""><i class="fa fa-ban"></i>
@@ -181,7 +186,7 @@ class Contact_Details extends Public_Controller
 					 }
 				  //$this->setFollowup($contact_id);
 
-				  redirect($this->uri->segment(1) . '/'  .$this->uri->segment(2). '/'  .$this->uri->segment(3) . '/' . $contact_id);
+				  //	  redirect($this->uri->segment(1) . '/'  .$this->uri->segment(2). '/'  .$this->uri->segment(3) . '/' . $contact_id);
 
 
 			   }
