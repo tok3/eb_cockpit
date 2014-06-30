@@ -9,13 +9,13 @@
 								   
 	<div class="row">
 
-	  <div class="col-md-5 col-sm-5 ">
-		<label>Strasse</label>
+	  <div class="col-md-4 col-sm-4 ">
+		<label>Strasse*</label>
 		<?php echo $str;?>
 	  </div>
 
-	  <div class="col-md-1 col-sm-1 left">
-		<label>Nr</label>
+	  <div class="col-md-2 col-sm-2 left">
+		<label>Nr*</label>
 		<?php echo $no;?>
 	  </div>
 
@@ -26,12 +26,12 @@
 	<div class="row">
 
 	  <div class="col-md-2 col-sm-2">
-		<label>PLZ</label>
+		<label>PLZ*</label>
 		<?php echo $plz;?>
 	  </div>
 
 	  <div class="col-md-4 col-sm-4 left">
-		<label>Ort</label>
+		<label>Ort*</label>
 		<?php echo $city;?>  </div>
 
 

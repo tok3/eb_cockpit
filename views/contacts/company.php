@@ -10,7 +10,7 @@
   <div class="row">
 
 	<div class="col-sm-12 col-lg-6 left">
-	  <label>Firma Name</label>
+	  <label>Name Firma*</label>
 <?php echo $name;?>
 <?php echo $name_2;?>
 

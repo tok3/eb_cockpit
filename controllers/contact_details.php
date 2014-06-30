@@ -46,7 +46,30 @@ class Contact_Details extends Public_Controller
 			$contact_id = $this->session->userdata('contact_id');
 
 		 }
+
 	  $contact_data = $this->contacts_m->get_contact_details($contact_id);
+
+	  if($this->current_user->group_id == 2 && !$this->input->post('details')) // user
+		 {
+
+			$autData = $this->ion_auth->get_user();
+
+			// preset contactdata from auth for group 2 = users
+			if($contact_data['persons'][0]['email'] ==  '')
+			   {
+				  $contact_data['persons'][0]['email'] = $autData->email;
+			   }	  
+			if($contact_data['persons'][0]['firstname'] ==  '')
+			   {
+				  $contact_data['persons'][0]['firstname'] = $autData->first_name;
+			   }	  
+			if($contact_data['persons'][0]['name'] ==  '')
+			   {
+				  $contact_data['persons'][0]['name'] = $autData->last_name;
+			   }	  
+
+		 }
+	  
 
  
 	  $follow_upSplit =  explode(' ', $contact_data['follow_up']);
@@ -236,6 +259,7 @@ class Contact_Details extends Public_Controller
 
 		  );
 
+
 	  $options = array(
 					   ''  => 'Bitte W&auml;hlen',
 					   'm'    => 'Herr',
@@ -269,6 +293,7 @@ class Contact_Details extends Public_Controller
 		 (
 		  'rules'=>'required|valid_email',
 		  'label'=>'Email',
+		  'maxlength'=>'5',
 
 		  );
 

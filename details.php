@@ -8,7 +8,7 @@
  */
 class Module_Cockpit extends Module {
 
-   public $version = '0.0.6';
+   public $version = '0.0.7';
 
    public function info()
    {
@@ -132,13 +132,7 @@ class Module_Cockpit extends Module {
 											'type'=>'int',
 											'constraint'=>'1',
 											),
-						   'hv_id'=>array(
-											 'type'=>'int',
-											 'constraint'=>'11',
-									   'default'=> "0"
-
-											 ),
-						   'affiliate_id'=>array(
+						   'hv_users_id'=>array(
 											 'type'=>'int',
 											 'constraint'=>'11',
 									   'default'=> "0"
