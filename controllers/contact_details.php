@@ -515,7 +515,7 @@ class Contact_Details extends Public_Controller
 		 (
 		  'type'=>'dropdown',
 		  'label'=>'Kontakt Typ',
-		  'rules'=>'required',
+		  'rules'=>'',
 		  'id'=>'contactType',
 		  'options'=>$options,
 		  'class'=>'contactType  form-control',
