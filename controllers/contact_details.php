@@ -112,11 +112,6 @@ class Contact_Details extends Public_Controller
  
 	  if($this->input->post('save') !=  '')
 		 {
-				  $contacts_data = $this->input->post('details');
-				  echo "<pre><code>";
-				  print_r($contacts_data);
-				  echo "</code></pre>";
-				  
 			if ($this->form_validation->run() != 1)
 			   {
 				  $errors .= '<div class="medium-6 small-12 columns"><div class="alert alert-danger alert-dismissable" data-alert=""><i class="fa fa-ban"></i>
@@ -276,7 +271,7 @@ class Contact_Details extends Public_Controller
 		  'options'=>$options,
 		  'type'=>'dropdown',
 		  'rules'=>'required',
-		  'label'=>'Kontakt Typ',
+		  'label'=>'Anrede',
 
 		  );
 
@@ -515,7 +510,7 @@ class Contact_Details extends Public_Controller
 		 (
 		  'type'=>'dropdown',
 		  'label'=>'Kontakt Typ',
-		  'rules'=>'',
+		  'rules'=>'required',
 		  'id'=>'contactType',
 		  'options'=>$options,
 		  'class'=>'contactType  form-control',
