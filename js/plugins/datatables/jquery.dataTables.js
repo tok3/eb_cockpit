@@ -12128,4 +12128,9 @@ jQuery.fn.dataTableExt.oSort['de_date-desc'] = function(a,b) {
     return ((x < y) ? 1 : ((x > y) ?  -1 : 0));
 };
 
+/** ============================================================
+* DATATABLES
+* umlaute richtig sortieren
+* ==============================================================
+**/ 
 

@@ -1,20 +1,32 @@
 /* Set the defaults for DataTables initialisation */
-$.extend( true, $.fn.dataTable.defaults, {
-	"sDom":
-		"<'row'<'col-xs-6'l><'col-xs-6'f>r>"+
-		"t"+
-		"<'row'<'col-xs-6'i><'col-xs-6'p>>",
-	"oLanguage": {
-		"sLengthMenu": "_MENU_ records per page"
-	}
-} );
+$.extend(true, $.fn.dataTable.defaults, {
+	sDom: "<'row-fluid'<'span6'f><'span6'l><'row-fluid'<'span12'>r>t<'row-fluid'<'span6'i><'span6'p>>",
+	sPaginationType: "bootstrap",
+	"iDisplayLength": 25,
+	oLanguage: {
+		sLengthMenu: "_MENU_ Eintr&auml;ge pro Seite",
+		sInfo: "Eintrag _START_ bis _END_ von _TOTAL_ ",
+		sSearch: "Suche:",
+		sInfoFiltered: " (gefiltert aus _MAX_ Eintr&auml;gen)",
+   sInfoThousands: ".",
+   sInfoEmpty: "Keine Eintr&auml;ge gefunden",
+ sLoadingRecords: "Daten werden geladen ...",
+sZeroRecords: "Keine Eintr&auml;ge",
+sEmptyTable:'nix da',
+		oPaginate: {
+			sFirst: "Erste Seite",
+			sPrevious: "Vorherige Seite",
+			sNext: "N&auml;chste Seite"
+		}
+}
+});
 
 
 /* Default class modification */
 $.extend( $.fn.dataTableExt.oStdClasses, {
 	"sWrapper": "dataTables_wrapper form-inline",
 	"sFilterInput": "form-control input-sm",
-	"sLengthSelect": "form-control input-sm"
+	"sLengthSelect": "testi btn form-control input-sm"
 } );
 
 // In 1.10 we use the pagination renderers to draw the Bootstrap paging,
@@ -248,3 +260,4 @@ if ( $.fn.DataTable.TableTools ) {
 		}
 	} );
 }
+

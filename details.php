@@ -8,21 +8,28 @@
  */
 class Module_Cockpit extends Module {
 
-   public $version = '0.0.7';
+   public $version = '0.0.10';
 
    public function info()
    {
 	  return array(
 				   'name' => array(
-								   'en' => '"Ihre Energieberater" Cockpit Module',
-								   'de' => 'Ihre Energieberater Cockpit Modul'
+								   'en' => '"Ihre Energieberater" <strong>Cockpit</strong>',
+								   'de' => 'Ihre Energieberater <strong>Cockpit</strong>'
 								   ),
 				   'description' => array(
 										  'en' => 'Cockpit for customers, affilliates and backoffice.',
 										  'de' => 'Cockpit f&uuml;r Kunden, Affilliates und Backoffice.', #update translation
 										  ),
-				   'frontend' => false,
-				   'backend' => true
+'frontend' => true,
+			'backend'  => true,
+			'skip_xss' => true,
+			'menu'	  => 'content',
+
+			'roles' => array(
+							 'customer', 'supervisor','affiliate', 'handelsvertreter'
+			),
+
 				   );
    }
 
@@ -282,6 +289,7 @@ class Module_Cockpit extends Module {
    public function upgrade($old_version)
    {
 
+	$this->db->delete('settings', array('module' => 'cockpit'));
 	  $eb_jqcalendar = array(
 							 'Id'=>array(
 										 'type'=>'int',

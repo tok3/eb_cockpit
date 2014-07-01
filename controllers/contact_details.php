@@ -306,7 +306,7 @@ class Contact_Details extends Public_Controller
 
 	  $config['tel'] = array
 		 (
-		  'rules'=>'required|numeric',
+		  'rules'=>'required',
 		  'label'=>'Kontakt --> Telefon',
 
 		  );
@@ -425,6 +425,13 @@ class Contact_Details extends Public_Controller
 
 
 	  $config['name_2'] = array
+		 (
+		  'type'=>'hidden',
+		  'rules'=>'',
+
+		  );
+
+	  $config['email'] = array
 		 (
 		  'type'=>'hidden',
 		  'rules'=>'',

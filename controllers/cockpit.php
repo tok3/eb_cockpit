@@ -23,6 +23,18 @@ class Cockpit extends Public_Controller
 	 */
 	public function index()
 	{
+
+	   /* //permisssionstest
+role_or_die($this->module,'customer');
+$this->permissions['cockpit']['customer'];
+if (group_has_role($this->module, 'customer'))
+{
+   echo "<pre><code>";
+   print_r($this->permissions);
+   echo "</code></pre>";
+   
+}
+	   */
 	  $contacts_m = $this->load->model('contacts_m');	   
 	  $this->template->enable_parser(true);
 	  $this->template->set_layout('cockpit.php');
