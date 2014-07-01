@@ -51,7 +51,7 @@ class Contact_Details extends Public_Controller
 
 	  if($this->current_user->group_id == 2 && !$this->input->post('details')) // user
 		 {
-
+			
 			$autData = $this->ion_auth->get_user();
 
 			// preset contactdata from auth for group 2 = users
@@ -67,7 +67,7 @@ class Contact_Details extends Public_Controller
 			   {
 				  $contact_data['persons'][0]['name'] = $autData->last_name;
 			   }	  
-
+			
 		 }
 	  
 
@@ -122,7 +122,7 @@ class Contact_Details extends Public_Controller
 			else
 			   {
 				  $contacts_data = $this->input->post('details');
-	  
+				  
 				  $contacts_data['id'] = $contact_id;
 
 				  $contacts_data['follow_up'] = $this->format->dateDe2en($contacts_data['followup_date']) . ' ' . $contacts_data['followup_time'];
@@ -154,7 +154,7 @@ class Contact_Details extends Public_Controller
 				  if(is_array($this->input->post('comp')) && $contacts['typ'] == 2)
 					 {
 					
-	$comp_data = $this->input->post('comp');
+						$comp_data = $this->input->post('comp');
 
 						$comp_data['contacts_id'] = $contact_id;
 
@@ -181,7 +181,7 @@ class Contact_Details extends Public_Controller
 					 }
 				  //$this->setFollowup($contact_id);
 
-				  //	  redirect($this->uri->segment(1) . '/'  .$this->uri->segment(2). '/'  .$this->uri->segment(3) . '/' . $contact_id);
+				  redirect($this->uri->segment(1) . '/'  .$this->uri->segment(2). '/'  .$this->uri->segment(3) . '/' . $contact_id);
 
 
 			   }
@@ -377,22 +377,22 @@ class Contact_Details extends Public_Controller
 	*/
 
    /*
-   function axTest()
-   {
+	function axTest()
+	{
 
-	  echo '->'.$this->input->post('post_data');
+	echo '->'.$this->input->post('post_data');
 
-	  $config['name'] = array
-		 (
-		  'rules'=>'',
-		  'label'=>'Firma Name',
+	$config['name'] = array
+	(
+	'rules'=>'',
+	'label'=>'Firma Name',
 
-		  );
+	);
 
-	  $compData['name'] = '';
-	  $this->gen_form_inputs($compData, 'comp',$config);
+	$compData['name'] = '';
+	$this->gen_form_inputs($compData, 'comp',$config);
 
-   }
+	}
    */
    function inpComp($_data = '')
    {
