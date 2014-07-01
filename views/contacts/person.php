@@ -10,7 +10,7 @@
 <div class="row">
    <div class="col-md-4 col-sm-4">
 
-   <label>Anrede*</label>
+   <label>Anrede <span class="text-red">*</span></label>
 
    <?php echo $sex;?>
 
@@ -18,13 +18,13 @@
 </div>
 <div class="col-md-4 col-sm-4">
 
-   <label>Vorname*</label>
+   <label>Vorname <span class="text-red">*</span></label>
    <?php echo $firstname;?>
 
 </div>
 
 <div class="col-md-4 col-sm-4">
-   <label>Name*</label>
+   <label>Name <span class="text-red">*</span></label>
 
    <?php echo $name;?>
 
@@ -59,7 +59,7 @@
 <div class="row">
 
    <div class="col-md-4 col-sm-4  ">
-   <label>Telefon*</label>
+   <label>Telefon <span class="text-red">*</span></label>
    <?php echo $tel;?>
 </div>
 
@@ -79,7 +79,7 @@
 <div class="row">
 
    <div class="col-md-4 col-sm-4  ">
-   <label>Email*</label>
+   <label>Email <span class="text-red">*</span></label>
    <?php echo $email;?>
 </div>
 

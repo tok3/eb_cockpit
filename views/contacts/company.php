@@ -10,21 +10,16 @@
   <div class="row">
 
 	<div class="col-sm-12 col-lg-6 left">
-	  <label>Name Firma*</label>
+	  <label>Name Firma <span class="text-red">*</span></label>
 <?php echo $name;?>
 <?php echo $name_2;?>
+<?php echo $email;?>
 
 	</div>
 
   </div>
 
   <div class="row  hide-for-touch">
-
-	<div class="col-sm-12 col-md-6 col-lg-6">
-	  <label>Email</label>
-<?php echo $email;?>
-	</div>
-
 
 	<div class="col-sm-12 col-md-6 col-lg-6">
 		<label>Internet</label>
