@@ -18,11 +18,6 @@ $(function() {
 	}
 
 
-
-
-
-
-
 /**
 * item in sidenav deaktivieren oder entfernen
 * 
@@ -42,6 +37,21 @@ $(function() {
 
 		}
 	}
+// --------------------------------------------------------------------
+	
+/**
+* css class setzen für alle inputs in stream entry form  
+* 
+*/
+$('.crud_form INPUT, .crud_form SELECT, .crud_form TEXTAREA').each(function(){
+
+
+$(this).addClass('form-control');
+
+
+});
+
+//$('.crud_form input[type="submit"]').val('Lead \u00fcbernehmen');
 
 	// --------------------------------------------------------------------
 });

@@ -27,10 +27,27 @@
 
 
 		<div class="content" style="display: none;">
+
+                            <div class="nav-tabs-custom">
+	{{tab_navigation}}
+                                <div class="tab-content">
+
 		  {{content}}
+
+</div><!-- /.nav-tabs-custom -->
+</div><!-- /.tab-content -->
+
 		</div>
 	  </div><!-- /.row -->
 	</div><!-- /.col -->
   </section> <!--  / content -->
 </aside> 
 </div><!-- ./wrapper -->
+
+
+<?
+		echo "<pre><code>";
+print_r($this->session->all_userdata());
+echo "</code></pre>";
+
+?>

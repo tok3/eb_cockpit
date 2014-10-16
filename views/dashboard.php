@@ -5,7 +5,7 @@
 	<ul class="timeline">
 
 <?
-if($this->session->userdata('contact_id') != '')
+if($this->session->userdata('contact_complete') == 1)
   {
 
 ?>     

@@ -89,10 +89,31 @@ if (group_has_role($this->module, 'customer'))
 
 		 ;
 
-
-
 	}
 
 
+
+// --------------------------------------------------------------------
+	
+	function test()
+	{
+
+	   $_contacts_id = 57;
+	  $addr = new $this->contacts_m();
+	  $addr->set_table('eb_addresses');
+$addrData = $addr->get_by('contacts_id',$_contacts_id);
+
+	  $persons = new $this->contacts_m();
+	  $persons->set_table('eb_persons');
+$personsData = $persons->get_by('contacts_id',$_contacts_id);
+  
+ echo "<pre><code>";
+ print_r($personsData);
+ echo "</code></pre>";
+ 
+echo  $isComplete = count($addrData) +  count($personsData);
+	  
+
+	}
 // --------------------------------------------------------------------
 }

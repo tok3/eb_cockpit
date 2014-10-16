@@ -13,7 +13,7 @@
 		  <i class="fa fa-dashboard"></i> <span>Nachrichtenzentrale</span>
 		</a>
 	  </li>
-	  
+
 
 	  <?
 
@@ -23,6 +23,12 @@
 	  <li class="<?php  echo check_active('cockpit/contacts');?>">
 		<a href="<?php echo site_url('cockpit/contacts');?>">
 		  <i class="fa fa-user"></i><span>Kontakte</span>
+		</a>
+	  </li>
+
+	  <li class="<?php  echo check_active('cockpit/leads_energieausweis/index');?>">
+		<a href="<?php echo site_url('cockpit/leads_energieausweis/index');?>">
+		  <i class="glyphicon glyphicon-transfer"></i><span>Leads Energieausweis</span>
 		</a>
 	  </li>
 
@@ -47,7 +53,7 @@
    <a href="<?php echo site_url('cockpit/documents/index');?>">
    <i class="fa fa-exchange"></i><span>Dokumente</span>
    <?
-   if($this->session->userdata('contact_id') != '')
+   if($this->session->userdata('contact_complete') == 1)
 	 {
 
 	   ?>     

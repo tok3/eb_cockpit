@@ -8,7 +8,7 @@
  */
 class Module_Cockpit extends Module {
 
-   public $version = '0.0.10';
+   public $version = '0.0.30';
 
    public function info()
    {
@@ -21,21 +21,20 @@ class Module_Cockpit extends Module {
 										  'en' => 'Cockpit for customers, affilliates and backoffice.',
 										  'de' => 'Cockpit f&uuml;r Kunden, Affilliates und Backoffice.', #update translation
 										  ),
-'frontend' => true,
-			'backend'  => true,
-			'skip_xss' => true,
-			'menu'	  => 'content',
+				   'frontend' => true,
+				   'backend'  => true,
+				   'skip_xss' => true,
+				   'menu'	  => 'content',
 
-			'roles' => array(
-							 'customer', 'supervisor','affiliate', 'handelsvertreter'
-			),
+				   'roles' => array(
+									'customer', 'supervisor','affiliate', 'handelsvertreter'
+									),
 
 				   );
    }
 
    public function install()
    {
-
 	  $eb_addresses = array(
 							'id'=>array(
 										'type'=>'int',
@@ -116,6 +115,7 @@ class Module_Cockpit extends Module {
 
 
 
+
 	  $eb_contacts = array(
 						   'id'=>array(
 									   'type'=>'int',
@@ -123,9 +123,16 @@ class Module_Cockpit extends Module {
 									   'auto_increment' => TRUE,
 									   ),
 						   'typ'=>array(
-										'type'=>'int',
-										'constraint'=>'11',
-										),
+										'type' => 'ENUM("0","privat","firma")',
+										'default' => '',
+										'null' => FALSE,
+										),				
+						   'is_affiliate'=>array(
+												 'type'=>'int',
+												 'constraint'=>'1',
+												 'default'=> "0"
+												 ),
+								
 						   'initial_contact'=>array(
 													'type'=>'timestamp',
 													),
@@ -139,16 +146,16 @@ class Module_Cockpit extends Module {
 											'type'=>'int',
 											'constraint'=>'1',
 											),
-						   'hv_users_id'=>array(
-											 'type'=>'int',
-											 'constraint'=>'11',
-									   'default'=> "0"
+						   'creator_users_id'=>array(
+													 'type'=>'int',
+													 'constraint'=>'11',
+													 'default'=> "0"
 
-											 ),
+													 ),
 						   'users_id'=>array(
 											 'type'=>'int',
 											 'constraint'=>'11',
-									   'default'=> "0"
+											 'default'=> "0"
 
 											 ),
 
@@ -213,6 +220,108 @@ class Module_Cockpit extends Module {
 	  $this->dbforge->add_field($eb_persons);
 	  $this->dbforge->add_key('id', TRUE);
 	  $this->dbforge->create_table("eb_persons");
+
+
+	  // --------------------------------------------------------------------
+	  /**
+	   * tabelle für kontakteigenschaftetn
+	   * 
+	   */
+	  $energieausweis_porperties = 'eb_contact_properties';
+	  $this->dbforge->drop_table($energieausweis_porperties);
+
+
+	  $eb_immo = array(
+					   'id'=>array(
+								   'type'=>'int',
+								   'constraint'=>'11',
+								   'auto_increment' => TRUE,
+								   ),
+					   'contacts_id'=>array(
+											'type'=>'int',
+											'constraint'=>'11',
+											),
+					   'property'=> array(
+										  'type' => 'ENUM("","strom","energieausweis","energieberater","immobilienmakler")',
+										  'default' => '',
+										  'null' => FALSE,
+										  )
+					   );
+			
+	  $this->dbforge->add_field($eb_immo);
+	  $this->dbforge->add_key('id', TRUE);
+	  $this->dbforge->create_table($energieausweis_porperties);
+
+
+	  // --------------------------------------------------------------------
+	  /**
+	   * tabelle für immobilien erzeugen
+	   * 
+	   */
+
+	  $energieausweis_immo_tablename = 'eb_immobilien';
+
+	  $eb_immo = array(
+					   'id'=>array(
+								   'type'=>'int',
+								   'constraint'=>'11',
+								   'auto_increment' => TRUE,
+								   ),
+					   'contacts_id'=>array(
+											'type'=>'int',
+											'constraint'=>'11',
+											),
+					   'Stream_entry_id'=>array(
+												'type'=>'int',
+												'constraint'=>'11',
+												),
+					   'objektart'=> array(
+										   'type'=>'varchar',
+										   'constraint'=>'55',
+										   ),
+					   'bezugsfrei'=> array(
+											'type'=>'varchar',
+											'constraint'=>'55',
+											),
+					   'str'=>array(
+									'type'=>'varchar',
+									'constraint'=>'100',
+									),
+					   'plz'=>array(
+									'type'=>'varchar',
+									'constraint'=>'5',
+									),
+					   'ort'=>array(
+									'type'=>'varchar',
+									'constraint'=>'100',
+									),
+					   'qm'=>array(
+								   'type'=>'varchar',
+								   'constraint'=>'100',
+								   ),
+					   'baujahr'=>array(
+										'type'=>'varchar',
+										'constraint'=>'100',
+										),
+					   'verausserung_art'=>array(
+												 'type'=>'varchar',
+												 'constraint'=>'55',
+												 'null'=>TRUE,
+
+												 ),
+					   'bemerkung'=>array(
+										  'type'=>'text'
+										  )
+
+
+					   );
+
+	  $this->dbforge->drop_table($energieausweis_immo_tablename);
+
+	  $this->dbforge->add_field($eb_immo);
+	  $this->dbforge->add_key('id', TRUE);
+	  $this->dbforge->create_table($energieausweis_immo_tablename);
+
 
 
 	  $eb_jqcalendar = array(
@@ -289,62 +398,192 @@ class Module_Cockpit extends Module {
    public function upgrade($old_version)
    {
 
-	$this->db->delete('settings', array('module' => 'cockpit'));
-	  $eb_jqcalendar = array(
-							 'Id'=>array(
+	  // --------------------------------------------------------------------
+	  /**
+	   * tabelle für kontakteigenschaftetn
+	   * 
+	   */
+	  $energieausweis_porperties = 'eb_contact_properties';
+
+	  if (!$this->db->table_exists($energieausweis_porperties))
+  		 {
+	
+
+
+			$eb_immo = array(
+							 'id'=>array(
 										 'type'=>'int',
 										 'constraint'=>'11',
 										 'auto_increment' => TRUE,
 										 ),
-							 'calendar_id'=>array(
-												  'type'=>'int',
-												  'constraint'=>'11',
-												  ),
-							 'Subject'=>array(
-											  'type'=>'varchar',
-											  'constraint'=>'1000',
-											  ),
-							 'Location'=>array(
-											   'type'=>'varchar',
-											   'constraint'=>'200',
-											   ),
-							 'Description'=>array(
-												  'type'=>'varchar',
-												  'constraint'=>'255',
-												  ),
-							 'StartTime'=>array(
-												'type'=>'datetime',
-												),
-							 'EndTime'=>array(
-											  'type'=>'datetime',
-											  ),
-							 'IsAllDayEvent'=>array(
-													'type'=>'smallint',
-													'constraint'=>'6',
-													),
-							 'Color'=>array(
-											'type'=>'varchar',
-											'constraint'=>'200',
-											),
-							 'RecurringRule'=>array(
-													'type'=>'varchar',
-													'constraint'=>'500',
-													),
 							 'contacts_id'=>array(
 												  'type'=>'int',
 												  'constraint'=>'11',
 												  ),
-							 'reminder'=>array(
-											   'type'=>'int',
-											   'constraint'=>'1',
-											   ),
+							 'property'=> array(
+												'type' => 'ENUM("","strom","energieausweis","energieberater","immobilienmakler")',
+												'default' => '',
+												'null' => FALSE,
+												)
 							 );
-	  $this->dbforge->drop_table("eb_jqcalendar");
+			
+			$this->dbforge->add_field($eb_immo);
+			$this->dbforge->add_key('id', TRUE);
+			$this->dbforge->create_table($energieausweis_porperties);
+			// kontakte aktualisieren av_id
 
-	  $this->dbforge->add_field($eb_jqcalendar);
-	  $this->dbforge->add_key('Id', TRUE);
-	  $this->dbforge->create_table("eb_jqcalendar");
+		 }
+	  // --------------------------------------------------------------------
+	  /**
+	   * feld hv_users_id in creator_users_id umwandeln
+	   * 
+	   */
+
+	  $fields = array(
+					  'hv_users_id' => array(
+											 'name' => 'creator_users_id',
+											 'type'=>'integer',										
+											 'constraint'=>'11',
+											 'default'=> "0"
+
+											 ),
+					  );
+	  $this->dbforge->modify_column('eb_contacts', $fields);
+
+
+
+	  // --------------------------------------------------------------------
+	  /**
+	   * tabelle für immobilien erzeugen
+	   * 
+	   */
+
+	  $energieausweis_immo_tablename = 'eb_immobilien';
+	  if (!$this->db->table_exists($energieausweis_immo_tablename))
+  		 {
+			$eb_immo = array(
+							 'id'=>array(
+										 'type'=>'int',
+										 'constraint'=>'11',
+										 'auto_increment' => TRUE,
+										 ),
+							 'contacts_id'=>array(
+												  'type'=>'int',
+												  'constraint'=>'11',
+												  ),
+							 'Stream_entry_id'=>array(
+													  'type'=>'int',
+													  'constraint'=>'11',
+													  ),
+							 'objektart'=> array(
+												 'type'=>'varchar',
+												 'constraint'=>'55',
+												 ),
+							 'bezugsfrei'=> array(
+												  'type'=>'varchar',
+												  'constraint'=>'55',
+												  ),
+							 'str'=>array(
+										  'type'=>'varchar',
+										  'constraint'=>'100',
+										  ),
+							 'plz'=>array(
+										  'type'=>'varchar',
+										  'constraint'=>'5',
+										  ),
+							 'ort'=>array(
+										  'type'=>'varchar',
+										  'constraint'=>'100',
+										  ),
+							 'qm'=>array(
+										 'type'=>'varchar',
+										 'constraint'=>'100',
+										 ),
+							 'baujahr'=>array(
+											  'type'=>'varchar',
+											  'constraint'=>'100',
+											  ),
+							 'verausserung_art'=>array(
+													   'type'=>'varchar',
+													   'constraint'=>'55',
+													   'null'=>TRUE,
+
+													   ),
+							 'bemerkung'=>array(
+												'type'=>'text'
+												)
+
+
+							 );
+
+			$this->dbforge->drop_table($energieausweis_immo_tablename);
+
+			$this->dbforge->add_field($eb_immo);
+			$this->dbforge->add_key('id', TRUE);
+			$this->dbforge->create_table($energieausweis_immo_tablename);
+
+		 }
+
+
+	  // --------------------------------------------------------------------
+	  //affiliate id in eb_contacts 
+	  if (!$this->db->field_exists('is_affiliate', 'eb_contacts'))
+		 {
+
+			$fields =  array(
+							 'is_affiliate'=>array(
+												   'type'=>'int',
+												   'constraint'=>'1',
+												   'default'=> "0"
+												   ));
+
+			$this->dbforge->add_column('eb_contacts', $fields);
+		 }
+
+
+
+	  // --------------------------------------------------------------------
+	  // affiliate id zu energieausweis stream hinzufügen
+	  $this->load->driver('Streams');
+
+	  $assignment = $this->streams->fields->get_field_assignments('affiliate_id', 'streams');
+	  if(count($assignment['0']) == 0)
+		 { 
+			$fields = array(
+							array(
+								  'name'		=> 'Affiliate ID',
+								  'slug'		=> 'affiliate_id',
+								  'namespace' => 'streams',
+								  'type'		=> 'integer',
+								  'assign'	=> 'energieausweis',
+								  'required'	=> false
+								  )
+							);
+
+
+			$this->streams->fields->add_fields($fields);
+		 }
+
+	  $assignment = $this->streams->fields->get_field_assignments('approved', 'streams');
+	  if(count($assignment['0']) == 0)
+		 { 
+			$fields = array(
+							array(
+								  'name'		=> 'Angenommen',
+								  'slug'		=> 'approved',
+								  'namespace' => 'streams',
+								  'type'		=> 'integer',
+								  'assign'	=> 'energieausweis',
+								  'required'	=> false,
+								  'default'	=> 0
+								  )
+							);
+
+
+			$this->streams->fields->add_fields($fields);
+		 }
 
 	  return true;
+
    }
 }

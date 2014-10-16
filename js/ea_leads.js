@@ -2,15 +2,14 @@ $(function() {
 
 
 
-	$("#personsGrid th:last-child()").each(function() {
+	$("#leadsGrid th:last-child()").each(function() {
 	 	$(this).addClass('editBtn');
 	});
 
 
 
 
-	var oTable = $('#personsGrid')
-        .dataTable({
+	var oTable = $('#leadsGrid').dataTable({
 			"aoColumnDefs": [
 				{ "sType": "de_date", "aTargets": [1] }           ],
             "fnDrawCallback": function(oSettings) {
@@ -36,12 +35,33 @@ $(function() {
 
             },
             "bStateSave": true,
+
         });
+
+
 	// --------------------------------------------------------------------
 	
 
 
+  function submitForm(app)
+    {
+var sel = 'formEnergieausweis'
+var default_action = $('#'+sel).attr('action');
+
+        document.getElementById(sel).action = default_action + '/' + app;
 
 
+        document.getElementById(sel).submit();
+    }
+
+
+$('.submitLead').click(function(){
+
+submitForm($(this).data('post-act'));
+});
+
+
+// --------------------------------------------------------------------
+	
 
 });

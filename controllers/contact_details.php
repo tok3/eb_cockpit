@@ -146,7 +146,11 @@ class Contact_Details extends Public_Controller
 						$contact_id = $contact_insert_id;
 						Events::trigger('set_contact_id');
 					 }
-				  
+				  if($this->session->userdata('contact_complete') != 1) 
+					 {
+
+						Events::trigger('set_contact_id');
+					 }
 
 				  // insert/update companies
 				  $contacts = $this->input->post('details');
@@ -213,6 +217,7 @@ class Contact_Details extends Public_Controller
 		 ->set_partial('header','header',array())
 		 ->set_partial('aside','sidebar',$aside)
 		 ->set('content',$content)
+		 ->set('tab_navigation',$this->navigation->get_tabs())
 		 ->append_js('module::modules.js')
 		 ->append_js('module::contacts.js') 
 		 ->build('default');

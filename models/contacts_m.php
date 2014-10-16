@@ -238,7 +238,7 @@ class contacts_m extends MY_Model
 	  $this->db->select('eb_contacts.*,eb_persons.*, eb_addresses.city, eb_addresses.plz, eb_companies.name as comp_name');
 	  $this->db->join('eb_contacts', 'eb_persons.contacts_id = eb_contacts.id');
 	  $this->db->join('eb_companies', 'eb_contacts.id = eb_companies.contacts_id','LEFT');
-  $this->db->join('eb_addresses', 'eb_contacts.id = eb_addresses.contacts_id','LEFT');
+	  $this->db->join('eb_addresses', 'eb_contacts.id = eb_addresses.contacts_id','LEFT');
 
 	  $this->db->from('eb_persons');
 	  $this->db->where('eb_contacts.deleted',0);
@@ -249,13 +249,13 @@ class contacts_m extends MY_Model
 
 	  if(count($result) != 0)
 		 {
-	  return $result;
+			return $result;
 		 }
-else
-   {
-	  return array($this->empty_query_fields($this->db->last_query()));
+	  else
+		 {
+			return array($this->empty_query_fields($this->db->last_query()));
 
-   }
+		 }
 
    }
    // --------------------------------------------------------------------
@@ -286,7 +286,7 @@ else
 	  $this->db->select('*');
 	  $this->db->from('eb_jqcalendar');
 	  $this->db->where('contacts_id',$contact_id);
-	  	  $this->db->where('StartTime > ',date('Y-m-d H:i:s',time()));
+	  $this->db->where('StartTime > ',date('Y-m-d H:i:s',time()));
 
 	  $query = $this->db->get();
 	  $result = $query->result_array();
@@ -301,6 +301,16 @@ else
 			return FALSE;
 		 }
    }
+   // --------------------------------------------------------------------
+   /**
+	* setter for table
+	* 
+	*/
+   public function set_table($_table_name)
+   {
+	  $this->_table = $_table_name;
+   } 
+
    // --------------------------------------------------------------------
    
 }

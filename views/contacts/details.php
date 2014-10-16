@@ -15,7 +15,7 @@
 
 	echo $typ;
 echo form_hidden('details[deleted]', 0);
-echo form_hidden('details[hv_users_id]', 0);
+echo form_hidden('details[creator_users_id]', 0);
 
 		?>
 

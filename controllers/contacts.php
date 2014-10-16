@@ -45,8 +45,6 @@ class Contacts extends Public_Controller
 		 ->build('default')
 		 ;
 
-
-
    }
 
    // --------------------------------------------------------------------
@@ -78,7 +76,7 @@ class Contacts extends Public_Controller
 				  $mitarbeiter = 'n/a'; 
 			   }
 
-			$tableData[$key]['user'] = $mitarbeiter;
+			//			$tableData[$key]['user'] = $mitarbeiter;
 			$tableData[$key]['initial_contact'] = date('d.m.Y',human_to_unix($item['initial_contact']));
 			$tableData[$key]['vorname'] = $item['firstname'];
 			$tableData[$key]['name'] = $item['name'];
@@ -106,6 +104,22 @@ class Contacts extends Public_Controller
 	  return $grid;
    }
 
+   
+   // --------------------------------------------------------------------
+   /**
+	* flag contact as deleted
+	* 
+	* @param 	integer	
+	* @return  	void	
+	*/
+	public function delete($_id)
+	{
+
+		$this->contacts_m->set_contact_deleted($_id);
+
+		redirect($this->router->fetch_module() . '/' .$this->uri->rsegment(1));
+
+	}
 
    // --------------------------------------------------------------------
    

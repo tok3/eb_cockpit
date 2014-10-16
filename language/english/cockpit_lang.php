@@ -2,7 +2,7 @@
 
 $lang['cockpit:success']			=	'It worked';
 
-$lang['cockpit:heading_grid_contacts'] = array('Sachbearbeiter', 'Kontakt erstellt', 'Vorname','Name','plz','Ort','Firma','Tel.','Fax','');
+$lang['cockpit:heading_grid_contacts'] = array( 'Kontakt erstellt', 'Vorname','Name','plz','Ort','Firma','Tel.','Fax','');
 
 
 $lang['cockpit:contact_info']  = 'Kontaktinfo';
@@ -43,6 +43,13 @@ $lang['cockpit:str'] = 'Strasse';
 $lang['cockpit:no'] = 'Nr.';
 $lang['cockpit:plz'] = 'Plz';
 $lang['cockpit:city'] = 'Ort';
+
+
+// --------------------------------------------------------------------
+
+$lang['cockpit:immo_art_option'] = array('EFH' => 'Einfamilienhaus','DHH' =>'Doppelhaush&auml;lfte','RH' =>'Reihenhaus','ETW' =>'Eigentumswohnung','MFH' =>'Merhfamilienhaus','GEW' =>'Gewerbe','GRD' =>'Grundst&uuml;ck');
+
+$lang['cockpit:immo_bezugsfrei_option'] = array('frei','vermietet', 'selbstgenutzt');
 
 
 

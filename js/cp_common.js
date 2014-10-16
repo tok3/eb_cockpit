@@ -1,6 +1,8 @@
 $(function() {
 
+
 	var contact_id = ci_session.getSessionData('contact_id');
+	var contact_id = ci_session.getSessionData('contact_complete');
 
 	/**
 	 * nach dem ersten anmelden 
