@@ -25,23 +25,40 @@ class navigation
    }
 
 
+
+
+// --------------------------------------------------------------------
+/**
+* 
+* 
+* @access 		
+* @param 		
+* @return 		
+* 
+*/
+ function wrap($_wrap)
+{
+
+
+}
+
+
    // --------------------------------------------------------------------
    /**
-	* Tab nav behiehen
+	* navigationseintrag erzeugen
 	* 
-	* @access 	public	
-	* @param 	string	
+	* @access 	private	
+	* @param 		
 	* @return 	string	
 	* 
 	*/
-   public function get_tabs()
+
+   private function set_entries ()
    {
 
+	  $_entries = array();
 
 	  $this->set_navigation();
-
-
-	  $t_nav ='  <ul class="nav nav-tabs">';
 
 	  foreach($this->navConf as $key => $conf)
 		 {
@@ -54,13 +71,52 @@ class navigation
 			   }
 
 
-			$t_nav .=   '<li class=" ' . $active . ' "><a href="'. $targ .'" >' . $conf['name'] . '</a></li>';
-                                 
-							   
+			$_entries[$key] =   '<li class=" ' . $active . ' "><a href="'. $targ .'" >' . $conf['name'] . '</a></li>';
 		 }
+
+	  return  implode("",$_entries	  );
+
+   }
+   // --------------------------------------------------------------------
+   /**
+	* Tab nav behziehen
+	* 
+	* @access 	public	
+	* @param 	string	
+	* @return 	string	
+	* 
+	*/
+   public function get_tabs()
+   {
+
+	  $t_nav ='  <ul class="nav nav-tabs">';
+	  $t_nav .= $this->set_entries();
 	  $t_nav .= '</ul>';
 
 	  return $t_nav;
+   }
+
+
+   // --------------------------------------------------------------------
+   /**
+	* get_sidebar
+	* 
+	* @access 	public	
+	* @param 	void	
+	* @return 	string	
+	* 
+	*/
+   public function get_sidebar()
+   {
+	  /**
+	   *   <li class="<?php  echo check_active('cockpit/leads_energieausweis/index');?>">
+	   <a href="<?php echo site_url('cockpit/leads_energieausweis/index');?>">
+	   <i class="glyphicon glyphicon-transfer"></i><span>Leads Energieausweis</span>
+	   </a>
+	   </li>
+	   * 
+	   */
+
    }
 
    // --------------------------------------------------------------------

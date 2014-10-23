@@ -49,7 +49,7 @@ class Contact_Details extends Public_Controller
 
 	  $contact_data = $this->contacts_m->get_contact_details($contact_id);
 
-	  if($this->current_user->group_id == 2 && !$this->input->post('details')) // user
+	  if($this->current_user->group_id == 2 && !$this->input->post('details')) // group 2 user
 		 {
 			
 			$autData = $this->ion_auth->get_user();
@@ -596,8 +596,6 @@ class Contact_Details extends Public_Controller
 	*/
    private function loop_view($_data, $_view)
    {
-
-	  	  
 	  $retVal = '';
 	  foreach($_data as $key => $items)
 		 {

@@ -88,8 +88,10 @@ class form_inputs
 
 			// --------------------------------------------------------------------
 			// form input, default
-			$retVal[$item['name']] = form_input($item);
-
+			if($item['type'] != 'dropdown')
+			   {
+$retVal[$item['name']] = form_input($item);
+			   }
 			// --------------------------------------------------------------------
 			// dropdown
 			if($item['type'] == 'dropdown')

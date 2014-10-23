@@ -8,33 +8,34 @@
 class Cockpit extends Public_Controller
 {
 
-	public function __construct()
-	{
-		parent::__construct();
+   public function __construct()
+   {
+	  parent::__construct();
 	  Asset::add_path('theme', site_url('addons/shared_addons/modules/cockpit').'/');
 
 
 	  $this->lang->load('cockpit');
 
-	}
+   }
 
-	/**
-	 * Index
-	 */
-	public function index()
-	{
+   /**
+	* Index
+	*/
+   public function index()
+   {
 
-	   /* //permisssionstest
-role_or_die($this->module,'customer');
-$this->permissions['cockpit']['customer'];
-if (group_has_role($this->module, 'customer'))
-{
-   echo "<pre><code>";
-   print_r($this->permissions);
-   echo "</code></pre>";
+
+	  /* //permisssionstest
+	   role_or_die($this->module,'customer');
+	   $this->permissions['cockpit']['customer'];
+	   if (group_has_role($this->module, 'customer'))
+	   {
+	   echo "<pre><code>";
+	   print_r($this->permissions);
+	   echo "</code></pre>";
    
-}
-	   */
+	   }
+	  */
 	  $contacts_m = $this->load->model('contacts_m');	   
 	  $this->template->enable_parser(true);
 	  $this->template->set_layout('cockpit.php');
@@ -59,12 +60,12 @@ if (group_has_role($this->module, 'customer'))
 
 
 
-	}
+   }
 
-// --------------------------------------------------------------------
+   // --------------------------------------------------------------------
 	
-	public function versorger()
-	{
+   public function versorger()
+   {
 
 
 
@@ -89,31 +90,31 @@ if (group_has_role($this->module, 'customer'))
 
 		 ;
 
-	}
+   }
 
 
 
-// --------------------------------------------------------------------
+   // --------------------------------------------------------------------
 	
-	function test()
-	{
+   function test()
+   {
 
-	   $_contacts_id = 57;
+	  $_contacts_id = 57;
 	  $addr = new $this->contacts_m();
 	  $addr->set_table('eb_addresses');
-$addrData = $addr->get_by('contacts_id',$_contacts_id);
+	  $addrData = $addr->get_by('contacts_id',$_contacts_id);
 
 	  $persons = new $this->contacts_m();
 	  $persons->set_table('eb_persons');
-$personsData = $persons->get_by('contacts_id',$_contacts_id);
+	  $personsData = $persons->get_by('contacts_id',$_contacts_id);
   
- echo "<pre><code>";
- print_r($personsData);
- echo "</code></pre>";
+	  echo "<pre><code>";
+	  print_r($personsData);
+	  echo "</code></pre>";
  
-echo  $isComplete = count($addrData) +  count($personsData);
+	  echo  $isComplete = count($addrData) +  count($personsData);
 	  
 
-	}
-// --------------------------------------------------------------------
+   }
+   // --------------------------------------------------------------------
 }

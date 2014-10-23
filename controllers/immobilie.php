@@ -98,46 +98,57 @@ else
 	* @return 		
 	* 
 	*/
+   function test()
+   {
+
+
+
+
+   form_prep('76',"addresses[0][id]");
+ die();
+	  $fields = $this->get_formfields();
+	  echo "<pre><code>";
+	  print_r($fields);
+	  echo "</code></pre>";
+	  
+   }
    function get_formfields ($_data = '')
    {
 	  $postName = 'formdata';
 	  $namePreFx = '';
 	  $idPreFx = 'weight_';
 
+	  $fields['id']['type'] = 'hidden';
+	  $fields['contacts_id']['type'] = 'hidden';
 
-	  $fields['id']->type = 'hidden';
+	  $fields['stream_entry_id']['type'] = 'hidden';
 
-	  $fields['contacts_id']->type = 'hidden';
+	  $fields['strasse']['type'] = 'input';
 
-	  $fields['stream_entry_id']->type = 'hidden';
+	  $fields['plz']['type'] = 'input';
 
-	  $fields['strasse']->type = 'input';
+	  $fields['ort']['type'] = 'input';
 
-	  $fields['plz']->type = 'input';
+	  $fields['qm']['type'] = 'input';
 
-	  $fields['ort']->type = 'input';
+	  $fields['baujahr']['type'] = 'input';
 
-	  $fields['qm']->type = 'input';
+	  $fields['objektart']['type'] = 'dropdown';
+	$fields['objektart']['options']  = lang('cockpit:immo_art_option');
 
-	  $fields['baujahr']->type = 'input';
+	  $fields['bezugsfrei']['type'] = 'dropdown';
+	$fields['bezugsfrei']['options']  = lang('cockpit:immo_bezugsfrei_option');
 
-	  $fields['objektart']->type = 'dropdown';
-	$fields['objektart']->options  = lang('cockpit:immo_art_option');
+	  $fields['bemerkung']['type'] = 'textarea';
 
-	  $fields['bezugsfrei']->type = 'dropdown';
-	$fields['bezugsfrei']->options  = lang('cockpit:immo_bezugsfrei_option');
-
-	  $fields['bemerkung']->type = 'textarea';
-
-	  $fields['verausserung_art']->type = 'input';
+	  $fields['verausserung_art']['type'] = 'input';
 
 
 
-	  $fields['str']->type = 'input';
-	  $fields['plz']->type = 'input';
-	  $fields['ort']->type = 'input';
+	  $fields['str']['type'] = 'input';
+	  $fields['plz']['type'] = 'input';
+	  $fields['ort']['type'] = 'input';
 
- 
 	  // werte setzen
 	  if(is_array($_data))
 		 {
@@ -146,16 +157,17 @@ else
 			if(isset($fields[$name]))
 			   {		
 
-				  $fields[$name]->value = $value;
+				  $fields[$name]['value'] = $value;
 			   }
 			   }
+
 		 }
-	 
+
 	  foreach ($fields as $key => $field)
 		 {
 
-			$field->name = $key;
-			$field->type;
+			$field['name'] = $key;
+			$field['type'];
 			$value = '';
 			if(isset($field->value))
 			   {
@@ -166,43 +178,44 @@ else
 			
 			// standard input	  
 			$conf = array(
-						  'name'        => $postName . '[' . $field->name . ']',
-						  'id'          => $key  . $field->name,
+						  'name'        => $postName . '[' . $field['name'] . ']',
+						  'id'          => $key  . $field['name'],
 						  'value'       => $value,
 						  'class'       => 'form-control',
 						  );
 
-			$formfields[$namePreFx . $field->name] = form_input($conf);
+			$formfields[$namePreFx . $field['name']] = form_input($conf);
 
 
 
-			if($field->type == 'dropdown')
+			if($field['type'] == 'dropdown')
 			   {
 
 
-				  $formfields[$namePreFx . $field->name] = form_dropdown($postName . '[' . $field->name . ']', $field->options, $value, 'class="form-control"');
+				  $formfields[$namePreFx . $field['name']] = form_dropdown($postName . '[' . $field['name'] . ']', $field['options'], $value, 'class="form-control"');
 
 			   }
 
-			if($field->type == 'hidden')
+			if($field['type'] == 'hidden')
 			   {
 
 
-				  $formfields[$namePreFx . $field->name] = form_hidden($postName . '[' . $field->name . ']', $value);
+				  $formfields[$namePreFx . $field['name']] = form_hidden($postName . '[' . $field['name'] . ']', $value);
 
 			   }
 
-			if($field->type == 'textarea')
+			if($field['type'] == 'textarea')
 			   {
 
 
-				  $formfields[$namePreFx . $field->name] = form_textarea($conf);
+				  $formfields[$namePreFx . $field['name']] = form_textarea($conf);
 
 			   }
 
 
 
 		 }
+
 
 	  return $formfields;	  
 
