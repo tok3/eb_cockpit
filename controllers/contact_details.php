@@ -372,6 +372,7 @@ class Contact_Details extends Public_Controller
 
 		  );
 
+
 	  $this->gen_form_inputs($_data, $_arr_name, $config);
    }
 
@@ -381,24 +382,6 @@ class Contact_Details extends Public_Controller
 	* 
 	*/
 
-   /*
-	function axTest()
-	{
-
-	echo '->'.$this->input->post('post_data');
-
-	$config['name'] = array
-	(
-	'rules'=>'',
-	'label'=>'Firma Name',
-
-	);
-
-	$compData['name'] = '';
-	$this->gen_form_inputs($compData, 'comp',$config);
-
-	}
-   */
    function inpComp($_data = '')
    {
 
@@ -443,6 +426,7 @@ class Contact_Details extends Public_Controller
 
 		  );
 	  
+
 	  $this->gen_form_inputs($compData, 'comp',$config);
 
 	  //$this->axTest();
@@ -529,8 +513,22 @@ class Contact_Details extends Public_Controller
 
 		  );
 
-	  $this->gen_form_inputs($_data, 'details', $config);
 
+
+/**
+* elemente die array als wert haben entfernen
+* kommt z.b. bei addressen, personen, abnahmestellen vor ... 
+*/
+	  foreach($_data as $key => $value)
+		 {
+			if(is_array($value))
+			   {
+				  unset($_data[$key]);
+
+			   }
+		 }
+
+	  $this->gen_form_inputs($_data, 'details', $config);
    }
 
    // --------------------------------------------------------------------
