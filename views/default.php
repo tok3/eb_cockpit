@@ -45,9 +45,3 @@
 </div><!-- ./wrapper -->
 
 
-<?
-		echo "<pre><code>";
-print_r($this->session->all_userdata());
-echo "</code></pre>";
-
-?>
