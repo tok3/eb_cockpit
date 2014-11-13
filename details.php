@@ -7,7 +7,7 @@
  */
 class Module_Cockpit extends Module {
 
-    public $version = '0.0.44';
+    public $version = '0.0.45';
 
     public function info()
     {
@@ -514,11 +514,11 @@ class Module_Cockpit extends Module {
         // --------------------------------------------------------------------
         
         $energieausweis_immo_tablename = 'eb_immobilien';
+       $this->dbforge->drop_table($energieausweis_immo_tablename);
 
         if (!$this->db->table_exists($energieausweis_immo_tablename))
         {
-        $this->dbforge->drop_table($energieausweis_immo_tablename);
-
+ 
         $eb_immo = array(
             'id'=>array(
                 'type'=>'int',
@@ -533,7 +533,7 @@ class Module_Cockpit extends Module {
                 'type'=>'int',
                 'constraint'=>'11',
             ),
-            'aktionscode'=>array(
+            'aktionscode'=>Array(
                 'type'=>'varchar',
                 'constraint'=>'55',
                 'default' => '',
