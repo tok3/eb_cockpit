@@ -1,6 +1,6 @@
 <?php
 if( !defined('BASEPATH'))
-   exit('No direct script access allowed');
+    exit('No direct script access allowed');
 
 // ------------------------------------------------------------------------
 /**
@@ -16,291 +16,291 @@ if( !defined('BASEPATH'))
 class format
 {
 
-   function __construct()
-   {
-	  $this->CI = &get_instance();
-   }
+    function __construct()
+    {
+        $this->CI = &get_instance();
+    }
 
-   /* --------------------------------------------------------------------
-	*function formats values in two dimensional array. this function is intendet to applay on result array for display purpose.
-	*
-	* @access 	public	
-	* @param 	array	result set
-	* @param 	array	function to apply on column eg $_columnCallbacka['id'] = 'number_format';
-	* @param 	array	additional parameters in case callback function needs more params than value given with _data. limitation: the first parameter of callback function must always be the data which is intendet to be formatted.
-	* @return 	array	
-	*
-	*
-	* example: 
-	* $data['0']['VERBRAUCH'] = 188.000;
-	* $data['0']['ARTIKELTEXT'] = 'rohrschelle';
-	*
-	* $data['1']['VERBRAUCH'] = 79.230;
-	* $data['1']['ARTIKELTEXT'] = 'magnetventil';
+    /* --------------------------------------------------------------------
+     *function formats values in two dimensional array. this function is intendet to applay on result array for display purpose.
+     *
+     * @access 	public	
+     * @param 	array	result set
+     * @param 	array	function to apply on column eg $_columnCallbacka['id'] = 'number_format';
+     * @param 	array	additional parameters in case callback function needs more params than value given with _data. limitation: the first parameter of callback function must always be the data which is intendet to be formatted.
+     * @return 	array	
+     *
+     *
+     * example: 
+     * $data['0']['VERBRAUCH'] = 188.000;
+     * $data['0']['ARTIKELTEXT'] = 'rohrschelle';
+     *
+     * $data['1']['VERBRAUCH'] = 79.230;
+     * $data['1']['ARTIKELTEXT'] = 'magnetventil';
 
-	* $function['ARTIKELTEXT'] = 'strtoupper';
-	*
-	* $function['VERBRAUCH'] = 'number_format';
-	* $param['VERBRAUCH'] = array( 2, ',', '.');
-	*
-	*  $formatted = $this->col_call($data, $function,$param);
-	*
-	*/
+     * $function['ARTIKELTEXT'] = 'strtoupper';
+     *
+     * $function['VERBRAUCH'] = 'number_format';
+     * $param['VERBRAUCH'] = array( 2, ',', '.');
+     *
+     *  $formatted = $this->col_call($data, $function,$param);
+     *
+     */
 
-   public function col_call($_data, $_columnCallback, $_param = FALSE)
-   {
-	  if(count($_data) == 0)
-		 {
+    public function col_call($_data, $_columnCallback, $_param = FALSE)
+    {
+        if(count($_data) == 0)
+        {
 			return FALSE;
-		 }
-	  if(is_array($_data))
-		 {	  
+        }
+        if(is_array($_data))
+        {	  
 
 			foreach($_data as $key => $innerArr)
-			   {
-				  $_arr[$key] = $this->format_row($innerArr, $_columnCallback, $_param);
-			   }
+            {
+                $_arr[$key] = $this->format_row($innerArr, $_columnCallback, $_param);
+            }
 
 			return $_arr;
-		 }
-   }
-   // --------------------------------------------------------------------
-   // loop thru row given in previous function 
-   private function format_row($_row, $_function, $_param)
-   {
-	  foreach($_row as $key => $value)
-		 {
+        }
+    }
+    // --------------------------------------------------------------------
+    // loop thru row given in previous function 
+    private function format_row($_row, $_function, $_param)
+    {
+        foreach($_row as $key => $value)
+        {
 
 			if( array_key_exists($key, $_function))
-			   {
+            {
 
-				  if(function_exists($_function[$key]) && !isset($_param[$key]))
-					 {
+                if(function_exists($_function[$key]) && !isset($_param[$key]))
+                {
 
-						$_row[$key] =  call_user_func($_function[$key], $_row[$key], $_row) ;
-					 }
-				  elseif(function_exists($_function[$key]) && isset($_param[$key]))
-					 {
+                    $_row[$key] =  call_user_func($_function[$key], $_row[$key], $_row) ;
+                }
+                elseif(function_exists($_function[$key]) && isset($_param[$key]))
+                {
 
-						array_unshift($_param[$key], $_row[$key]);
-						$_row[$key] =  call_user_func_array($_function[$key],$_param[$key]);
-					 }
-			   }
-		 }		 
+                    array_unshift($_param[$key], $_row[$key]);
+                    $_row[$key] =  call_user_func_array($_function[$key],$_param[$key]);
+                }
+            }
+        }		 
 
-	  return  $_row;
-   }
+        return  $_row;
+    }
 
-   public function copy_col($_data, $_col2Copy, $_newName)
-   {
+    public function copy_col($_data, $_col2Copy, $_newName)
+    {
 
 
-	  if(is_array($_data))
-		 {	  
+        if(is_array($_data))
+        {	  
 			foreach($_data as $key => $value)
-			   {
+            {
 
-				  $_data[$key][$_newName] = $_data[$key][$_col2Copy];
+                $_data[$key][$_newName] = $_data[$key][$_col2Copy];
 
-			   }
-		 }
+            }
+        }
 
-	  return $_data;
+        return $_data;
 
-   }
+    }
 
 
-   // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-   /**
-	* function formats currency for displaying
-	*
-	* @return  	string	formatted currency value
-	* @param  	decimal	currency
-	* @param 	string 	iso code for localization
-	* @return 	string	formatted currency
-	*/
-   public function currency($_mnt, $_iso = 'de')
-   {
+    /**
+     * function formats currency for displaying
+     *
+     * @return  	string	formatted currency value
+     * @param  	decimal	currency
+     * @param 	string 	iso code for localization
+     * @return 	string	formatted currency
+     */
+    public function currency($_mnt, $_iso = 'de')
+    {
 
-	  $locale_format = strtolower($_iso) . '_' . strtoupper($_iso);
-	  setlocale(LC_MONETARY, $locale_format);
-	  return money_format('%.2n', $_mnt);
-   }
+        $locale_format = strtolower($_iso) . '_' . strtoupper($_iso);
+        setlocale(LC_MONETARY, $locale_format);
+        return money_format('%.2n', $_mnt);
+    }
 
-   // --------------------------------------------------------------------
-   /**
-	* this function converts Y-m-d dates to d.m.Y date
-	*
-	* @access 	public
-	* @param 	string	date Y-m-d
-	* @return 	string	date d.m.Y
-	*/
-   public function date2german($_date = '')
-   {
-	  if($_date == '')
-		 {
+    // --------------------------------------------------------------------
+    /**
+     * this function converts Y-m-d dates to d.m.Y date
+     *
+     * @access 	public
+     * @param 	string	date Y-m-d
+     * @return 	string	date d.m.Y
+     */
+    public function date2german($_date = '')
+    {
+        if($_date == '')
+        {
 			return FALSE;
-		 }
-	  $parts = explode('-', $_date);
+        }
+        $parts = explode('-', $_date);
 
-	  if(!stristr($_date, ':'))
-		 {
+        if(!stristr($_date, ':'))
+        {
             //nur datum
 			$Ddate = $parts['2'] . '.' . $parts['1'] . '.' . $parts['0'];
-		 }
-	  else
-		 {
+        }
+        else
+        {
             //datum und uhrzeit
 			$dayTime = explode(' ', $parts['2']);
 			$Ddate = $dayTime['0'] . '.' . $parts['1'] . '.' . $parts['0'] . ' ' . $dayTime['1'];
-		 }
+        }
 
-	  return $Ddate;
-   }
-   // --------------------------------------------------------------------
-   /**
-	* alias for date2german
-	* 
-	*/
-   public function date2de($_date = '')
-   {
-	 return  $this->date2german($_date);
-   }
-   // --------------------------------------------------------------------
+        return $Ddate;
+    }
+    // --------------------------------------------------------------------
+    /**
+     * alias for date2german
+     * 
+     */
+    public function date2de($_date = '')
+    {
+        return  $this->date2german($_date);
+    }
+    // --------------------------------------------------------------------
 
-   function dateDe2en($_german,$yearPreFx = '')
-   {
-	  if($_german == "")
-		 {
+    function dateDe2en($_german,$yearPreFx = '')
+    {
+        if($_german == "")
+        {
 			return FALSE;
-		 }
-	  $parts = explode('.',$_german);
-	  $year = $parts['2'];
+        }
+        $parts = explode('.',$_german);
+        $year = $parts['2'];
 
-	  if($yearPreFx != '' && strlen($parts['2']) == 2)
-		 {
+        if($yearPreFx != '' && strlen($parts['2']) == 2)
+        {
 			$year = $yearPreFx.$parts['2'];
-		 } 
+        } 
 
-	  $en = $year.'-'.$parts['1'].'-'.$parts['0'];
+        $en = $year.'-'.$parts['1'].'-'.$parts['0'];
 
-	  return $en;
-   }
-   // --------------------------------------------------------------------
-   /**
-	* Function gives exact timestamp from given date and time
-	*
-	* @access	public			   
-	* @param 	string 		date Y-m-d
-	* @param 	string 		hour
-	* @param 	string 		minute
-	* @param 	string 		second
-	* @return	string		timestamp
-	*/
-   public function getTimeFromDate($_date, $H = 0, $i = 0, $s = 0)
-   {	  
-	  $dateParts = explode('-',$_date);
-	  $timespamp = mktime($H,$i,$s,$dateParts['1'],$dateParts['2'],$dateParts['0']);
+        return $en;
+    }
+    // --------------------------------------------------------------------
+    /**
+     * Function gives exact timestamp from given date and time
+     *
+     * @access	public			   
+     * @param 	string 		date Y-m-d
+     * @param 	string 		hour
+     * @param 	string 		minute
+     * @param 	string 		second
+     * @return	string		timestamp
+     */
+    public function getTimeFromDate($_date, $H = 0, $i = 0, $s = 0)
+    {	  
+        $dateParts = explode('-',$_date);
+        $timespamp = mktime($H,$i,$s,$dateParts['1'],$dateParts['2'],$dateParts['0']);
 
-	  return $timespamp;
-   }
+        return $timespamp;
+    }
 
-   public function make_time($_date)
-   {	  
-	  $date = date_parse_from_format('Y-m-d H:i:s', $_date); 
-	  $start_tStamp = mktime($date['hour'], $date['minute'], $date['second'], $date['month'], $date['day'], $date['year']);
+    public function make_time($_date)
+    {	  
+        $date = date_parse_from_format('Y-m-d H:i:s', $_date); 
+        $start_tStamp = mktime($date['hour'], $date['minute'], $date['second'], $date['month'], $date['day'], $date['year']);
 
-	  return $start_tStamp;
-   }
+        return $start_tStamp;
+    }
 
-   // --------------------------------------------------------------------
-   /**
-	*
-	*/
-   public function compTime($_time)
-   {	  
-	  return	  str_replace(':','',$_time);
+    // --------------------------------------------------------------------
+    /**
+     *
+     */
+    public function compTime($_time)
+    {	  
+        return	  str_replace(':','',$_time);
 
-   }
+    }
 
 
-   /** --------------------------------------------------------------------
-    *********************************************************************
-    |GELDBETRÄGE FÜR AUSGABE FORMATIEREN   
-    -------------------------------------------------------------------- */
+    /** --------------------------------------------------------------------
+*********************************************************************
+|GELDBETRÄGE FÜR AUSGABE FORMATIEREN   
+-------------------------------------------------------------------- */
 
-   function displCurr($_curr,$_currSign = FALSE)
-   {
-	  if($_curr == '')
-		 {
+    function displCurr($_curr,$_currSign = FALSE)
+    {
+        if($_curr == '')
+        {
     		$_curr = 0;
-		 }
-	  $retVal =  number_format(str_replace(",",".",$_curr), 2, ',', '.').'&#160;&euro;';
+        }
+        $retVal =  number_format(str_replace(",",".",$_curr), 2, ',', '.').'&#160;&euro;';
 
-	  if($_currSign == FALSE)
-		 {
+        if($_currSign == FALSE)
+        {
     		$retVal =  number_format(str_replace(",",".",$_curr), 2, ',', '.');
-		 }
+        }
 
-	  return $retVal;
+        return $retVal;
 
-   } 
-   /* --------------------------------------------------------------------
-    *********************************************************************
-    Geldbeträge im DE Format in DEC für DB umwandeln
-    --------------------------------------------------------------------*/
+    } 
+    /* --------------------------------------------------------------------
+*********************************************************************
+Geldbeträge im DE Format in DEC für DB umwandeln
+--------------------------------------------------------------------*/
     
 
-   function curr2Dec($_curr)
-   {
-	  $_currDec = str_replace(',','.',$_curr);
+    function curr2Dec($_curr)
+    {
+        $_currDec = str_replace(',','.',$_curr);
 
-	  $firstPoint = strpos($_currDec,'.');
-	  $lastPoint = strrpos($_currDec,'.');
-	  if($firstPoint != $lastPoint)
-		 {
+        $firstPoint = strpos($_currDec,'.');
+        $lastPoint = strrpos($_currDec,'.');
+        if($firstPoint != $lastPoint)
+        {
     		$_currDec = substr_replace  ($_currDec,'',$firstPoint,1);
-		 }
+        }
 
-	  $retVal =  $_currDec;
+        $retVal =  $_currDec;
 
-	  return $retVal;
+        return $retVal;
 
-   } 
+    } 
 
-   // --------------------------------------------------------------------
-   /**
-	* TA-Nummer auf zehn stellen mit führendern nullen bringen
-	*
-	* @access 	public	
-	* @param 	integer	
-	* @return 	integer	
-	*/
-   public function ta_nr($_ta_nr)
-   {
-	  if (strlen($_ta_nr) < 10)
-		 {
+    // --------------------------------------------------------------------
+    /**
+     * TA-Nummer auf zehn stellen mit führendern nullen bringen
+     *
+     * @access 	public	
+     * @param 	integer	
+     * @return 	integer	
+     */
+    public function ta_nr($_ta_nr)
+    {
+        if (strlen($_ta_nr) < 10)
+        {
 			$_ta_nr = str_pad($_ta_nr, 10, 0, STR_PAD_LEFT);
-		 }
+        }
 
-	  return $_ta_nr;
-   }
-   // --------------------------------------------------------------------
-   /**
-	* funktion gibt array mit monaten zurück
-	* 
-	* @access 	public	
-	* @param 	voide	
-	* @return 	array	monat als zahl mit fuehrender 0
-	*/
-   public function getMonths($_mode = 'm')
-   {
-	  $retVal = array();
-	  $_months = range ('01','12');
+        return $_ta_nr;
+    }
+    // --------------------------------------------------------------------
+    /**
+     * funktion gibt array mit monaten zurück
+     * 
+     * @access 	public	
+     * @param 	voide	
+     * @return 	array	monat als zahl mit fuehrender 0
+     */
+    public function getMonths($_mode = 'm')
+    {
+        $retVal = array();
+        $_months = range ('01','12');
 
-	  foreach($_months as $numMonth)
-		 {
+        foreach($_months as $numMonth)
+        {
 
 			$_M = str_pad($numMonth, 2, 0, STR_PAD_LEFT);
 
@@ -309,177 +309,177 @@ class format
 			$_displ_M = date($_mode,$_t_stamp_displ);
 
 			$retVal[$_M] = $_displ_M; 
-		 }
-	  return $retVal;
-   }
+        }
+        return $retVal;
+    }
 
 
-   // --------------------------------------------------------------------
-   /**
-	* funktion gibt array mit jahren von heute bis param 1 plus oder minus zurück
-	* 
-	* @access 	public	
-	* @param 	integer	offset range jahre die angezeigt werden ausgehend von diesem jahr
-	* @param 	string	offset zukunft oder vergangenheit
-	*/
-   public function getYears($_rageOffset = '8', $_offsetDirection = '-')
-   {
+    // --------------------------------------------------------------------
+    /**
+     * funktion gibt array mit jahren von heute bis param 1 plus oder minus zurück
+     * 
+     * @access 	public	
+     * @param 	integer	offset range jahre die angezeigt werden ausgehend von diesem jahr
+     * @param 	string	offset zukunft oder vergangenheit
+     */
+    public function getYears($_rageOffset = '8', $_offsetDirection = '-')
+    {
 
-	  $currYear = date('Y', time());
-	  if($_offsetDirection == '-')
-		 {
+        $currYear = date('Y', time());
+        if($_offsetDirection == '-')
+        {
 			$startYear = $currYear - $_rageOffset;
-		 }
-	  else
-		 {
+        }
+        else
+        {
 			$startYear = $currYear + $_rageOffset;
-		 }
-	  $yearTmp = range($startYear, $currYear);
-	  $flippedYears =  array_flip($yearTmp);
+        }
+        $yearTmp = range($startYear, $currYear);
+        $flippedYears =  array_flip($yearTmp);
 
-	  foreach($flippedYears as $_year => $key4Year)
-		 {
+        foreach($flippedYears as $_year => $key4Year)
+        {
 			$years[$_year] = $yearTmp[$key4Year];
-		 } 
+        } 
 
-	  return $years; 
-   }
+        return $years; 
+    }
 
-   // --------------------------------------------------------------------
-   /**
-	* Anforderungsnummer für materialbeschaffung formatieren
-	*
-	* @access 	public	
-	* @param 	integer	
-	* @return 	integer	
-	*/
-   public function anforderung_NR($_id)
-   {
-	  $len = 5;
-	  if (strlen($_id) < 10)
-		 {
+    // --------------------------------------------------------------------
+    /**
+     * Anforderungsnummer für materialbeschaffung formatieren
+     *
+     * @access 	public	
+     * @param 	integer	
+     * @return 	integer	
+     */
+    public function anforderung_NR($_id)
+    {
+        $len = 5;
+        if (strlen($_id) < 10)
+        {
 			$_id = str_pad($_id, $len, 0, STR_PAD_LEFT);
-		 }
+        }
 
-	  return $_id;
-   }
-
-
-   // --------------------------------------------------------------------
-   /**
-	* nur reinen text zurückgeben, alle special chars und html tags entfernen
-	* 
-	* @access 	public	
-	* @param 	string	
-	* @return 	string	
-	*/
-   public function strip_all($des)
-   {
-
-	  // Strip HTML Tags
-	  $clear = strip_tags($des);
-	  // Clean up things like &amp;
-	  $clear = html_entity_decode($clear);
-	  // Strip out any url-encoded stuff
-	  $clear = urldecode($clear);
-	  // Replace non-AlNum characters with space
-	  $clear = preg_replace('/[^A-Za-z0-9]/', ' ', $clear);
-	  // Replace Multiple spaces with single space
-	  $clear = preg_replace('/ +/', ' ', $clear);
-	  // Trim the string of leading/trailing space
-	  $clear = trim($clear);
+        return $_id;
+    }
 
 
-	  return $clear;
-   }
+    // --------------------------------------------------------------------
+    /**
+     * nur reinen text zurückgeben, alle special chars und html tags entfernen
+     * 
+     * @access 	public	
+     * @param 	string	
+     * @return 	string	
+     */
+    public function strip_all($des)
+    {
 
-   // --------------------------------------------------------------------
-   /**
-	* pad array value // str_pad auf alle elemente eines arrays anwenden 
-	*
-	* @access 	public	
-	* @param 	array	
-	* @return 	array	
-	*/
-   public function array_val_pad($_arr,$pad_length, $pad_string = " " ,$pad_type = STR_PAD_LEFT)
-   {
+        // Strip HTML Tags
+        $clear = strip_tags($des);
+        // Clean up things like &amp;
+        $clear = html_entity_decode($clear);
+        // Strip out any url-encoded stuff
+        $clear = urldecode($clear);
+        // Replace non-AlNum characters with space
+        $clear = preg_replace('/[^A-Za-z0-9]/', ' ', $clear);
+        // Replace Multiple spaces with single space
+        $clear = preg_replace('/ +/', ' ', $clear);
+        // Trim the string of leading/trailing space
+        $clear = trim($clear);
 
-	  $retVal = array();
-	  foreach ($_arr as $key => $value) 
-		 {
+
+        return $clear;
+    }
+
+    // --------------------------------------------------------------------
+    /**
+     * pad array value // str_pad auf alle elemente eines arrays anwenden 
+     *
+     * @access 	public	
+     * @param 	array	
+     * @return 	array	
+     */
+    public function array_val_pad($_arr,$pad_length, $pad_string = " " ,$pad_type = STR_PAD_LEFT)
+    {
+
+        $retVal = array();
+        foreach ($_arr as $key => $value) 
+        {
 			$retVal[$key] = str_pad($value,$pad_length, $pad_string ,$pad_type); 
-		 }
+        }
 		
-	  return $retVal;
-   }
-   // --------------------------------------------------------------------
-   /**
-	* sonderzeichen ersetzen 
-	* 
-	*/
-   function convert_spcialChars($string)
-   {
+        return $retVal;
+    }
+    // --------------------------------------------------------------------
+    /**
+     * sonderzeichen ersetzen 
+     * 
+     */
+    function convert_spcialChars($string)
+    {
 
-	  $string = str_replace("�", "ae", $string);
-	  $string = str_replace("ä", "ae", $string);
-	  $string = str_replace("�", "Ae", $string);
-	  $string = str_replace("Ä", "Ae", $string);
-	  $string = str_replace("�", "oe", $string);
-	  $string = str_replace("ö", "oe", $string);
-	  $string = str_replace("�", "Oe", $string);
-	  $string = str_replace("Ö", "Oe", $string);
-	  $string = str_replace("�", "ue", $string);
-	  $string = str_replace("ü", "ue", $string);
-	  $string = str_replace("�", "Ue", $string);
-	  $string = str_replace("Ü", "Ue", $string);
-	  $string = str_replace("�", "ss", $string);
-	  $string = str_replace("ß", "ss", $string);
-	  $string = str_replace("�", "", $string);
+        $string = str_replace("�", "ae", $string);
+        $string = str_replace("ä", "ae", $string);
+        $string = str_replace("�", "Ae", $string);
+        $string = str_replace("Ä", "Ae", $string);
+        $string = str_replace("�", "oe", $string);
+        $string = str_replace("ö", "oe", $string);
+        $string = str_replace("�", "Oe", $string);
+        $string = str_replace("Ö", "Oe", $string);
+        $string = str_replace("�", "ue", $string);
+        $string = str_replace("ü", "ue", $string);
+        $string = str_replace("�", "Ue", $string);
+        $string = str_replace("Ü", "Ue", $string);
+        $string = str_replace("�", "ss", $string);
+        $string = str_replace("ß", "ss", $string);
+        $string = str_replace("�", "", $string);
 
-	  return $string;
-   }
+        return $string;
+    }
 
-   // --------------------------------------------------------------------
-   /**
-	* object in array convertieren
-	* 
-	*/
-   function object_to_array($object_arr) {
+    // --------------------------------------------------------------------
+    /**
+     * object in array convertieren
+     * 
+     */
+    function object_to_array($object_arr) {
 
-	  $retVal = array();
-	  foreach($object_arr as $key => $object)
-		 {
+        $retVal = array();
+        foreach($object_arr as $key => $object)
+        {
 			$retVal[$key] = (array) $object;
-		 }
-	  return $retVal;
-   }
+        }
+        return $retVal;
+    }
 
 
-   // --------------------------------------------------------------------
-   /**
-	* dropdown für stunden und minuten ausgeben
-	*  $this->timeSelect(date('H:i',time()), 'start', 'holidays['.$key.'][%%]');
-	* @return void
-	* @author
-	**/
-   public function timeSelect($_val = '8:00', $_name_sfx = "start", $nameArr = '')
-   {
+    // --------------------------------------------------------------------
+    /**
+     * dropdown für stunden und minuten ausgeben
+     *  $this->timeSelect(date('H:i',time()), 'start', 'holidays['.$key.'][%%]');
+     * @return void
+     * @author
+     **/
+    public function timeSelect($_val = '8:00', $_name_sfx = "start", $nameArr = '')
+    {
 
-	  $timeParts = explode(':', $_val);
-	  $data['hrs'] = $timeParts[0];
-	  $data['min'] = $timeParts [1];
+        $timeParts = explode(':', $_val);
+        $data['hrs'] = $timeParts[0];
+        $data['min'] = $timeParts [1];
 
-	  $hrs = range(0, 23);
-	  $min = $this->array_val_pad(array_combine(range(0, 50, 10), range(0, 50, 10)), 2, '0');
+        $hrs = range(0, 23);
+        $min = $this->array_val_pad(array_combine(range(0, 50, 10), range(0, 50, 10)), 2, '0');
 
-	  $name_start = 'hour_' . $_name_sfx;
-	  $id_start = $name_start;
+        $name_start = 'hour_' . $_name_sfx;
+        $id_start = $name_start;
 
-	  $name_end = 'min_' . $_name_sfx;
-	  $id_end = $name_end;
+        $name_end = 'min_' . $_name_sfx;
+        $id_end = $name_end;
 
-	  if ($nameArr !== '') 
-		 {
+        if ($nameArr !== '') 
+        {
 
 			$name_start = str_replace('%%', $name_start, $nameArr);
 			$id_start .= '_' . sha1($name_start);
@@ -489,14 +489,56 @@ class format
 			$id_end .= '_' . sha1($name_end);
 			$id_end = '';
 
-		 }
+        }
 
-	  $retVal = form_dropdown($name_start, $hrs, $data['hrs'], 'id="' . $id_start . '" class="time_select"') . ':' . form_dropdown($name_end, $min, $data['min'], 'id="' . $id_end . '" class="time_select"');
+        $retVal = form_dropdown($name_start, $hrs, $data['hrs'], 'id="' . $id_start . '" class="time_select"') . ':' . form_dropdown($name_end, $min, $data['min'], 'id="' . $id_end . '" class="time_select"');
 
-	  return $retVal;
-   }
+        return $retVal;
+    }
 
-   // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+    /**
+     * array serialisieren und in base64 packen
+     * 
+     * @access 	public	
+     * @param 	array	
+     * @return 	string	base64encoded
+     * 
+     */
+    public function enc_arr($_arr)
+    {
+        return base64_encode(serialize($_arr));
+    }
+    // --------------------------------------------------------------------
+    /**
+     * array deserialisieren
+     * 
+     * @access 	public	
+     * @param 	string	base64encoded with serialized array
+     * @return 	return array
+     * 
+     */
+    public function dec_arr($_base64)
+    {
+        return unserialize(base64_decode($_base64));
+    }
+    // --------------------------------------------------------------------
+    /**
+     * array deserialisieren und key zurück geben 
+     * 
+     * @access 	public	
+     * @param 	string	base64encoded with serialized array
+     * @param 	string	array_key to be returned
+     * @return 	
+     * 
+     */
+    public function dec_arr_key($_base64, $_key)
+    {
+        $arr = $this->dec_arr($_base64);
+        return $arr[$_key];
+    }
+
+    
    
 }
 

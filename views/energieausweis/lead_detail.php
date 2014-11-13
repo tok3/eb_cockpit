@@ -5,16 +5,21 @@
 {{ form_open }}
 <div class="box box-primary">
    <div class="box-header">
-   <h3 class="box-title">Kontakt</h3>
+    <h3 class="box-title">Lead Energieausweis  </h3>
    </div>
    <div class="box-body">
 
 
 
 <input type="hidden" name="affiliate_id" value="{{ affiliate_id:value }}" />
+<input type="hidden" name="aktionscode" value="{{ aktionscode:value }}" />
 
-{{ created:value }}
-
+{{ if affiliate_id:value > 0 }}
+<strong>Affiliate ID: </strong>{{ affiliate_id:value }}
+{{ endif }}
+{{ if aktionscode:value != '' }}
+<strong>Aktions-Code: </strong>{{ aktionscode:value }}
+{{ endif }}
 
 
 <div class="row">

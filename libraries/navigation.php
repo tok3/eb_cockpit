@@ -1,153 +1,235 @@
 <?php
-if( !defined('BASEPATH'))
-   exit('No direct script access allowed');
+if (! defined('BASEPATH')) exit('No direct script access allowed'); 
 
-// ------------------------------------------------------------------------
-/**
- *
- *
- *
- * @category	Libraries
- * @author		tobias.koch@mmstc.de.com
- */
-
-class navigation
+class Navigation
 {
-   protected $ci;
-   protected $module;
-   private $navConf;
-   function __construct()
-   {
-	  $this->ci = &get_instance();
+    protected $ci;
+    protected $module;
+    protected $config_path = 'navigation/'; // relative to /config directore
 
-	  $this->module = $this->ci->router->fetch_module();
+    private $navConf;
 
-   }
+    function __construct()
+    {
+        $this->ci = &get_instance();
+
+        $this->module = $this->ci->router->fetch_module();
+
+    }
+
+    // --------------------------------------------------------------------
+    /**
+     * 
+     * 
+     * @access 		
+     * @param 		
+     * @return 		
+     * 
+     */
+    function wrap($_wrap)
+    {
+    
+        echo $_ent;
+        $_ent =  explode('></',$_wrap);
+        echo "<pre><code>";
+        print_r($_ent);
+        echo "</code></pre>";
+    
+        $wrapped = $_ent[0] . $this->get_entries() . $_ent[1];
+
+        return $wrapped;
+    }
 
 
+    // --------------------------------------------------------------------
+    /**
+     * navigationseintrag erzeugen
+     * 
+     * @access 	public	
+     * @param 		
+     * @return 	string	
+     * 
+     */
 
+    public function get_entries ()
+    {
+        
+        $_entries = array();
 
-// --------------------------------------------------------------------
-/**
-* 
-* 
-* @access 		
-* @param 		
-* @return 		
-* 
-*/
- function wrap($_wrap)
-{
+        //$this->set_navigation();
 
-
-}
-
-
-   // --------------------------------------------------------------------
-   /**
-	* navigationseintrag erzeugen
-	* 
-	* @access 	private	
-	* @param 		
-	* @return 	string	
-	* 
-	*/
-
-   private function set_entries ()
-   {
-
-	  $_entries = array();
-
-	  $this->set_navigation();
-
-	  foreach($this->navConf as $key => $conf)
-		 {
+        foreach($this->navConf as $key => $conf)
+        {
 			$active = '';
+			$li_class = '';
+
 			$targ = site_url($this->module . '/' . $conf['target']);
 
 			if(current_url() == $targ)
-			   {
-				  $active = 'active ';
-			   }
+            {
+                $active = 'active ';
+            }
+
+            if(isset($conf['class']))
+            {
+                $li_class = $conf['class'];
+            }
+			$_entries[$key] =   '<li class=" '.$li_class.' ' . $active . ' "><a href="'. $targ .'" >' . $conf['item'] . '</a></li>';
+        }
+
+        return  implode("",$_entries	  );
+
+    }
+    // --------------------------------------------------------------------
+    /**
+     * Tab nav beziehen
+     * 
+     * @access 	public	
+     * @param 	string	
+     * @return 	string	
+     * 
+     */
+    public function get_tabs()
+    {
+
+        $t_nav ='  <ul class="nav nav-tabs">';
+        $t_nav .= $this->get_entries();
+        $t_nav .= '</ul>';
+
+        return $t_nav;
+    }
 
 
-			$_entries[$key] =   '<li class=" ' . $active . ' "><a href="'. $targ .'" >' . $conf['name'] . '</a></li>';
-		 }
+    // --------------------------------------------------------------------
+    /**
+     * check active 
+     * 
+     * @access 	public	
+     * @param 	string	
+     * @return 	string	
+     * 
+     */
 
-	  return  implode("",$_entries	  );
+    function check_active($target = '')
+    {
 
-   }
-   // --------------------------------------------------------------------
-   /**
-	* Tab nav behziehen
-	* 
-	* @access 	public	
-	* @param 	string	
-	* @return 	string	
-	* 
-	*/
-   public function get_tabs()
-   {
+        $CI =& get_instance();
+        if(!is_array($target))
+        {
+            $target = array($target);
+        } 
 
-	  $t_nav ='  <ul class="nav nav-tabs">';
-	  $t_nav .= $this->set_entries();
-	  $t_nav .= '</ul>';
+        foreach($target as $item)
+        {
+            if(uri_string() == $item)
+            {
+                return 'active';
+            }
+        }
 
-	  return $t_nav;
-   }
+    }   
 
+    // --------------------------------------------------------------------
+    /**
+     * @access 	private	
+     * @param 	array	
+     * 
+     */
+    function set($_config)
+    {
+        $this->navConf = $this->prep_conf($_config);
+        return $this;
 
-   // --------------------------------------------------------------------
-   /**
-	* get_sidebar
-	* 
-	* @access 	public	
-	* @param 	void	
-	* @return 	string	
-	* 
-	*/
-   public function get_sidebar()
-   {
-	  /**
-	   *   <li class="<?php  echo check_active('cockpit/leads_energieausweis/index');?>">
-	   <a href="<?php echo site_url('cockpit/leads_energieausweis/index');?>">
-	   <i class="glyphicon glyphicon-transfer"></i><span>Leads Energieausweis</span>
-	   </a>
-	   </li>
-	   * 
-	   */
+    }
+    // --------------------------------------------------------------------
+    /**
+     * load navigation with config from within this directory
+     * 
+     * @access 	public	
+     * @param 	string	
+     * @return 		
+     * 
+     */
+    public function load($_cfg)
+    {
+        $_config =  $this->ci->load->config($this->config_path . $_cfg, true);
 
-   }
+        $this->navConf = $this->prep_conf($_config);
 
-   // --------------------------------------------------------------------
-   /**
-	* 
-	* 
-	* @access 		
-	* @param 		
-	* @return 		
-	* 
-	*/
-   function set_navigation ()
-   {
-
-
-	  $config = array(
-					  'nav_contact'=>array(
-										   'name'=>'Kontaktdaten',
-										   'target'=>'contact_details/contact/' . $this->ci->uri->rsegment(3),
-										   ),
-					  'nav_immo'=>array(
-										'name'=>'Energieausweis',
-										'target'=>'immobilie/details/' . $this->ci->uri->rsegment(3),
-										)
-
-					  );
+        return $this;
+    }
 
 
-	  $this->navConf = $config;
-   }
+    // --------------------------------------------------------------------
+    /**
+     * prepare config, replacements and restrictions
+     * 
+     * @access 	private	
+     * @param 	array
+     * @return 	array	
+     * 
+     */
+    private function prep_conf($_config)
+    {
 
-   // --------------------------------------------------------------------
+        foreach($_config as $key => $entry)
+        {
+
+
+            // replace contact id
+            $search['%%contact_id%%'] = $this->ci->session->userdata('contact_id');
+            $_config[$key]['target'] = str_replace(array_keys($search), $search, $entry['target']);
+
+
+            // check if menu entry is restricted to grops by id
+            if(isset($_config[$key]['group_id']))
+            {
+
+                $groupsArr = explode( ',',$_config[$key]['group_id']);
+                $is_valid = array_search($this->ci->session->userdata('group_id'), preg_replace('/\s+/', '',$groupsArr));
+
+                if(!is_numeric($is_valid))
+                {
+                    unset( $_config[$key]);
+                }
+            }
+
+            // check if menu entry is restricted to grops by groupname
+            if(isset($_config[$key]['group']))
+            {
+                $groupsArr = explode( ',',$_config[$key]['group']);
+                $is_valid = array_search($this->ci->session->userdata('group'), preg_replace('/\s+/', '',$groupsArr));
+
+                if(!is_numeric($is_valid))
+                {
+                    unset( $_config[$key]);
+                }
+
+            }
+        }
+        return $_config;
+    }
+    // --------------------------------------------------------------------
+    /**
+     * append to nav entry
+     * 
+     * @access 	public	
+     * @param 	string	
+     * @return 	void	
+     * 
+     */
+    public function append($_key, $_value)
+    {
+        if($this->navConf == "")
+        {
+            return false;
+        }
+
+        $this->navConf[$_key]['item'] = $this->navConf[$_key]['item'] . $_value; 
+
+        return $this;
+    }
+
+// --------------------------------------------------------------------
  
 }

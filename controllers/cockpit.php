@@ -23,7 +23,7 @@ class Cockpit extends Public_Controller
 	*/
    public function index()
    {
-
+         $sidenav = new $this->navigation();        
 
 	  /* //permisssionstest
 	   role_or_die($this->module,'customer');

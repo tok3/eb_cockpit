@@ -37,7 +37,6 @@ class leads_energieausweis extends Public_Controller
    function index()
    {
 
-
 	  $this->template
 		 ->set_partial('header','header',array())
 		 ->set_partial('aside','sidebar',array())
@@ -203,6 +202,7 @@ class leads_energieausweis extends Public_Controller
 		 $insertData_immo['baujahr'] = $_POST['baujahr'];
 		 $insertData_immo['verausserung_art'] = implode($_POST['verausserung_art'], ',');
 		 $insertData_immo['bemerkung'] = $_POST['bemerkung']; 
+		 $insertData_immo['aktionscode'] = $_POST['aktionscode']; 
 
 		 $this->general_m->set_table('eb_immobilien');
 		 $this->general_m->insert($insertData_immo);
@@ -210,7 +210,7 @@ class leads_energieausweis extends Public_Controller
 // --------------------------------------------------------------------
 		 // insert property
 		 $this->general_m->set_table('eb_contact_properties');
-		 $this->general_m->insert(array('contacts_id'=>$contact_insert_id,'property'=>2)); // 2 energeiausweis
+		 $this->general_m->insert(array('contacts_id'=>$contact_insert_id,'property'=>'3')); // 3 = energeiausweis
 
 
 		 // --------------------------------------------------------------------

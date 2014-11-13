@@ -25,44 +25,83 @@ class Contacts extends Public_Controller
 	  $contacts_m = $this->load->model('contacts_m');	   
 	  $this->load->library('form_validation');
 
-	  $this->validation_rules = array();
 
    }
-   /**
-	* Index
-	*/
-   public function index()
-   {
+    /**
+     * Index
+     */
+    public function index($_prop = 0)
+    {
+        if($_prop == 100)
+        {
+            $this->db->where('is_affiliate',1); // nur affiliates selectieren
+            $prop = '';
+        }
+        else
+        {
+            $prop = (int) $_prop;
 
+        }
+        
+        $grid = $this->get_contacts_grid($prop);
+       
+        $this->template
+            ->set_partial('header','header',array())
+            ->set_partial('aside','sidebar',array())
+            ->set('active_kontakt','active')
+            ->append_js('module::contacts_grid.js') 
+            ->append_js('module::modules.js')
+            ->set('content', $grid)
+            ->build('default')
+            ;
 
-	  $this->template
-		 ->set_partial('header','header',array())
-		 ->set_partial('aside','sidebar',array())
-		 ->set('active_kontakt','active')
-		 ->append_js('module::contacts_grid.js') 
-		 ->append_js('module::modules.js')
-		 ->set('content', $this->get_contacts_grid())
-		 ->build('default')
-		 ;
+    }
 
-   }
-
-   // --------------------------------------------------------------------
-   /**
-	* contact grid generieren
+    // --------------------------------------------------------------------
+    /**
+     * contact grid generieren
 	* 
 	* @access 		
 	* @param 		
 	* @return 		
 	* 
 	*/
-   function get_contacts_grid()
+    public function by_aff($_affiliate_id = 0)
+    {
+        $this->db->where('affiliate_id',$this->session->userdata('contact_id')); // nur affiliates selectieren
+
+        $grid = $this->get_aff_grid();
+       
+        $this->template
+            ->set_partial('header','header',array())
+            ->set_partial('aside','sidebar',array())
+            ->set('active_kontakt','active')
+            ->append_js('module::contacts_grid.js') 
+            ->append_js('module::modules.js')
+            ->set('content', $grid)
+            ->build('default')
+            ;
+
+    }
+
+// --------------------------------------------------------------------
+    /**
+     * contact grid generieren
+	* 
+	* @access 		
+	* @param 		
+	* @return 		
+	* 
+	*/
+   function get_contacts_grid($_property = 0)
    {
 
 	  // --------------------------------------------------------------------
-	  $contacts = $this->contacts_m->get_persons();
+	  $contacts = $this->contacts_m->get_persons($_property);
 
 	  $tableData = array();
+      if($contacts != FALSE)
+      {
 	  foreach($contacts as $key => $item)
 		 {
 			$user = $this->ion_auth->get_user();
@@ -90,7 +129,64 @@ class Contacts extends Public_Controller
 			$tableData[$key]['id'] = '<span class="editDelBtn"><a href="' . site_url('cockpit/contacts/delete/' .$item['contacts_id']) . '" class="gridDelete right hide-for-touch"><span title="L&ouml;schen" class="fa fa-trash-o"></span></a>&nbsp;<a href="' . site_url('cockpit/contact_details/contact/' .$item['contacts_id']) . '" class="gridEdit right"><span title="Bearbeiten" class="fa fa-edit"></span></a></span>';
 
 		 }
+      }
+	  $tmpl = array ( 'table_open'  => '<table id="personsGrid"  class="display table table-bordered table-hover dataTable">');
 
+
+	  $this->table->set_template($tmpl); 
+
+	  $this->table->set_heading(lang('cockpit:heading_grid_contacts'));
+
+
+	  $grid = $this->table->generate($tableData);
+
+	  return $grid;
+   }
+
+    // --------------------------------------------------------------------
+    /**
+     * contact grid mit geworbenen kontakten für affiliates generieren
+	* 
+	* @access 		
+	* @param 		
+	* @return 		
+	* 
+	*/
+   function get_aff_grid($_property = 0)
+   {
+	  $contacts = $this->contacts_m->get_persons($_property);
+
+	  $tableData = array();
+      if($contacts != FALSE)
+      {
+	  foreach($contacts as $key => $item)
+		 {
+			$user = $this->ion_auth->get_user();
+
+			if(is_object($user))
+			   {
+				  $mitarbeiter = $user->first_name . ' ' . $user->last_name;
+			   }
+			else
+			   {
+				  $mitarbeiter = 'n/a'; 
+			   }
+
+			//			$tableData[$key]['user'] = $mitarbeiter;
+			$tableData[$key]['initial_contact'] = date('d.m.Y',human_to_unix($item['initial_contact']));
+			$tableData[$key]['vorname'] = str_pad(substr($item['firstname'],0,2), 7, '*');
+			$tableData[$key]['name'] = str_pad(substr($item['name'],0,2), 7, '*');
+			$tableData[$key]['plz'] = str_pad(substr($item['plz'],0,2), 5, '*');
+			$tableData[$key]['city'] = str_pad(substr($item['city'],0,2), 7, '*');
+			$tableData[$key]['comp_name'] = str_pad(substr($item['comp_name'],0,2), 7, '*');
+			$tableData[$key]['tel'] = str_pad(substr($item['tel'],0,2), 8, '*');
+			$tableData[$key]['mobile'] = str_pad(substr($item['mobile'],0,2), 8, '*');
+
+
+			$tableData[$key]['id'] = '<a href="' . site_url('cockpit/info/contact/' . $this->format->enc_arr(array('contacts_id'=>$item['contacts_id']))) . '" class="gridEdit right"><span title="Bearbeiten" class="fa fa-info-circle"></span></a></span>';
+
+		 }
+      }
 	  $tmpl = array ( 'table_open'  => '<table id="personsGrid"  class="display table table-bordered table-hover dataTable">');
 
 
@@ -121,46 +217,5 @@ class Contacts extends Public_Controller
 
 	}
 
-   // --------------------------------------------------------------------
-   
-   function testvalidation()
-   {
-
-
-	  $validation_rules = array(
-								array(
-									  'field'   => 'data[0][name]',
-									  'label'   => 'Name',
-									  'rules'   => 'required'
-									  )
-								);
-
-	  $this->form_validation->set_rules($validation_rules);
-
-
-	  $errors = '';
-	  if($this->input->post('submit') !=  '')
-		 {
-			if ($this->form_validation->run() != 1)
-			   {
-				  echo "validation geht nicht durch<br>";
-
-				  $errors = '<div class="medium-12 small-12 columns"><div class="alert-box secondary radius" data-alert="">
-				' . validation_errors() .'
-				</div></div>';
-			   }
-		 }
-
-	  $form = $this->load->view('valTest',array('errors'=>$errors),TRUE);
-	  $this->template
-		 ->set_partial('aside','sidebar',array())
-		 ->append_js('module::modules.js')
-		 ->set('content',$form)
-		 ->append_js('module::contacts.js') 
-		 ->build('default',false)
-		 ;
-
-
-   }
    // --------------------------------------------------------------------
 }

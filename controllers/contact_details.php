@@ -40,7 +40,7 @@ class Contact_Details extends Public_Controller
 
         $contact_id = $_contacts_id;
 
-        if($this->current_user->group_id == 2) // user
+        if($this->current_user->group_id != 1) // wenn nicht admin 
         {
 
 			$contact_id = $this->session->userdata('contact_id');
@@ -218,7 +218,7 @@ class Contact_Details extends Public_Controller
             ->set_partial('header','header',array())
             ->set_partial('aside','sidebar',$aside)
             ->set('content',$content)
-            ->set('tab_navigation',$this->navigation->get_tabs())
+            ->set('tab_navigation',$this->navigation->load('contact_tabs')->get_tabs())
             ->append_js('module::modules.js')
             ->append_js('module::contacts.js') 
             ->build('default');
@@ -298,9 +298,7 @@ class Contact_Details extends Public_Controller
         $config['email'] = array
             (
                 'rules'=>'required|valid_email',
-                'label'=>'Email',
-                'maxlength'=>'5',
-
+                'label'=>'Email'
             );
 
         $config['mobile'] = array
@@ -608,8 +606,19 @@ class Contact_Details extends Public_Controller
 
     }
 
+// --------------------------------------------------------------------
+    function test()
+    {
 
 
-    // --------------------------------------------------------------------
-   
+$this->load->driver('Streams');
+        $test = $this->streams->fields->get_field_assignments('question', 'faq');
+
+echo "<pre><code>";
+print_r($test);
+echo "</code></pre>";
+
+    }
+// --------------------------------------------------------------------
+    
 }

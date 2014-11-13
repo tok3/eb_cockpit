@@ -232,32 +232,61 @@ class contacts_m extends MY_Model
 	* get all persons for grid view 
 	* 
 	*/
-   function get_persons($_user_id = '')
+    function get_persons($_property = '')
    {
 
-	  $this->db->select('eb_contacts.*,eb_persons.*, eb_addresses.city, eb_addresses.plz, eb_companies.name as comp_name');
-	  $this->db->join('eb_contacts', 'eb_persons.contacts_id = eb_contacts.id');
-	  $this->db->join('eb_companies', 'eb_contacts.id = eb_companies.contacts_id','LEFT');
-	  $this->db->join('eb_addresses', 'eb_contacts.id = eb_addresses.contacts_id','LEFT');
+       $this->db->select('eb_contacts.*,eb_persons.*, eb_addresses.city, eb_addresses.plz, eb_companies.name as comp_name');
+       $this->db->join('eb_contacts', 'eb_persons.contacts_id = eb_contacts.id');
+       $this->db->join('eb_companies', 'eb_contacts.id = eb_companies.contacts_id','LEFT');
+       $this->db->join('eb_addresses', 'eb_contacts.id = eb_addresses.contacts_id','LEFT');
 
-	  $this->db->from('eb_persons');
-	  $this->db->where('eb_contacts.deleted',0);
+       if($_property != "")
+       {
+           $this->db->join('eb_contact_properties', 'eb_contacts.id = eb_contact_properties.contacts_id','left');
+           $this->db->where('eb_contact_properties.property', $_property);
 
-	  $query = $this->db->get();
+       }
+      
+       $this->db->from('eb_persons');
+       $this->db->where('eb_contacts.deleted',0);
 
-	  $result = $query->result_array();
+       $query = $this->db->get();
 
-	  if(count($result) != 0)
-		 {
-			return $result;
-		 }
-	  else
-		 {
-			return array($this->empty_query_fields($this->db->last_query()));
+       $result = $query->result_array();
 
-		 }
+       if(count($result) != 0)
+       {
+           return $result;
+       }
+       else
+       {
+           return FALSE;
+//           return array($this->empty_query_fields($this->db->last_query()));
+
+       }
 
    }
+
+    // --------------------------------------------------------------------
+    /**
+     * alle eigenschaften eines kontaktes, also stromkunde, energieausweiskunde, makler, energieberater usw
+     * 
+     * @access 	public	
+     * @param 	int	contacts_id
+     * @return 	array	
+     * 
+     */
+    public function get_properties($_contacts_id)
+    {
+        $this->db->select('property');
+        $this->db->from('eb_contact_properties');
+        $this->db->where('eb_contact_properties.contacts_id',$_contacts_id);
+
+        $query = $this->db->get();
+
+        $result = $query->result_array();
+
+    }
    // --------------------------------------------------------------------
    /**
 	* add where condition 

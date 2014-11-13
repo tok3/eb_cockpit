@@ -12,7 +12,7 @@ $.extend(true, $.fn.dataTable.defaults, {
    sInfoEmpty: "Keine Eintr&auml;ge gefunden",
  sLoadingRecords: "Daten werden geladen ...",
 sZeroRecords: "Keine Eintr&auml;ge",
-sEmptyTable:'nix da',
+sEmptyTable:'',
 		oPaginate: {
 			sFirst: "Erste Seite",
 			sPrevious: "Vorherige Seite",

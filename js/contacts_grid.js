@@ -12,7 +12,7 @@ $(function() {
 	var oTable = $('#personsGrid')
         .dataTable({
 			"aoColumnDefs": [
-				{ "sType": "de_date", "aTargets": [1] }           ],
+				{ "sType": "de_date", "aTargets": [0] }           ],
             "fnDrawCallback": function(oSettings) {
                 iMax = oSettings.fnRecordsTotal();
                 iTotal = oSettings.fnRecordsDisplay();
