@@ -49,8 +49,8 @@ class Contacts extends Public_Controller
             ->set_partial('header','header',array())
             ->set_partial('aside','sidebar',array())
             ->set('active_kontakt','active')
-            ->append_js('module::contacts_grid.js') 
             ->append_js('module::modules.js')
+            ->append_js('module::contacts_grid.js') 
             ->set('content', $grid)
             ->build('default')
             ;

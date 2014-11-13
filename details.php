@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
+
 /**
  * Cockpit Module
  *
@@ -307,7 +308,7 @@ class Module_Cockpit extends Module {
                 'default' => '',
             ),
             'baujahr'=>array(
-                'type'=>'integer',
+                'type'=>'varchar',
                 'constraint'=>'4',
                 'null'=>TRUE,
 
@@ -325,6 +326,12 @@ class Module_Cockpit extends Module {
             'wasser'=>array(
                 'type'=>'varchar',
                 'constraint'=>'55',
+                'null'=>TRUE,
+
+            )            ,
+            'rg_verbrauch'=>array(
+                'type'=>'integer',
+                'constraint'=>'1',
                 'null'=>TRUE,
 
             ),
@@ -514,7 +521,7 @@ class Module_Cockpit extends Module {
         // --------------------------------------------------------------------
         
         $energieausweis_immo_tablename = 'eb_immobilien';
-       $this->dbforge->drop_table($energieausweis_immo_tablename);
+        //$this->dbforge->drop_table($energieausweis_immo_tablename);
 
         if (!$this->db->table_exists($energieausweis_immo_tablename))
         {
@@ -569,7 +576,7 @@ class Module_Cockpit extends Module {
                 'default' => '',
             ),
             'baujahr'=>array(
-                'type'=>'integer',
+                'type'=>'varchar',
                 'constraint'=>'4',
                 'null'=>TRUE,
 
@@ -587,6 +594,12 @@ class Module_Cockpit extends Module {
             'wasser'=>array(
                 'type'=>'varchar',
                 'constraint'=>'55',
+                'null'=>TRUE,
+
+            ),
+            'rg_verbrauch'=>array(
+                'type'=>'integer',
+                'constraint'=>'1',
                 'null'=>TRUE,
 
             ),
