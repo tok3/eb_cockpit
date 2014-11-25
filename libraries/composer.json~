@@ -1,0 +1,29 @@
+{
+    "name": "",
+    "description": "Pyrocms Energieberater Cockpit",
+    "keywords": ["pyrocms", "moduel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "tobias c. koch",
+            "homepage": "http://www.mmsetc.de"
+        }
+    ],
+    "require": {
+        "anahkiasen/former": "dev-master"
+    },
+     "scripts": {
+        "pre-update-cmd": [
+            "php artisan clear-compiled"
+        ],
+        "post-install-cmd": [
+            "php artisan optimize"
+        ],
+        "post-update-cmd": [
+            "php artisan optimize"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}

@@ -5,7 +5,7 @@
  * @author  tobias@mmsetc.de
  * @package energieberaer
  */
-use Former\Facades\Former;
+//use Former\Facades\Former;
 
 class bankaccounts extends Public_Controller
 {
