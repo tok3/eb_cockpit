@@ -15,7 +15,7 @@
 $sidenav = new $this->navigation();        
 
 $sidenav->load('sidebar');
-if($this->session->userdata('contact_complete') == 1)
+if($this->session->userdata('contact_complete') == 1  && $this->current_user->group == 'user')
 {
     $sidenav->append('dokumente','<small class="badge pull-right bg-green">1</small>');
 }

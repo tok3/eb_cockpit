@@ -43,16 +43,25 @@
 				<input type="password" name="password" maxlength="100" id="password"/>
 			</div></div>
 
+     
 			<?php foreach($profile_fields as $field) { if($field['required'] and $field['field_slug'] != 'display_name') { ?>
 			<div class="row">
 				<div class="large-12 columns">
 					<label for="<?php echo $field['field_slug'] ?>"><?php echo (lang($field['field_name'])) ? lang($field['field_name']) : $field['field_name'];  ?></label>
-					<div class="input"><?php echo $field['input'] ?></div>
+<div class="input"><?php echo $field['input'] ?></div>
 				</div></div>
 				<?php } } ?>
 
+<!-- agb -->
+	<div class="row">
+			<div class="large-12 columns">
+     <label><input type="checkbox" name="agb" id="agb"/>&nbsp;Ich habe die allgemeinen Gesch&auml;ftsbedingungen gelesen und akzeptiere diese.	</label>
+			</div></div>
+
+     <!-- /agb -->
 				
 				<div class="row">
+
 					<div class="large-12 columns">
 						
 						<?php echo form_submit('btnSubmit', lang('user:register_btn')) ?>

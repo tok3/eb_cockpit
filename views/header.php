@@ -91,7 +91,7 @@
                             </ul>
                         </li>
                         <!-- Notifications: style can be found in dropdown.less -->
-                        <li class="dropdown notifications-menu hide">
+                        <li id="notify-top" class="dropdown notifications-menu hide">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell"></i>
                                 <span class="label label-success">1</span>

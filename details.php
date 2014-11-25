@@ -6,9 +6,11 @@
  * @author		tobias@mmsetc.de
  * @package		Ihre energieberater
  */
+
+require __DIR__ . '/libraries/vendor/autoload.php';
 class Module_Cockpit extends Module {
 
-    public $version = '0.0.45';
+    public $version = '0.0.48';
 
     public function info()
     {
@@ -495,240 +497,64 @@ class Module_Cockpit extends Module {
     {
 
 
-// --------------------------------------------------------------------
-  // affiliate id zu energieausweis stream hinzuf?gen
-	  $this->load->driver('Streams');
 
-	  $assignment = $this->streams->fields->get_field_assignments('aktionscode', 'streams');
-	  if(count($assignment['0']) == 0)
-		 { 
-			$fields = array(
-							array(
-								  'name'	=> 'Aktionscode',
-								  'slug'	=> 'aktionscode',
-								  'namespace' => 'streams',
-								  'type'	=> 'text',
-								  'assign'	=> 'energieausweis',
-								  'required'	=> false
-								  )
-							);
-
-
-			$this->streams->fields->add_fields($fields);
-		 }
-
-
-        // --------------------------------------------------------------------
-        
-        $energieausweis_immo_tablename = 'eb_immobilien';
-        //$this->dbforge->drop_table($energieausweis_immo_tablename);
-
-        if (!$this->db->table_exists($energieausweis_immo_tablename))
-        {
- 
-        $eb_immo = array(
-            'id'=>array(
-                'type'=>'int',
-                'constraint'=>'11',
-                'auto_increment' => TRUE,
-            ),
-            'contacts_id'=>array(
-                'type'=>'int',
-                'constraint'=>'11',
-            ),
-            'stream_entry_id'=>array(
-                'type'=>'int',
-                'constraint'=>'11',
-            ),
-            'aktionscode'=>Array(
-                'type'=>'varchar',
-                'constraint'=>'55',
-                'default' => '',
-            ),
-            'objektart'=> array(
-                'type'=>'varchar',
-                'constraint'=>'55',
-            ),
-            'bezugsfrei'=> array(
-                'type'=>'varchar',
-                'constraint'=>'55',
-            ),
-            'str'=>array(
-                'type'=>'varchar',
-                'constraint'=>'100',
-            ),
-            'plz'=>array(
-                'type'=>'varchar',
-                'constraint'=>'5',
-            ),
-            'ort'=>array(
-                'type'=>'varchar',
-                'constraint'=>'100',
-            ),
-            'qm'=>array(
-                'type'=>'varchar',
-                'constraint'=>'55',
-                'default' => '',
-            ),
-            'qm_grund'=>array(
-                'type'=>'varchar',
-                'constraint'=>'55',
-                'default' => '',
-            ),
-            'baujahr'=>array(
-                'type'=>'varchar',
-                'constraint'=>'4',
-                'null'=>TRUE,
-
-            ),
-            'bauart'=>array(
-                'type'=>'varchar',
-                'constraint'=>'155',
-                'default' => '',
-            ),
-            'heizung'=>array(
-                'type'=>'varchar',
-                'constraint'=>'55',
-                'default' => '',
-            ),
-            'wasser'=>array(
-                'type'=>'varchar',
-                'constraint'=>'55',
-                'null'=>TRUE,
-
-            ),
-            'rg_verbrauch'=>array(
-                'type'=>'integer',
-                'constraint'=>'1',
-                'null'=>TRUE,
-
-            ),
-            'verbrauchsabr'=>array(
-                'type'=>'integer',
-                'constraint'=>'1',
-                'null'=>TRUE,
-            ),
-            'instanthaltungsm'=>array(
-                'type'=>'text',
-                'null'=>TRUE,
-                    
-            ),
-            'bauplan'=>array(
-                'type'=>'integer',
-                'constraint'=>'1',
-                'null'=>TRUE,
-
-            ),
-            'makler_kontaktiert'=>array(
-                'type'=>'integer',
-                'constraint'=>'1',
-                'null'=>TRUE,
-            ),
-            'makler'=>array(
-                'type'=>'varchar',
-                'constraint'=>'255',
-                'null'=>TRUE,
-            ),
-            'an_makler'=>array(
-                'type'=>'integer',
-                'constraint'=>'1',
-                'null'=>TRUE,
-            ),
-            'an_energieberater'=>array(
-                'type'=>'integer',
-                'constraint'=>'1',
-                'null'=>TRUE,
-            ),
-            'est_preis'=>array(
-                'type'=>'varchar',
-                'constraint'=>'12',
-                'null'=>TRUE,
-            ),
-            'vk_preis'=>array(
-                'type'=>'varchar',
-                'constraint'=>'12',
-                'null'=>TRUE,
-            ),
-            'innenprovision'=>array(
-                'type'=>'varchar',
-                'constraint'=>'4',
-                'null'=>TRUE,
-            ),
-            'aussenprovision'=>array(
-                'type'=>'varchar',
-                'constraint'=>'4',
-                'null'=>TRUE,
-            ),
-            'verkauft'=>array(
-                'type'=>'int',
-                'constraint'=>'1',
-                'null'=>TRUE,
-
-            ),
-            'verausserung_art'=>array(
-                'type'=>'varchar',
-                'constraint'=>'55',
-                'null'=>TRUE,
-            ),
-            'bemerkung'=>array(
-                'type'=>'text',
-                'null'=>TRUE,
-
-            ),
-            'last_upd TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
-
-        );
-
-
-            $this->dbforge->add_field($eb_immo);
-            $this->dbforge->add_key('id', TRUE);
-            $this->dbforge->create_table($energieausweis_immo_tablename);
-        }
-        
-        // --------------------------------------------------------------------
+                // --------------------------------------------------------------------
         /**
-         * tabelle für bankkonten
+         * tabelle für firmen
          * 
          */
-        $bank_acc = 'eb_bank_accounts';
-        $this->dbforge->drop_table($bank_acc);
-
-        if (!$this->db->table_exists($bank_acc))
-        {
-	
+        $tableName = 'eb_companies';
+// steuerunummer
+        if(!$this->db->field_exists($field = 'ust_id', $tableName)){
 
 
 			$ba_fields = array(
-                'id'=>array(
-                    'type'=>'int',
-                    'constraint'=>'11',
-                    'auto_increment' => TRUE,
-                ),
-                'contacts_id'=>array(
-                    'type'=>'int',
-                    'constraint'=>'11',
-                ),
-                'bank_name'=> array(
+                $field=> array(
                     'type'=>'varchar',
-                    'constraint'=>'100',
-                ),
-                'iban'=> array(
-                    'type'=>'varchar',
-                    'constraint'=>'34',
-                ),
-                'bic'=> array(
-                    'type'=>'varchar',
-                    'constraint'=>'11',
-                ),
-                'last_upd TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
+                    'constraint'=>'15',
+                    'null'=>TRUE,
+
+                )
 
             );
-			
-			$this->dbforge->add_field($ba_fields);
-			$this->dbforge->add_key('id', TRUE);
-			$this->dbforge->create_table($bank_acc);
-			// kontakte aktualisieren av_id
+            $this->dbforge->add_column($tableName, $ba_fields);
+        }
 
+// str nu/id 
+
+        if(!$this->db->field_exists($field = 'str_id', $tableName)){
+
+
+			$ba_fields = array(
+                $field=> array(
+                    'type'=>'varchar',
+                    'constraint'=>'15',
+                    'null'=>TRUE,
+
+                )
+
+            );
+            $this->dbforge->add_column($tableName, $ba_fields);
+        }
+
+        // --------------------------------------------------------------------
+        /**
+         * tabelle für bankkonten aktualisieren
+         * 
+         */
+        $tableName = 'eb_bank_accounts';
+
+        if(!$this->db->field_exists($field = 'acc_holder', $tableName)){
+
+
+			$ba_fields = array(
+                $field=> array(
+                    'type'=>'varchar',
+                    'constraint'=>'100',
+                )
+
+            );
+            $this->dbforge->add_column($tableName, $ba_fields);
         }
 
 

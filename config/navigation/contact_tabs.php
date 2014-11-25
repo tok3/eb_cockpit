@@ -21,9 +21,14 @@ $config = array(
                 'item'=>'Kontaktdaten',
                 'target'=>'contact_details/contact/' . $ci->uri->rsegment(3),
             ),
-            'nav_immo'=>array(
+            'nav_energieausweis'=>array(
                 'item'=>'Energieausweis',
                 'target'=>'immobilie/details/' . $ci->uri->rsegment(3),
+            ),
+            'nav_bank'=>array(
+                'item'=>'Bankdaten',
+                'target'=>'bankaccounts/show/' . $ci->uri->rsegment(3),
             )
+
 
         );

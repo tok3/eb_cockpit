@@ -5,12 +5,16 @@
  * @author  tobias@mmsetc.de
  * @package energieberaer
  */
+
+use Former\Facades\Former;
+
 class Contacts extends Public_Controller
 {
 
+    
    public function __construct()
    {
-	  parent::__construct();
+       parent::__construct();
 	  Asset::add_path('theme', site_url('addons/shared_addons/modules/cockpit').'/');
 
 	  $this->template->enable_parser(true);
@@ -218,4 +222,36 @@ class Contacts extends Public_Controller
 	}
 
    // --------------------------------------------------------------------
+    public function test()
+    {
+        $clients = array('c1', 'c2');
+
+        echo Former::select('clients')->options($clients, 2)
+  ->help('Pick some dude')
+                         ->state('warning');
+
+
+echo Former::open()->rules(array(
+  'name'     => 'required|max:20|alpha',
+  'age'      => 'between:18,24',
+  'email'    => 'email',
+  'show'     => 'in:batman,spiderman',
+  'random'   => 'match:/[a-zA-Z]+/',
+  'birthday' => 'before:1968-12-03',
+  'avatar'   => 'image',
+));
+        
+
+echo '<input name="test"      type="text"   required maxlength="20" pattern="[a-zA-Z]+" /><input name="name"      type="text"   required maxlength="20" pattern="[a-zA-Z]+" />
+<input name="age"       type="number" min="18" max="24" />
+<input name="email"     type="email" />
+<input name="show"      type="text"   pattern="^(batman|spiderman)$" />
+<input name="random"    type="text"   pattern="[a-zA-Z]+" />
+<input name="birthday"  type="date"   max="1968-12-03" />
+<input name="avatar"    type="file"   accept="image/jpeg,image/png,image/gif,image/bmp" />'.form_submit() . form_close();
+
+
+    }
+// --------------------------------------------------------------------
+    
 }

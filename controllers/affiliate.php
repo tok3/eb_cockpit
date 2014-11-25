@@ -60,6 +60,12 @@ class affiliate extends Public_Controller
 				'label' => lang('user:username'),
 				'rules' => Settings::get('auto_username') ? '' : 'required|alpha_dot_dash|min_length[3]|max_length[20]|callback__username_check',
 			),
+			array(
+				'field' => 'agb',
+				'label' => 'Gesch&auml;ftsbedingungen',
+				'rules' => 'required',
+			),
+
 		);
 
 		// --------------------------------

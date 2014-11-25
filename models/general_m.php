@@ -29,6 +29,7 @@ class general_m extends MY_Model {
    public function set_table($_table)
    {
 	  $this->_table = $_table;
+      return $this;
    }
 
 

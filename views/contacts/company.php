@@ -15,6 +15,21 @@
 <?php echo $name_2;?>
 <?php echo $email;?>
 
+
+	</div>
+
+  </div>
+
+       <div class="row">
+
+	<div class="col-sm-6 col-lg-3 left">
+     <label>Steuernummer <span class="text-red">*</span></label>
+<?php echo $str_id;?>
+	</div>
+
+     	<div class="col-sm-6 col-lg-3 left">
+     <label>USt-Identifikationsnummer  <span class="text-red"></span></label>
+<?php echo $ust_id;?>
 	</div>
 
   </div>

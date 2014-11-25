@@ -1,5 +1,5 @@
 <?
-if($this->session->userdata('contact_id') != '')
+if($this->session->userdata('contact_id') != '' && $this->current_user->group == 'user')
   {
 
 ?>     
@@ -47,7 +47,7 @@ Download
                     
         <div class="box box-success">
                                 <div class="box-header">
-                                    <h3 class="box-title">Keine Dokumente Vorhanden</h3>
+                                    <h3 class="box-title">Zur Zeit keine Dokumente Vorhanden</h3>
                                 </div><!-- /.box-header -->
 
                             </div><!-- /.box -->

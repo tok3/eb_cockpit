@@ -5,6 +5,8 @@
  * @author  tobias@mmsetc.de
  * @package energieberaer
  */
+use Former\Facades\Former;
+
 class Contact_Details extends Public_Controller
 {
     public function __construct()
@@ -14,7 +16,6 @@ class Contact_Details extends Public_Controller
 
         $this->template->enable_parser(true);
         $this->template->set_layout('cockpit.php');
-        $this->template->append_css('module::form.css');
         $this->template->append_css('module::jquery.datetimepicker.css');
         $this->template->append_js('module::jquery.datetimepicker.js');
 
@@ -22,9 +23,7 @@ class Contact_Details extends Public_Controller
         $this->lang->load('cockpit');
 
         $contacts_m = $this->load->model('contacts_m');	   
-        //	  $form_validation = $this->load->library('form_validation');
 
-        $this->validation_rules = array();
         $this->formFields = $this->load->library('form_inputs');
 
     }
@@ -99,6 +98,8 @@ class Contact_Details extends Public_Controller
 			if($sent['typ'] != 2) // wenn kontakttyp nicht firma dann form validierungsregel leer setzen 
             {
                 $this->formFields->overwrite_rules('comp[name]', '');
+                $this->formFields->overwrite_rules('comp[str_id]', '');
+
             }
         }
         $this->inpContacs($contact_data);			
@@ -121,6 +122,13 @@ class Contact_Details extends Public_Controller
             }
 			else
             {
+
+                // kontakteigenschaften setzen 
+                if($this->input->post('properties'))
+                {
+                    $this->properties($contact_id, $this->input->post('properties'));
+                }
+
                 $contacts_data = $this->input->post('details');
 				  
                 $contacts_data['id'] = $contact_id;
@@ -145,7 +153,7 @@ class Contact_Details extends Public_Controller
                 if($contact_id == '')
                 {
                     $contact_id = $contact_insert_id;
-                    Events::trigger('set_contact_id');
+                    Events::trigger('setcontact_id');
                 }
                 if($this->session->userdata('contact_complete') != 1) 
                 {
@@ -207,25 +215,85 @@ class Contact_Details extends Public_Controller
 
         $data['errors'] = $errors;
 
+// properties nur für admin (group_id = 1) anzeigen
+        $data['properties'] = ($this->current_user->group_id == 1 ? $this->properties($contact_id) : '');
+
         $content = $this->load->view('contacts/edit', $data, TRUE);
 
         $aside['title'] = 'Meine Kontaktdaten';
         $aside['breadcrumb'] = '<li><a href="#"><i class="fa fa-user"></i> Home</a></li>
 	  <li class="active">Meine Kontaktdaten</li>';
 
-
+        
         $this->template
             ->set_partial('header','header',array())
             ->set_partial('aside','sidebar',$aside)
-            ->set('content',$content)
-            ->set('tab_navigation',$this->navigation->load('contact_tabs')->get_tabs())
+            ->set('content', $content)
+            ->set('tab_navigation',$this->navigation->load('contact_tabs',usr_contact_tabs($contact_id))->get_tabs())
             ->append_js('module::modules.js')
             ->append_js('module::contacts.js') 
             ->build('default');
 
 
     } 
+// --------------------------------------------------------------------
+/**
+* checkboxen um contact eigenschaften zuzuordnen
+* 
+*/
+    function properties($_contacts_id, $_values = '')
+    {
+        $avail_contact_tabs = array_keys($this->load->config('navigation/contact_tabs', true));        
+        
+        $propTable = 'default_eb_contact_properties';
+        $this->load->model('general_m');
+        $props = $this->general_m->set_table('eb_contact_properties');
 
+        if(is_array($_values))
+        {
+            $usr_properties = $props->get_many_by('contacts_id', $_contacts_id);
+
+            $this->db->query('delete from ' . $propTable . ' where contacts_id = ' . $_contacts_id );
+            foreach($_values as $key => $value)
+            {
+                $insDat['property'] =  $value;
+                $insDat['contacts_id'] =  $_contacts_id;
+                $this->db->insert($propTable, $insDat);
+
+            }
+        }
+
+        $usr_properties = $props->get_many_by('contacts_id', $_contacts_id);
+
+        $availProps = $this->format->getEnumOptions($propTable, 'property');
+        unset($availProps['']);
+
+        $checked = array();
+        foreach($usr_properties as $kay => $item)
+        {
+                $checked[$item->property] = $item->property;
+                }
+
+        
+        $retVal = '';
+        foreach($availProps as $key => $item)
+        {
+            $data = array(
+                'name'        => 'properties['.$item.']',
+                'value'       => $item,
+                'checked'     => (isset($checked[$item]) ? true : false),
+                'Style'       => 'margin:10px',
+            );
+
+
+            $retVal .= '<label for="property[strom]" class="checkbox">' . form_checkbox($data) . humanize($item) . '</label>';
+            //$avP[$item] ='property['.$item.']';                
+        }
+
+
+ return $retVal;
+        
+    }
     // --------------------------------------------------------------------
     /**
      * function wird als callback für inputs verwendet
@@ -395,7 +463,7 @@ class Contact_Details extends Public_Controller
             }
         }
 	  
-	  
+        
         $config['id'] = array
             (
                 'type'=>'hidden',
@@ -424,7 +492,22 @@ class Contact_Details extends Public_Controller
                 'rules'=>'',
 
             );
-	  
+
+                $config['ust_id'] = array
+            (
+                'type'=>'text',
+                'rules'=>'',
+
+            );
+
+                                $config['str_id'] = array
+            (
+                'type'=>'text',
+                'rules'=>'required',
+                'label'=>'Steuernummer',
+
+            );
+
 
         $this->gen_form_inputs($compData, 'comp',$config);
 
@@ -563,9 +646,7 @@ class Contact_Details extends Public_Controller
 
 			if(isset($config[$key]))
             {
-				   
-
-
+		 		   
                 if(isset($config[$key]['callback']))
                 {
                     // callback funktion auf value anwenden, z.b. datum formatieren
@@ -581,7 +662,7 @@ class Contact_Details extends Public_Controller
                 $conf = $config[$key] + $conf;
             }
 
-			$this->formFields->add_field($conf);			
+			$this->form_inputs->add_field($conf);			
         }
 	  
 
@@ -606,19 +687,6 @@ class Contact_Details extends Public_Controller
 
     }
 
-// --------------------------------------------------------------------
-    function test()
-    {
-
-
-$this->load->driver('Streams');
-        $test = $this->streams->fields->get_field_assignments('question', 'faq');
-
-echo "<pre><code>";
-print_r($test);
-echo "</code></pre>";
-
-    }
 // --------------------------------------------------------------------
     
 }

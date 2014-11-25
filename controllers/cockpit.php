@@ -23,6 +23,7 @@ class Cockpit extends Public_Controller
 	*/
    public function index()
    {
+       
          $sidenav = new $this->navigation();        
 
 	  /* //permisssionstest
@@ -36,12 +37,12 @@ class Cockpit extends Public_Controller
    
 	   }
 	  */
+         
 	  $contacts_m = $this->load->model('contacts_m');	   
 	  $this->template->enable_parser(true);
 	  $this->template->set_layout('cockpit.php');
 
-
-	  $dash = $this->load->view('dashboard', '',true);
+	  $dash = $this->load->view($this->current_user->group . '_dashboard', '',true);
 
 	  $section['title'] = 'Nachrichtenzentrale';
 	  $section['breadcrumb'] = '<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -53,6 +54,7 @@ class Cockpit extends Public_Controller
 		 ->set_partial('aside','sidebar',$section)
 		 ->append_js('module::contacts_grid.js') 
 		 ->append_js('module::modules.js')
+		 ->append_js('module::app.js')
 		 ->set('content', $dash)
 		 ->build('default')
 

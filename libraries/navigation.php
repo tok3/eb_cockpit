@@ -51,7 +51,7 @@ class Navigation
      * 
      */
 
-    public function get_entries ()
+    public function get_entries()
     {
         
         $_entries = array();
@@ -98,8 +98,50 @@ class Navigation
 
         return $t_nav;
     }
+// --------------------------------------------------------------------
+/**
+* navigationspunkte entfernen
+* 
+* @access 	public	
+* @param 	mixed	string oder array
+* @return 	void	
+* 
+*/
+    public function remove($_entries = '')
+    {
+        if($_entries == '')
+        {
+            return $this;
+        }
+        
+        if(is_array($_entries))
+        {
+            foreach($_entries as $key => $item)
+            {
+                $this->rm_nav_item($item);
+            }
+        }
+        else
+        {
+            $this->rm_nav_item($_entries);
+        }
+        return $this;
+    }
 
-
+    private function rm_nav_item($_entry)
+    {
+        if(is_numeric($_entry))
+        {
+            $keys = array_keys($this->navConf);
+            unset($this->navConf[$keys[$_entry]]);
+        }
+        else
+        {
+            unset($this->navConf[$_entry]);
+        }
+    
+        return $this;
+    }
     // --------------------------------------------------------------------
     /**
      * check active 
@@ -135,7 +177,7 @@ class Navigation
      * @param 	array	
      * 
      */
-    function set($_config)
+    private function set($_config)
     {
         $this->navConf = $this->prep_conf($_config);
         return $this;
@@ -147,13 +189,26 @@ class Navigation
      * 
      * @access 	public	
      * @param 	string	
+     * @param 	array    wenn gegeben dann nur config items aus $_selective laden	
      * @return 		
      * 
      */
-    public function load($_cfg)
+    public function load($_cfg, $_selective = array())
     {
         $_config =  $this->ci->load->config($this->config_path . $_cfg, true);
+       
+        if(count($_selective) > 0)
+        {
+            foreach($_selective as $key => $item)
+                {
+                    $cfgItems[$item] = $_config[$item] ;                    
+                    }
+        $this->navConf = $this->prep_conf($cfgItems);
 
+        return $this;
+
+        }
+        
         $this->navConf = $this->prep_conf($_config);
 
         return $this;
@@ -220,7 +275,7 @@ class Navigation
      */
     public function append($_key, $_value)
     {
-        if($this->navConf == "")
+        if($this->navConf == "" || !isset($this->navConf[$_key]))
         {
             return false;
         }

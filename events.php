@@ -82,6 +82,7 @@ class Events_Cockpit {
      */
     public function set_contact_id()
     {
+
         $this->ci->ev_user->set_contact_id();
     }
     // --------------------------------------------------------------------

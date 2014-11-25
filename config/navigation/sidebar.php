@@ -47,6 +47,7 @@ $config['ek'] = array
             
         );
 
+
 $config['aff'] = array 
         (
             'item' => '<i class="fa fa-user"></i><span>Affiliates</span>',
@@ -69,6 +70,13 @@ $config['affcontacts'] = array
             'target' => 'contacts/by_aff',
             'group' => 'affiliate',
         );
+$config['banner'] = array 
+        (
+            'item' => '<i class="glyphicon glyphicon-tag"></i><span>Banner</span>',
+            'target' => 'contacts/index/2',
+            'group' => 'affiliate',
+            
+        );
 
 
 $config['energieausweis'] = array
@@ -82,6 +90,7 @@ $config['dokumente'] = array
         (
             'item' => ' <i class="fa fa-exchange"></i><span>Dokumente</span>',
             'target' => 'documents/index',
+            'group' => 'user, admin, affiliate',
         );
 
 $config['versorger'] = array

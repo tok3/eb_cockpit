@@ -1,7 +1,4 @@
-<?php
-if( !defined('BASEPATH'))
-    exit('No direct script access allowed');
-
+<?php 
 // ------------------------------------------------------------------------
 /**
  * this library contains commonly used function for formating
@@ -12,13 +9,13 @@ if( !defined('BASEPATH'))
  * @category	Libraries
  * @author		tobias.koch@mmstc.de.com
  */
-
+function format() {}
 class format
 {
 
     function __construct()
     {
-        $this->CI = &get_instance();
+  $this->CI = &get_instance();
     }
 
     /* --------------------------------------------------------------------
@@ -538,7 +535,33 @@ Geldbeträge im DE Format in DEC für DB umwandeln
         return $arr[$_key];
     }
 
-    
+   // --------------------------------------------------------------------
+   /**
+	* function returns array with enum values to use in form_dropdown as options array
+	*
+	* @access 	public	
+	* @param 	string	tablename
+	* @param 	string	fieldname
+	* @return 	array	
+	*/
+   public function getEnumOptions($table , $field )
+   {
+	  $query = "SHOW COLUMNS FROM ".$table." LIKE '$field'";
+	  $row = $this->CI->db->query("SHOW COLUMNS FROM ".$table." LIKE '$field'")->row()->Type;
+	  $regex = "/'(.*?)'/";
+
+	  preg_match_all( $regex , $row, $enum_array );
+
+	  $enum_fields = $enum_array[1];
+
+	  foreach ($enum_fields as $key=>$value)
+		 {
+            $enums[$value] = $value; 
+		 }
+
+	  return $enums;
+   }     
+
    
 }
 

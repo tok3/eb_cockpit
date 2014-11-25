@@ -9,6 +9,7 @@ class Info extends Public_Controller
 {
     public function __construct()
     {
+
         parent::__construct();
         Asset::add_path('theme', site_url('addons/shared_addons/modules/cockpit').'/');
 
@@ -78,6 +79,8 @@ private function get_immo_info($_contacts_id)
     return     $this->load->view('affiliate/immo_info', $data,true);
 }
 
+
+    
 // --------------------------------------------------------------------
     
 }

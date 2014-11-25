@@ -84,7 +84,7 @@ class contacts_m extends MY_Model
 			$this->db->where('eb_contacts.id',$_contacts_id);
 		 }
 	  $this->db->select('eb_contacts.*,
-						 eb_companies.id AS comp_id, eb_companies.name AS comp_name, eb_companies.name_2 comp_name_2, eb_companies.tel AS comp_tel, eb_companies.fax AS comp_fax, eb_companies.email AS comp_email, eb_companies.homepage AS comp_homepage
+						 eb_companies.id AS comp_id, eb_companies.name AS comp_name, eb_companies.name_2 comp_name_2, eb_companies.tel AS comp_tel, eb_companies.fax AS comp_fax, eb_companies.email AS comp_email, eb_companies.homepage AS comp_homepage, eb_companies.ust_id as comp_ust_id, eb_companies.str_id AS comp_str_id
 						 ');
 
 	  $this->db->join('eb_companies','eb_contacts.id = eb_companies.contacts_id', 'LEFT');
@@ -206,7 +206,7 @@ class contacts_m extends MY_Model
 
    // --------------------------------------------------------------------
    /**
-	* scheisst array mit leer belegtne feldern zurück 
+	* schiesst array mit leer belegtne feldern zurück 
 	* zur vorbelegung von input feldern falls noch kein eintrag existiert 
 	*
 	* @param 	string	

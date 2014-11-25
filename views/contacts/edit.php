@@ -29,6 +29,7 @@ echo form_open('',$attributes);
 
 <div id="sec_contact_info" class="sections">
   <?php echo $contact_info;?>
+      <?php echo $properties;?>
 </div>
 
 	<div class="row">

@@ -41,7 +41,8 @@ class form_inputs
    function rules()
    {
 
-	  $this->CI->form_validation->set_rules($this->validation_rules);
+       
+       $this->CI->form_validation->set_rules($this->validation_rules);
 
    }
 
@@ -121,9 +122,6 @@ $retVal[$item['name']] = form_input($item);
 
 			   }
 
-
-
-
 		 }
 
 	  $retVal = $this->set_ret_arr($retVal);
@@ -200,6 +198,7 @@ $retVal[$item['name']] = form_input($item);
 
 
 	  // set validation rulses
+      
 	  array_push($this->validation_rules,$rules);
 
 

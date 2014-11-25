@@ -1,13 +1,17 @@
 $(function() {
 
 	var contact_id = ci_session.getSessionData('contact_id');
+	var group_id = ci_session.getSessionData('group_id');
 
 	/**
 	 * nach dem ersten anmelden 
 	 * 
 	 */
 	sideNavState('.noauth','disabled');
-	if(contact_id > 0) // kontaktdaten wurden ausgefüllt
+
+
+
+    if(contact_id > 0)  // kontaktdaten wurden ausgefüllt
 	{
 		$('.notifications-menu').removeClass('hide');
 	}
@@ -17,7 +21,10 @@ $(function() {
 			$('.small-box-footer').removeAttr("href");
 	}
 
-
+    if(group_id != 2)
+    {
+	$('#notify-top').remove();
+    }
 /**
 * item in sidenav deaktivieren oder entfernen
 * 
@@ -52,6 +59,7 @@ $(this).addClass('form-control');
 });
 
 //$('.crud_form input[type="submit"]').val('Lead \u00fcbernehmen');
+
 
 	// --------------------------------------------------------------------
 });

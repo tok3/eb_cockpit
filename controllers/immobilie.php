@@ -42,6 +42,8 @@ class immobilie extends Public_Controller
     {
         $this->general_m->set_table('eb_immobilien');
 
+        $contact_id = $this->uri->rsegment(3);
+        
         // $this->load->config( 'navigation');
         // echo "<pre><code>";
         // print_r($this->config->item('nav_sidebar'));
@@ -61,14 +63,14 @@ class immobilie extends Public_Controller
             }
             else
             {
-                $crud_dat['contacts_id'] = $this->uri->rsegment(3);
-                $crud_dat['stream_entry_id'] = $this->uri->rsegment(3);
+                $crud_dat['contacts_id'] = $contact_id;
+                $crud_dat['stream_entry_id'] = $contact_id;
 
                 $this->general_m->insert($crud_dat);
             }
 
         }
-        $_dat = $this->general_m->get_many_by(array('contacts_id' => $this->uri->rsegment(3)));
+        $_dat = $this->general_m->get_many_by(array('contacts_id' => $contact_id));
 
                 
         if(isset($_dat[0]) && is_object($_dat[0]))
@@ -78,7 +80,7 @@ class immobilie extends Public_Controller
 
 
         $data = $this->get_formfields($_dat);
-        $data['contact'] = $this->contacts_m->get_contact_details($this->uri->rsegment(3));
+        $data['contact'] = $this->contacts_m->get_contact_details($contact_id);
 
         $content = $this->load->view('energieausweis/v_immobilie', $data, TRUE);
 
@@ -92,7 +94,7 @@ class immobilie extends Public_Controller
             ->set_partial('header','header',array())
             ->set_partial('aside','sidebar',$aside)
             ->set('content',$content)
-            ->set('tab_navigation',$this->navigation->load('contact_tabs')->get_tabs())
+            ->set('tab_navigation',$this->navigation->load('contact_tabs',usr_contact_tabs($contact_id))->get_tabs())
             ->append_js('module::modules.js')
             ->append_js('module::contacts.js') 
             ->build('default');
