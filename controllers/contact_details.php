@@ -18,6 +18,7 @@ class Contact_Details extends Public_Controller
         $this->template->set_layout('cockpit.php');
         $this->template->append_css('module::jquery.datetimepicker.css');
         $this->template->append_js('module::jquery.datetimepicker.js');
+        $this->template->append_js('module::app.js');
 
 
         $this->lang->load('cockpit');
@@ -95,7 +96,7 @@ class Contact_Details extends Public_Controller
         { 
 			$contact_data['typ'] = $sent['typ'];
 
-			if($sent['typ'] != 2) // wenn kontakttyp nicht firma dann form validierungsregel leer setzen 
+			if(($sent['typ'] != 2) || ($this->current_user->group_id == 1)) // wenn kontakttyp nicht firma dann form validierungsregel leer setzen 
             {
                 $this->formFields->overwrite_rules('comp[name]', '');
                 $this->formFields->overwrite_rules('comp[str_id]', '');
@@ -189,16 +190,11 @@ class Contact_Details extends Public_Controller
                     $personal_data['contacts_id'] = $contact_id;
 
                     $this->contacts_m->insert_update($personal_data, 'eb_persons');
-
-
                 }
                 //$this->setFollowup($contact_id);
 
                 redirect($this->uri->segment(1) . '/'  .$this->uri->segment(2). '/'  .$this->uri->segment(3) . '/' . $contact_id);
-
-
             }
-
         }
 	  
 
@@ -206,8 +202,7 @@ class Contact_Details extends Public_Controller
 
         $data['persons'] = $this->loop_view($fields['persons'], 'contacts/person');	  
         $data['addresses'] = $this->loop_view($fields['addresses'], 'contacts/addresses');	  
-
-	  
+ 	  
         $data['contact_info'] = $this->load->view('contacts/details', $fields['details'], TRUE);
 
         $data['company'] = $this->load->view('contacts/company', $fields['comp'], TRUE);
@@ -224,23 +219,27 @@ class Contact_Details extends Public_Controller
         $aside['breadcrumb'] = '<li><a href="#"><i class="fa fa-user"></i> Home</a></li>
 	  <li class="active">Meine Kontaktdaten</li>';
 
+        $selectiveTabs = usr_contact_tabs($contact_id);
+        if($contact_data['is_affiliate'] != 1)
+        {
+            unset($selectiveTabs[array_search('ad_by_aff', $selectiveTabs)]); // geworbne kunden tab entfernen wenn kein affiliate
+        }
         
         $this->template
             ->set_partial('header','header',array())
             ->set_partial('aside','sidebar',$aside)
             ->set('content', $content)
-            ->set('tab_navigation',$this->navigation->load('contact_tabs',usr_contact_tabs($contact_id))->get_tabs())
+            ->set('tab_navigation',$this->navigation->load('contact_tabs',$selectiveTabs)->get_tabs())
             ->append_js('module::modules.js')
             ->append_js('module::contacts.js') 
             ->build('default');
 
-
     } 
 // --------------------------------------------------------------------
 /**
-* checkboxen um contact eigenschaften zuzuordnen
-* 
-*/
+ * checkboxen um contact eigenschaften zuzuordnen
+ * 
+ */
     function properties($_contacts_id, $_values = '')
     {
         $avail_contact_tabs = array_keys($this->load->config('navigation/contact_tabs', true));        
@@ -271,8 +270,8 @@ class Contact_Details extends Public_Controller
         $checked = array();
         foreach($usr_properties as $kay => $item)
         {
-                $checked[$item->property] = $item->property;
-                }
+            $checked[$item->property] = $item->property;
+        }
 
         
         $retVal = '';
@@ -291,7 +290,7 @@ class Contact_Details extends Public_Controller
         }
 
 
- return $retVal;
+        return $retVal;
         
     }
     // --------------------------------------------------------------------
@@ -493,17 +492,17 @@ class Contact_Details extends Public_Controller
 
             );
 
-                $config['ust_id'] = array
+        $config['ust_id'] = array
             (
                 'type'=>'text',
                 'rules'=>'',
 
             );
 
-                                $config['str_id'] = array
+        $config['str_id'] = array
             (
                 'type'=>'text',
-                'rules'=>'required',
+                'rules'=>'',
                 'label'=>'Steuernummer',
 
             );

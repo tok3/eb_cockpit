@@ -22,6 +22,7 @@ class Contacts extends Public_Controller
 	  $this->template->append_css('module::form.css');
 	  $this->template->append_css('module::jquery.datetimepicker.css');
 	  $this->template->append_js('module::jquery.datetimepicker.js');
+      $this->template->append_js('module::app.js');
 
 
 	  $this->lang->load('cockpit');
@@ -36,6 +37,7 @@ class Contacts extends Public_Controller
      */
     public function index($_prop = 0)
     {
+        $this->session->set_userdata('contacts_backlink', current_url());
         if($_prop == 100)
         {
             $this->db->where('is_affiliate',1); // nur affiliates selectieren
@@ -79,6 +81,37 @@ class Contacts extends Public_Controller
         $this->template
             ->set_partial('header','header',array())
             ->set_partial('aside','sidebar',array())
+            ->set('active_kontakt','active')
+            ->append_js('module::contacts_grid.js') 
+            ->append_js('module::modules.js')
+            ->set('content', $grid)
+            ->build('default')
+            ;
+
+    }
+    // --------------------------------------------------------------------
+    /**
+     * contact grid generieren
+	* 
+	* @access 		
+	* @param 		
+	* @return 		
+	* 
+	*/
+    public function by_aff_admin($_affiliate_id = 0)
+    {
+        if($this->current_user->group_id != 1)
+        {
+            die('');
+        }
+        $this->db->where('affiliate_id',$_affiliate_id); // nur affiliates selectieren
+
+        $grid = $this->get_aff_grid();
+        
+        $this->template
+            ->set_partial('header','header',array())
+            ->set_partial('aside','sidebar',array())
+            ->set('tab_navigation',$this->navigation->load('contact_tabs',usr_contact_tabs($_affiliate_id))->get_tabs())
             ->set('active_kontakt','active')
             ->append_js('module::contacts_grid.js') 
             ->append_js('module::modules.js')

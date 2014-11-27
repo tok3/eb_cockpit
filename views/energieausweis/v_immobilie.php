@@ -6,6 +6,10 @@
     <h3 class="box-title">Kunde</h3>
   </div>
   <div class="box-body">
+    <div class="row">
+
+      <div class="col-md-3 col-sm-3">
+
     <address>
       <strong><?php echo $contact['persons']['0']['firstname'];?> <?php echo $contact['persons']['0']['name'];?>
       </strong>
@@ -13,7 +17,20 @@
       <?php echo $contact['addresses']['0']['str'] . $contact['addresses']['0']['no'];?>
       <br>
 </strong><?php echo $contact['addresses']['0']['plz'];?> </strong> <?php echo $contact['addresses']['0']['city'];?>
+
 </address>
+</div>
+
+      <div class="col-md-3 col-sm-3">
+
+	<strong>Affiliate-ID:</strong> <?php echo ($contact['affiliate_id'] != '' ? $contact['affiliate_id'] : '');?> 
+<br>
+<strong>Aktionscode:</strong> <?php echo (isset($displ_dat['aktionscode']) ? $displ_dat['aktionscode'] : '0');?> 
+<br>
+<strong>Page-Slug:</strong> <?php echo (isset($displ_dat['page_slug']) ? $displ_dat['page_slug'] : '0');?>  
+
+</div> <!-- /col -->
+    </div> <!-- /row -->
 </div><!-- /box-body -->
 </div><!-- /box -->
 

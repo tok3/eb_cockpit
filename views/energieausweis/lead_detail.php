@@ -13,12 +13,16 @@
 
 <input type="hidden" name="affiliate_id" value="{{ affiliate_id:value }}" />
 <input type="hidden" name="aktionscode" value="{{ aktionscode:value }}" />
+<input type="hidden" name="page_slug" value="{{ page_slug:value }}" />
 
 {{ if affiliate_id:value > 0 }}
-<strong>Affiliate ID: </strong>{{ affiliate_id:value }}
+<strong>Affiliate ID: </strong>{{ affiliate_id:value }}<br>
 {{ endif }}
 {{ if aktionscode:value != '' }}
-<strong>Aktions-Code: </strong>{{ aktionscode:value }}
+<strong>Aktions-Code: </strong>{{ aktionscode:value }}<br>
+{{ endif }}
+{{ if page_slug:value != '' }}
+<strong>Page-Slug: </strong>{{ page_slug:value }}</br>
 {{ endif }}
 
 

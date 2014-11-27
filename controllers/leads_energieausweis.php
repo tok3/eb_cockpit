@@ -203,6 +203,7 @@ class leads_energieausweis extends Public_Controller
 		 $insertData_immo['verausserung_art'] = implode($_POST['verausserung_art'], ',');
 		 $insertData_immo['bemerkung'] = $_POST['bemerkung']; 
 		 $insertData_immo['aktionscode'] = $_POST['aktionscode']; 
+		 $insertData_immo['page_slug'] = $_POST['page_slug']; 
 
 		 $this->general_m->set_table('eb_immobilien');
 		 $this->general_m->insert($insertData_immo);

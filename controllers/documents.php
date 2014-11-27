@@ -13,6 +13,7 @@ class Documents extends Public_Controller
 		parent::__construct();
 	  Asset::add_path('theme', site_url('addons/shared_addons/modules/cockpit').'/');
 
+      $this->template->append_js('module::app.js');
 
 	  $this->lang->load('cockpit');
 

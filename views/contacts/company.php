@@ -10,7 +10,7 @@
   <div class="row">
 
 	<div class="col-sm-12 col-lg-6 left">
-	  <label>Name Firma <span class="text-red">*</span></label>
+	  <label>Name Firma oder Einzelperson <span class="text-red">*</span></label>
 <?php echo $name;?>
 <?php echo $name_2;?>
 <?php echo $email;?>
@@ -23,7 +23,7 @@
        <div class="row">
 
 	<div class="col-sm-6 col-lg-3 left">
-     <label>Steuernummer <span class="text-red">*</span></label>
+     <label>Steuernummer <span class="text-red"></span></label>
 <?php echo $str_id;?>
 	</div>
 

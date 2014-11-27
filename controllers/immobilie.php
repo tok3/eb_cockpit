@@ -80,6 +80,9 @@ class immobilie extends Public_Controller
 
 
         $data = $this->get_formfields($_dat);
+        $data['displ_dat'] = $_dat;        
+
+
         $data['contact'] = $this->contacts_m->get_contact_details($contact_id);
 
         $content = $this->load->view('energieausweis/v_immobilie', $data, TRUE);

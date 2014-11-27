@@ -103,7 +103,8 @@ class Events_Cockpit {
 
         if($usrInf->group_id == 3)
         {
-			$contacts_data['is_affiliate'] = 1; 
+            $contacts_data['is_affiliate'] = 1; 
+            $contacts_data['typ'] = 2; 
         }
 
         if(isset($_COOKIE['ihre_energieberater_af_id']))
@@ -147,12 +148,21 @@ class Events_Cockpit {
      */
     public function set_affilite_id()
     {
-
+        //echo "events/set_affilite_id()";
 
         if(isset($_GET['afid']) && !isset($_COOKIE['ihre_energieberater_af_id']))
         {
             setcookie("ihre_energieberater_af_id",$_GET['afid'],time() + $this->cookie_liefetime );
         }
+
+/*
+        if(isset($_GET['banner']))
+        {
+$banner = file_get_contents('assets/banner/Baecker-EB_Banner_breit.gif');
+header('Content-type: image/gif'); //Set the content type to image/jpg
+echo $banner;
+        }
+*/
     }
 
 }

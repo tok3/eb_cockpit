@@ -10,7 +10,7 @@
 require __DIR__ . '/libraries/vendor/autoload.php';
 class Module_Cockpit extends Module {
 
-    public $version = '0.0.48';
+    public $version = '0.0.49';
 
     public function info()
     {
@@ -279,6 +279,11 @@ class Module_Cockpit extends Module {
                 'constraint'=>'55',
                 'default' => '',
             ),
+            'page_slug'=>array(
+                'type'=>'varchar',
+                'constraint'=>'255',
+                    'null'=>TRUE,
+            ),
             'objektart'=> array(
                 'type'=>'varchar',
                 'constraint'=>'55',
@@ -503,15 +508,15 @@ class Module_Cockpit extends Module {
          * tabelle für firmen
          * 
          */
-        $tableName = 'eb_companies';
+        $tableName = 'eb_immobilien';
 // steuerunummer
-        if(!$this->db->field_exists($field = 'ust_id', $tableName)){
+        if(!$this->db->field_exists($field = 'page_slug', $tableName)){
 
 
 			$ba_fields = array(
                 $field=> array(
                     'type'=>'varchar',
-                    'constraint'=>'15',
+                    'constraint'=>'255',
                     'null'=>TRUE,
 
                 )

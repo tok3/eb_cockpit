@@ -9,6 +9,7 @@ $(function() {
 	 */
 	sideNavState('.noauth','disabled');
 
+    
 
 
     if(contact_id > 0)  // kontaktdaten wurden ausgefüllt
@@ -25,6 +26,11 @@ $(function() {
     {
 	$('#notify-top').remove();
     }
+        if(group_id == 3)
+    {
+
+    }
+
 /**
 * item in sidenav deaktivieren oder entfernen
 * 

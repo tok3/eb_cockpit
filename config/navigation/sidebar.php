@@ -73,7 +73,7 @@ $config['affcontacts'] = array
 $config['banner'] = array 
         (
             'item' => '<i class="glyphicon glyphicon-tag"></i><span>Banner</span>',
-            'target' => 'contacts/index/2',
+            'target' => 'promo/banner',
             'group' => 'affiliate',
             
         );

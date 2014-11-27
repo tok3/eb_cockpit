@@ -40,7 +40,7 @@ echo form_open('',$attributes);
 
   if($this->current_user->group_id == 1)
 	{
-	  echo '<a href="' . site_url('cockpit/contacts').'" class="btn button small secondary right">Zur&uuml;ck</a>';
+        echo '<a href="' . $this->session->userdata('contacts_backlink').'" class="btn button small secondary right">Zur&uuml;ck</a>';
 	}
 ?>
 	  </div>

@@ -28,7 +28,13 @@ $config = array(
             'nav_bank'=>array(
                 'item'=>'Bankdaten',
                 'target'=>'bankaccounts/show/' . $ci->uri->rsegment(3),
+            ),
+                 'ad_by_aff'=>array(
+                'item'=>'Geworbene Kunden',
+                'target'=>'contacts/by_aff_admin/' . $ci->uri->rsegment(3),
+                'group'=>'admin'
             )
+
 
 
         );

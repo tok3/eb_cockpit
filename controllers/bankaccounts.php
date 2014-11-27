@@ -100,7 +100,8 @@ class bankaccounts extends Public_Controller
 
                 $postData = $this->input->post('bankdata');
                 $this->general_m->update($postData['id'],$postData );
-                echo                 redirect($this->uri->segment(1) . '/'  .$this->uri->segment(2). '/'  .$this->uri->segment(3) . '/' . $contact_id);
+
+                redirect($this->uri->segment(1) . '/'  .$this->uri->segment(2). '/'  .$this->uri->segment(3) . '/' . $contact_id);
             }
         }
 
@@ -111,7 +112,8 @@ class bankaccounts extends Public_Controller
         $aside['title'] = 'Meine Kontodaten';
         $aside['breadcrumb'] = '<li><a href="#"><i class="fa fa-user"></i> Home</a></li>
 	  <li class="active">Meine Konto</li>';
-
+        
+        
         $this->template
             ->set_partial('header','header',array())
   ->set_partial('aside','sidebar',$aside)        

@@ -13,6 +13,7 @@ class Cockpit extends Public_Controller
 	  parent::__construct();
 	  Asset::add_path('theme', site_url('addons/shared_addons/modules/cockpit').'/');
 
+      $this->template->append_js('module::app.js');
 
 	  $this->lang->load('cockpit');
 
@@ -23,8 +24,8 @@ class Cockpit extends Public_Controller
 	*/
    public function index()
    {
-       
-         $sidenav = new $this->navigation();        
+
+       $sidenav = new $this->navigation();        
 
 	  /* //permisssionstest
 	   role_or_die($this->module,'customer');
@@ -37,6 +38,11 @@ class Cockpit extends Public_Controller
    
 	   }
 	  */
+
+         if(($this->session->userdata('contact_complete') == 0) && ($this->current_user->group_id == 3))
+         {
+             redirect($this->router->fetch_module().'/contact_details/contact/' . $this->session->userdata('contact_id'));
+         }
          
 	  $contacts_m = $this->load->model('contacts_m');	   
 	  $this->template->enable_parser(true);
@@ -100,8 +106,11 @@ class Cockpit extends Public_Controller
 	
    function test()
    {
-
-	  $_contacts_id = 57;
+       echo "<pre><code>";
+       print_r($this->session->all_userdata());
+       echo "</code></pre>";
+       
+	  $_contacts_id = 149;
 	  $addr = new $this->contacts_m();
 	  $addr->set_table('eb_addresses');
 	  $addrData = $addr->get_by('contacts_id',$_contacts_id);
