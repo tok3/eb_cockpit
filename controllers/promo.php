@@ -24,7 +24,7 @@ class Promo extends Public_Controller
 
 
 	  $this->lang->load('cockpit');
-
+    $this->load->helper('file');
 	  $contacts_m = $this->load->model('contacts_m');	   
 	  $this->load->library('form_validation');
 
@@ -49,8 +49,10 @@ class Promo extends Public_Controller
 */
 public function banner()
 {
-    $data['affiliate_id'] = $this->session->userdata('contact_id');
-            $content = $this->load->view('promo/banner', $data, TRUE);
+
+
+    
+    $content = $this->get_banners();
 
             $this->template
             ->set_partial('header','header',array())
@@ -63,6 +65,40 @@ public function banner()
             ;
 
 }
+
+// --------------------------------------------------------------------
+/**
+* get available banners
+* 
+* @access 	private	
+* @param 	void	
+* @return 	string	bannerlisting
+* 
+*/
+private function get_banners()
+{
+
+
+    $bannerPath = './assets/banner/';
+    $data['affiliate_id'] = $this->session->userdata('contact_id');
+        $filenames =  get_filenames($bannerPath);
+
+        $_bstr = '';
+        foreach($filenames as $key => $filename)
+            {
+                $data['f_inf'] = get_file_info($bannerPath . $filename);
+                $data['f_img_inf'] = getimagesize($bannerPath . $filename);
+
+                $data['get_name'] = basename($bannerPath . $filename, stristr($filename,'.'));
+
+$_bstr .= $this->load->view('promo/_banner', $data, TRUE);
+
+            }
+
+        return $_bstr;
+}
+    
+
 // --------------------------------------------------------------------
     
 }

@@ -103,8 +103,9 @@ class Events_Cockpit {
 
         if($usrInf->group_id == 3)
         {
-            $contacts_data['is_affiliate'] = 1; 
-            $contacts_data['typ'] = 2; 
+		$contacts_data['is_affiliate'] = 1; 
+        $contacts_data['typ'] = 2; 
+
         }
 
         if(isset($_COOKIE['ihre_energieberater_af_id']))
@@ -116,8 +117,15 @@ class Events_Cockpit {
         }
 
 	  
-        $this->ci->contacts_m->insert_update($contacts_data, 'eb_contacts');
+        $contacts_id = $this->ci->contacts_m->insert_update($contacts_data, 'eb_contacts');
 
+        $p_data['contacts_id'] = $contacts_id;
+        $p_data['name'] = '';
+
+        $this->ci->contacts_m->insert_update($p_data, 'eb_persons');
+        $this->ci->contacts_m->insert_update(array('contacts_id'=>$contacts_id), 'eb_addresses');
+
+        
     }
     // --------------------------------------------------------------------
     /**
