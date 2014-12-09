@@ -3103,7 +3103,6 @@ class Form {
 	  if ($key!==FALSE) return $this->_elements[$key]['unique'];
 	  return FALSE;
    }
-	
 }
 
 /* End of file Form.php */

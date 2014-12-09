@@ -36,6 +36,7 @@ class Promo extends Public_Controller
     public function index()
     {
 
+        $this->banner();
     }
 
 

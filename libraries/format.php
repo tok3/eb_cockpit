@@ -562,6 +562,24 @@ Geldbeträge im DE Format in DEC für DB umwandeln
 	  return $enums;
    }     
 
+	// --------------------------------------------------------------------
+    /**
+* Aktionscode gernerieren
+* 
+*/
+    
+    function get_aktionscode($_id)
+    {
+        $code = substr(sha1($_id),7,4) . 'X'. $_id;
+        return strtoupper($code); 
+    }
+
+    function dec_aktionscode($_code)
+    {
+        $last_occ = strrpos( $_code, 'X');
+        $id = substr($_code,$last_occ + 1 );
+        return $id; 
+    }
    
 }
 
