@@ -71,7 +71,7 @@ Dazu h&auml;ngen Sie einfach Ihre ID als Get-Parameter (<strong>?afid=<?php echo
         3000+</sup>
       </h3>
       <p>
-   &Uuml;ber 3000 Beratungen jedes Jahr
+   <nobr>&Uuml;ber 3000 Beratungen im Jahr</nobr>
       </p>
     </div>
     <div class="icon">
