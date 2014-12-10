@@ -83,7 +83,7 @@ private function get_banners()
     $bannerPath = './assets/banner/';
     $data['affiliate_id'] = $this->session->userdata('contact_id');
         $filenames =  get_filenames($bannerPath);
-
+        natsort($filenames);
         echo "<pre><code>";
         print_r($filenames);
         echo "</code></pre>";
