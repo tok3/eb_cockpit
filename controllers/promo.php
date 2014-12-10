@@ -84,6 +84,10 @@ private function get_banners()
     $data['affiliate_id'] = $this->session->userdata('contact_id');
         $filenames =  get_filenames($bannerPath);
 
+        echo "<pre><code>";
+        print_r($filenames);
+        echo "</code></pre>";
+        
         $_bstr = '';
         foreach($filenames as $key => $filename)
             {
