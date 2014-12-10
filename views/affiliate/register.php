@@ -55,7 +55,7 @@
 <!-- agb -->
 	<div class="row">
 			<div class="large-12 columns">
-     <label><input type="checkbox" name="agb" id="agb"/>&nbsp;Ich habe die allgemeinen Gesch&auml;ftsbedingungen gelesen und akzeptiere diese.	</label>
+     <label><input type="checkbox" name="agb" id="agb"/>&nbsp;Ich habe die <?php echo anchor('impressum/Affiliate-Nutzungsbedingungen','Nutzungsbedingungen des Partnerprogramms');?> gelesen und akzeptiere diese.	</label>
 			</div></div>
 
      <!-- /agb -->
