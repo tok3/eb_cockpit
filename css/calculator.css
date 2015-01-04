@@ -1,0 +1,103 @@
+BODY
+{
+    padding:10px;
+    background-color:white !important;
+}
+.arrow {
+    background: url("../img/bg_arrow.png") no-repeat scroll 100% 50% transparent;
+    font-size: 1.0em;
+    margin-bottom: 0;
+    padding: 0 18px 0 0;
+
+}
+
+.arrow {
+    background: url("../img/pfeil_bg.png") no-repeat scroll 100% 50% transparent;
+    font-size: 1.0em;
+    margin-bottom: 0;
+    padding: 0 85px 0 0;
+
+}
+
+.arrow .inner {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #d6d6d6;
+    border-image: none;
+    border-style: solid none solid solid;
+    border-width: 2px 0 2px 2px;
+    padding: 0.5em 0 0.5em 0.5em;
+    background-color:white;
+}
+#ebLogo
+{
+    padding:10px;
+}
+H1{
+    color:#459853;
+}
+h1.price {
+    font-size: 5em;
+    font-weight: 700;
+    line-height: 1em;
+    margin: 0;
+    padding: 0 0 10px;
+}
+.small
+{
+    font-size:0.2em !important;
+}
+.btest{
+    border: 1px solid black !important;
+}
+.smallhint
+{
+    font-size:9pt;
+
+}
+.hintrow
+{
+    text-align:center !important;
+
+}
+.check
+{
+    list-style-type:none;
+}
+ul{margin-top:10px;}
+ul li:before{ content:"+"; position:relative; left:-5px;}
+ul li{ text-indent:-2em; }
+
+.bigbold
+{
+    font-weight:bold;
+    font-size:1.5em;
+}
+.hint
+{
+    font-weight:bold;
+    color:#459853;
+    font-size:1.2em;
+}
+.hint2
+{
+    font-weight:bold;
+    color:#008dbb;
+    font-size:1.2em;
+}
+
+.icoSmall
+{
+    width:35px;
+}
+.ico
+{
+    width:50px;
+    padding:5px 0 5px 0;
+}
+.error
+{
+    color:red;
+}

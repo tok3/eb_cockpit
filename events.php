@@ -136,7 +136,7 @@ class Events_Cockpit {
     {
         // is_logged_in(); eigentlich besser 
 
-        if($this->ci->uri->segment(3) == 'register') // usercheck auf affilliate/register nicht durchführen
+        if(($this->ci->uri->segment(3) == 'register') || ($this->ci->uri->segment(2) == 'calc')) // usercheck auf affilliate/register nicht durchführen
         {
 			return FALSE;
         }
