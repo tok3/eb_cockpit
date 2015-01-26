@@ -38,16 +38,17 @@
 	</div></div>
 	
 	<div class="row">
-	  <div class="large-6 columns">
+	  <div class="large-12 columns">
 	    <label for="password"><?php echo lang('global:password') ?></label>
 	    <input type="password" name="password" maxlength="100" id="password"/>
 </div>	  
-  <div class="large-6 columns">
+<!--
+     <div class="large-6 columns">
 	      <label for="password"><?php echo lang('global:password_confirm') ?></label>
 	      <input type="password" name="password" maxlength="100" id="password"/>
-	  </div></div>
-
-	  
+	  </div>
+-->
+	  </div>
 	  
 	  <?php foreach($profile_fields as $field) { if($field['required'] and $field['field_slug'] != 'display_name') { ?>
 	  <div class="row">
