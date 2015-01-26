@@ -29,6 +29,7 @@ class calc extends Public_Controller
 	 */
 	public function index()
 	{
+            
 	  $this->template->enable_parser(true);
 	  $this->template->set_layout('calculators.php');
 

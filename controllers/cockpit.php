@@ -25,12 +25,14 @@ class Cockpit extends Public_Controller
    public function index()
    {
 
+     
+/*
        $usrInf = $this->ion_auth->get_user(166);
                 $userdata = (array) $usrInf;        
         $userdata['contacts_id'] = 161;
 
        $this->ev_user->transfer_profile_data($userdata);
-
+*/
        $sidenav = new $this->navigation();        
 
 	  /* //permisssionstest

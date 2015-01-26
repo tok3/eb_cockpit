@@ -47,6 +47,7 @@ class ev_user
 			$this->ci->session->set_userdata('contact_id', $contact->id);
 
 			$this->check_complete($contact->id);
+            return $contact->id;
 		 }
    }
 

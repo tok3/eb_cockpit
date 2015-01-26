@@ -116,7 +116,7 @@ class Events_Cockpit {
         {
 
 			$contacts_data['affiliate_id'] = $_COOKIE['ihre_energieberater_af_id']; 
-			setcookie ("ihre_energieberater_af_id", "", time() - ($this->cookie_liefetime + 3600));
+			setcookie ("ihre_energieberater_af_id", "", time() - ($this->cookie_liefetime + 3600), '/');
             unset($_COOKIE['ihre_energieberater_af_id']);
         }
 
@@ -181,7 +181,7 @@ class Events_Cockpit {
 
         if(isset($_GET['afid']) && !isset($_COOKIE['ihre_energieberater_af_id']))
         {
-            setcookie("ihre_energieberater_af_id",$_GET['afid'],time() + $this->cookie_liefetime );
+            setcookie("ihre_energieberater_af_id",$_GET['afid'],time() + $this->cookie_liefetime, '/' );
         }
 
 /*
