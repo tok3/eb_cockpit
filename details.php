@@ -38,7 +38,7 @@ class Module_Cockpit extends Module {
     public function install()
     {
 
-$this->stream_energy();
+        $this->stream_energy();
 
         $eb_addresses = array(
             'id'=>array(
@@ -49,22 +49,27 @@ $this->stream_energy();
             'contacts_id'=>array(
                 'type'=>'int',
                 'constraint'=>'11',
+                'default' => '',
             ),
             'str'=>array(
                 'type'=>'varchar',
                 'constraint'=>'100',
+                'default' => '',
             ),
             'no'=>array(
                 'type'=>'varchar',
                 'constraint'=>'5',
+                'default' => '',
             ),
             'plz'=>array(
                 'type'=>'varchar',
                 'constraint'=>'5',
+                'default' => '',
             ),
             'city'=>array(
                 'type'=>'varchar',
                 'constraint'=>'100',
+                'default' => '',
             ),
         );
         $this->dbforge->drop_table("eb_addresses");
@@ -187,35 +192,43 @@ $this->stream_energy();
             'name'=>array(
                 'type'=>'varchar',
                 'constraint'=>'100',
+                'default' => '',
             ),
             'firstname'=>array(
                 'type'=>'varchar',
                 'constraint'=>'100',
-                                'default' => '',
+                'default' => '',
 
             ),
             'name_phonetic'=>array(
                 'type'=>'varchar',
                 'constraint'=>'155',
+                'default' => '',
+
             ),
             'birthday'=>array(
                 'type'=>'date',
+                'default' => '',
             ),
             'tel'=>array(
                 'type'=>'varchar',
                 'constraint'=>'30',
+                'default' => '',
             ),
             'fax'=>array(
                 'type'=>'varchar',
                 'constraint'=>'30',
+                'default' => '',
             ),
             'mobile'=>array(
                 'type'=>'varchar',
                 'constraint'=>'100',
+                'default' => '',
             ),
             'email'=>array(
                 'type'=>'varchar',
                 'constraint'=>'30',
+                'default' => '',
             ),
         );
 
@@ -287,7 +300,7 @@ $this->stream_energy();
             'page_slug'=>array(
                 'type'=>'varchar',
                 'constraint'=>'255',
-                    'null'=>TRUE,
+                'null'=>TRUE,
             ),
             'objektart'=> array(
                 'type'=>'varchar',
@@ -506,276 +519,6 @@ $this->stream_energy();
     public function upgrade($old_version)
     {
 
-$this->stream_energy();
-
-                // --------------------------------------------------------------------
-        /**
-         * tabelle für firmen
-         * 
-         */
-        $tableName = 'eb_immobilien';
-// steuerunummer
-        if(!$this->db->field_exists($field = 'page_slug', $tableName)){
-
-
-			$ba_fields = array(
-                $field=> array(
-                    'type'=>'varchar',
-                    'constraint'=>'255',
-                    'null'=>TRUE,
-
-                )
-
-            );
-            $this->dbforge->add_column($tableName, $ba_fields);
-        }
-
-// str nu/id 
-
-        if(!$this->db->field_exists($field = 'str_id', $tableName)){
-
-
-			$ba_fields = array(
-                $field=> array(
-                    'type'=>'varchar',
-                    'constraint'=>'15',
-                    'null'=>TRUE,
-
-                )
-
-            );
-            $this->dbforge->add_column($tableName, $ba_fields);
-        }
-
-        // --------------------------------------------------------------------
-        /**
-         * tabelle für bankkonten aktualisieren
-         * 
-         */
-        $tableName = 'eb_bank_accounts';
-
-        if(!$this->db->field_exists($field = 'acc_holder', $tableName)){
-
-
-			$ba_fields = array(
-                $field=> array(
-                    'type'=>'varchar',
-                    'constraint'=>'100',
-                )
-
-            );
-            $this->dbforge->add_column($tableName, $ba_fields);
-        }
-
-
-        return true;
-
-    }
-
-// --------------------------------------------------------------------
-    
-    function stream_energy()
-    {
-        $this->load->driver('Streams');
-        $stream_slug = 'leads_energy';
-        $namespace = 'streams';
-        $field_preFX = "el_";
-        /* testen ob stream existiert. muss so getestet werden, da pyro team zu doof ist get_stream() fehlerfrei zu machen: https://forum.pyrocms.com/discussion/12829/check-if-stream-exists
-         */
-        
-        $query = $this->db->query('Select * from default_data_streams where stream_slug = "'. $stream_slug .'"');
-        $res = $query->result();
-
-        
-        if(isset($res[0]->id))
-        {
-// $this->streams->fields->assign_field($namespace, $stream_slug, 'aa_testfeld', array('required' => true));
-            $assignments = $this->streams->streams->get_assignments($stream_slug, $namespace);
-// deassign and delete fields
-            foreach($assignments as $key => $assignment)
-            {
-                
-                $this->streams->fields->deassign_field($namespace, $stream_slug, $assignment->field_slug);
-                $this->streams->fields->delete_field($assignment->field_slug, $assignment->field_namespace);
-            }
-
-            $this->streams->streams->delete_stream($stream_slug, $namespace);
-
-            echo             anchor("admin/streams/entries/add/" . ($assignments[0]->stream_id + 1));
-        }
-        //die();
-        $fields = array(
-                        array(
-                'name'          => 'Affiliate ID',
-                'slug'          => $field_preFX . 'affiliate_id',
-                'namespace'     => $namespace,
-                'type'          => 'text',
-                'extra'         => array('max_length' => 11),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => false
-            ),
-            array(
-                'name'          => 'Aktionscode',
-                'slug'          => $field_preFX . 'aktions_code',
-                'namespace'     => $namespace,
-                'type'          => 'text',
-                'extra'         => array('max_length' => 23),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => false
-            ),
-                        array(
-                'name'          => 'Angenommen',
-                'slug'          => $field_preFX . 'approved',
-                'namespace'     => $namespace,
-                'type'          => 'choice',
-                'extra'         => array('choice_type'=>'radio','default_value'=>'0','choice_data'=>"1 : Ja\n 0 : Nein"),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => false
-                        ),
-
-                        array(
-                'name'          => 'Anrede',
-                'slug'          => $field_preFX . 'anrede',
-                'namespace'     => $namespace,
-                'type'          => 'choice',
-                'extra'         => array('choice_type'=>'radio','choice_data'=>"m : Herr\n f : Frau"),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => true
-                        ),
-
-            array(
-                'name'          => 'Name',
-                'slug'          => $field_preFX . 'name',
-                'namespace'     => $namespace,
-                'type'          => 'text',
-                'extra'         => array('max_length' => 200),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => true
-            ),
-                        array(
-                'name'          => 'Firma',
-                'slug'          => $field_preFX . 'firma',
-                'namespace'     => $namespace,
-                'type'          => 'text',
-                'extra'         => array('max_length' => 200),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => true
-            ),
-                        array(
-                'name'          => 'Email',
-                'slug'          => $field_preFX . 'email',
-                'namespace'     => $namespace,
-                'type'          => 'email',
-                'extra'         => array('max_length' => 200),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => true
-            ),
-                        array(
-                'name'          => 'Telefon',
-                'slug'          => $field_preFX . 'telefon',
-                'namespace'     => $namespace,
-                'type'          => 'text',
-                'extra'         => array('max_length' => 20),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => true
-                        ),
-                                                array(
-                'name'          => 'Plz',
-                'slug'          => $field_preFX . 'plz',
-                'namespace'     => $namespace,
-                'type'          => 'text',
-                'extra'         => array('max_length' => 5),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => true
-            ),
-                        array(
-                'name'          => 'Ort',
-                'slug'          => $field_preFX . 'ort',
-                'namespace'     => $namespace,
-                'type'          => 'text',
-                'extra'         => array('max_length' => 200),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => true
-            ),
-
-                        array(
-                'name'          => 'Branche',
-                'slug'          => $field_preFX . 'branche',
-                'namespace'     => $namespace,
-                'type'          => 'choice',
-                'extra'         => array('choice_data'=>"\" \" : Branche*\nBaustoffe\nB&auml;ckereien mit Backstube\nB&uuml;ros/Verwaltungseinrichtungen\nEinzelhandel\nGastronomie\nHotellerie\nProduktionsbetriebe/Werkst&auml;tten\nMaschinenbau\nWohnungswesen\nSchulen/Kinderg&auml;rten\nPflegeeinrichtungen\nSonstiges"),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'assign'        => $stream_slug,
-                'default'        => 2,
-                'required'      => true
-                        ),
-                        array(
-                'name'          => 'Art',
-                'slug'          => $field_preFX . 'art',
-                'namespace'     => $namespace,
-                'type'          => 'choice',
-                'extra'         => array('choice_type'=>'radio','choice_data'=>"e : Strom \n g : Gas"),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => true
-                        ),
-            array(
-                'name'          => 'Verbrauch',
-                'slug'          => $field_preFX . 'verbrauch',
-                'namespace'     => $namespace,
-                'type'          => 'text',
-                'extra'         => array('max_length' => 20),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => true
-                        ),
-                        array(
-                'name'          => 'Leistung',
-                'slug'          => $field_preFX . 'leistung',
-                'namespace'     => $namespace,
-                'type'          => 'text',
-                'extra'         => array('max_length' => 20),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => false
-                        ),
-                        array(
-                'name'          => 'Abnahmestellen',
-                'slug'          => $field_preFX . 'abnahmestellen',
-                'namespace'     => $namespace,
-                'type'          => 'choice',
-                'extra'         => array('choice_type'=>'radio','default_value'=>'1','choice_data'=>"1 : Eine Abnahmestelle\n n : Mehrere Abnahmestellen"),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => true
-                        ),
-                        array(
-                'name'          => 'Interest',
-                'slug'          => $field_preFX . 'interest',
-                'namespace'     => $namespace,
-                'type'          => 'choice',
-                'extra'         => array('choice_type'=>'checkboxes','choice_data'=>"oekostrom : Ich interessiere mich f&uuml;r &Ouml;kostrom\n erdgas : Ich interessiere mich f&uuml;r Erdgas"),
-                'assign'        => $stream_slug,
-                'title_column'  => false,
-                'required'      => false
-                        ),
-
-                        
-        );
-
-        $this->streams->streams->add_stream('Leads Energy', $stream_slug, $namespace, null, null);
-        $this->streams->fields->add_fields($fields);
     }
 
 

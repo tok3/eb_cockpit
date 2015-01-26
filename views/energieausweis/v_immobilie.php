@@ -23,7 +23,7 @@
 
       <div class="col-md-3 col-sm-3">
 
-	<strong>Affiliate-ID:</strong> <?php echo ($contact['affiliate_id'] != '' ? $contact['affiliate_id'] : '');?> 
+	<strong>Geworben &uuml;ber Affiliate (ID):</strong> <?php echo ($contact['affiliate_id'] != '' ? $contact['affiliate_id'] : '');?> 
 <br>
 <strong>Aktionscode:</strong> <?php echo (isset($displ_dat['aktionscode']) ? $displ_dat['aktionscode'] : '0');?> 
 <br>

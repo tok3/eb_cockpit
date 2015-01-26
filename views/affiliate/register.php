@@ -31,23 +31,28 @@
 	<?php endif ?>
 	
 	<div class="row">
-		<div class="large-12 columns">
-			<label for="email"><?php echo lang('global:email') ?></label>
-			<input type="email" name="email" maxlength="100" value="<?php echo $_user->email ?>" />
-			<?php echo form_input('d0ntf1llth1s1n', ' ', 'class="default-form" style="display:none" id="email"') ?>
-		</div></div>
-		
-		<div class="row">
-			<div class="large-12 columns">
-				<label for="password"><?php echo lang('global:password') ?></label>
-				<input type="password" name="password" maxlength="100" id="password"/>
-			</div></div>
+	  <div class="large-12 columns">
+	    <label for="email"><?php echo lang('global:email') ?></label>
+	    <input type="email" name="email" maxlength="100" value="<?php echo $_user->email ?>" />
+	    <?php echo form_input('d0ntf1llth1s1n', ' ', 'class="default-form" style="display:none" id="email"') ?>
+	</div></div>
+	
+	<div class="row">
+	  <div class="large-6 columns">
+	    <label for="password"><?php echo lang('global:password') ?></label>
+	    <input type="password" name="password" maxlength="100" id="password"/>
+</div>	  
+  <div class="large-6 columns">
+	      <label for="password"><?php echo lang('global:password_confirm') ?></label>
+	      <input type="password" name="password" maxlength="100" id="password"/>
+	  </div></div>
 
-     
-			<?php foreach($profile_fields as $field) { if($field['required'] and $field['field_slug'] != 'display_name') { ?>
-			<div class="row">
-				<div class="large-12 columns">
-					<label for="<?php echo $field['field_slug'] ?>"><?php echo (lang($field['field_name'])) ? lang($field['field_name']) : $field['field_name'];  ?></label>
+	  
+	  
+	  <?php foreach($profile_fields as $field) { if($field['required'] and $field['field_slug'] != 'display_name') { ?>
+	  <div class="row">
+	    <div class="large-12 columns">
+	      <label for="<?php echo $field['field_slug'] ?>"><?php echo (lang($field['field_name'])) ? lang($field['field_name']) : $field['field_name'];  ?></label>
 <div class="input"><?php echo $field['input'] ?></div>
 				</div></div>
 				<?php } } ?>

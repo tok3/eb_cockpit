@@ -70,9 +70,9 @@ $config['affcontacts'] = array
             'target' => 'contacts/by_aff',
             'group' => 'affiliate',
         );
-$config['banner'] = array 
+$config['promo'] = array 
         (
-            'item' => '<i class="glyphicon glyphicon-tag"></i><span>Banner</span>',
+            'item' => '<i class="glyphicon glyphicon-tag"></i><span>Promo Material</span>',
             'target' => 'promo/banner',
             'group' => 'affiliate',
             

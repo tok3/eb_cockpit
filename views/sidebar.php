@@ -19,6 +19,7 @@ if($this->session->userdata('contact_complete') == 1  && $this->current_user->gr
 {
     $sidenav->append('dokumente','<small class="badge pull-right bg-green">1</small>');
 }
+
 echo $sidenav->get_entries();
       ?>
       

@@ -62,11 +62,57 @@ public function banner()
             ->append_js('module::contacts_grid.js') 
             ->append_js('module::modules.js')
             ->set('content', $content)
+            ->set('tab_navigation',$this->navigation->load('promo_tabs')->get_tabs())
             ->build('default')
             ;
 
 }
 
+
+        // --------------------------------------------------------------------
+/**
+* display banners for affiliate
+* 
+* @access 	public	
+* @return 		
+* 
+*/
+public function gewerbeenergie()
+{
+
+    
+    $content = $this->get_calculators();
+
+            $this->template
+            ->set_partial('header','header',array())
+            ->set_partial('aside','sidebar',array())
+            ->set('active_kontakt','active')
+            ->append_js('module::contacts_grid.js') 
+            ->append_js('module::modules.js')
+            ->set('content', $content)
+            ->set('tab_navigation',$this->navigation->load('promo_tabs')->get_tabs())
+            ->build('default')
+            ;
+
+}
+// --------------------------------------------------------------------
+/**
+* affiliate stromrechner einbinden und eingindungcode darstellen
+* 
+* @access 	private	
+* @param 	void	
+* @return 	string	content tarifrechner
+* 
+*/
+private function get_calculators()
+{
+
+$data['affiliate_id'] = $this->session->userdata('contact_id');
+
+    return $this->load->view('promo/_strom_gas_rechner', $data, TRUE);
+
+}
+    
 // --------------------------------------------------------------------
 /**
 * get available banners

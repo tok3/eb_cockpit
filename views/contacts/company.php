@@ -1,16 +1,19 @@
 <div class="box box-primary">
   <div class="box-header">
-	<h3 class="box-title">Firma</h3>
+	<h3 class="box-title">Firma </h3>
 
   </div>
   <div class="box-body">
+<?php /* echo str_pad($this->uri->rsegment(3),6,0,STR_PAD_LEFT);*/?>
+     
+<?php echo $id; /* hidden field !!! do not remove */?>
 
-<?php echo $id;?>
 
   <div class="row">
 
 	<div class="col-sm-12 col-lg-6 left">
 	  <label>Name Firma oder Einzelperson <span class="text-red">*</span></label>
+
 <?php echo $name;?>
 <?php echo $name_2;?>
 <?php echo $email;?>

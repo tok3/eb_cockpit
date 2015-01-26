@@ -217,7 +217,7 @@ class Contact_Details extends Public_Controller
 
         $aside['title'] = 'Meine Kontaktdaten';
         $aside['breadcrumb'] = '<li><a href="#"><i class="fa fa-user"></i> Home</a></li>
-	  <li class="active">Meine Kontaktdaten</li>';
+	                            <li class="active">Meine Kontaktdaten</li>';
 
         $selectiveTabs = usr_contact_tabs($contact_id);
         if($contact_data['is_affiliate'] != 1)
@@ -252,7 +252,7 @@ class Contact_Details extends Public_Controller
         {
             $usr_properties = $props->get_many_by('contacts_id', $_contacts_id);
 
-            $this->db->query('delete from ' . $propTable . ' where contacts_id = ' . $_contacts_id );
+
             foreach($_values as $key => $value)
             {
                 $insDat['property'] =  $value;
@@ -260,6 +260,7 @@ class Contact_Details extends Public_Controller
                 $this->db->insert($propTable, $insDat);
 
             }
+
         }
 
         $usr_properties = $props->get_many_by('contacts_id', $_contacts_id);

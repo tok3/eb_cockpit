@@ -85,5 +85,67 @@ class ev_user
 	  $this->ci->session->set_userdata('contact_complete', $COMPLETE);
 
    } 
+
    // --------------------------------------------------------------------
+   /**
+   * profildaten in cockpit übertragen
+   * 
+   * @access 	public	
+   * @param     contact_id		
+   * @return 		
+   * 
+   */
+    public function transfer_profile_data($_userdata)
+    {
+/*
+        $userdata = $_userdata;
+        $contact_id = $userdata['contacts_id'];
+
+        if($contact_id != '')
+        {
+            $dtails = $this->ci->contacts_m->get_contact_details($contact_id);
+
+            // ids von erstem datensatz falls schon vorhanden
+            $personal_data['id'] = $dtails['persons'][0]['id'];
+            $addr_data['id'] = $dtails['addresses'][0]['id'];
+            $contacts_data['id'] = $contact_id;
+        }
+        else
+        {
+            die('contact id missing ev_user : 101');
+        }
+
+    if($userdata['group_id'] == 3)
+        {
+            $contacts_data['typ'] = 2;
+            $this->ci->contacts_m->insert_update($contacts_data, 'eb_contacts');
+
+        }
+
+        $addr_data['contacts_id'] = $contact_id;
+        $addr_data['str'] = $userdata['strasse'];
+        $addr_data['no'] = $userdata['haus_nr'];
+        $addr_data['plz'] = str_pad($userdata['plz'],5,0,STR_PAD_LEFT);
+        $addr_data['city'] = $userdata['ort'];
+        $this->ci->contacts_m->insert_update($addr_data, 'eb_addresses');
+
+
+
+        $personal_data['contacts_id'] = $contact_id;
+        $personal_data['name'] = $userdata['last_name'];
+        $personal_data['firstname'] = $userdata['first_name'];
+        $personal_data['tel'] = $userdata['telefon'];
+        $personal_data['email'] = $userdata['email'];
+        $personal_data['name_phonetic'] = '';
+        $personal_data['fax'] = '';
+        $personal_data['mobile'] = '';
+
+        $this->ci->contacts_m->insert_update($personal_data, 'eb_persons');
+
+*/
+//    die;
+        // $addr_data['contacts_id'] = $contact_id;
+        //                 $this->contacts_m->insert_update($addr_data, 'eb_addresses');
+    }
+// --------------------------------------------------------------------
 }

@@ -69,7 +69,6 @@ class Events_Cockpit {
     // startseite setzen welche nach login angezeigt wird	
     public function cp_startpage()
     {
-
         //redirect('cockpit/contact_details/contact/');
         Events::trigger('set_contact_id');
         //	  redirect('cockpit/');
@@ -84,16 +83,19 @@ class Events_Cockpit {
     {
 
         $this->ci->ev_user->set_contact_id();
+
+
     }
     // --------------------------------------------------------------------
     /**
-     * kontact id in session speichern
+     * kontact initiieren und profildaten in cockpit übernehmen
      * 
      */
     public function init_contact($_id)
     {
 
-        $usrInf = $this->ci->ion_auth->get_user($_id) ;
+
+        $usrInf = $this->ci->ion_auth->get_user($_id);
 
         $contacts_data['follow_up'] = date('Y-m-d', time() + 86400); 
         $contacts_data['typ'] = 0; 
@@ -101,13 +103,15 @@ class Events_Cockpit {
         $contacts_data['deleted'] = 0; 
         $contacts_data['users_id'] = $usrInf->id; 
 
+        $contacts_data['typ'] = 1; 
+
         if($usrInf->group_id == 3)
         {
 		$contacts_data['is_affiliate'] = 1; 
         $contacts_data['typ'] = 2; 
-
         }
-
+            
+        
         if(isset($_COOKIE['ihre_energieberater_af_id']))
         {
 
@@ -119,11 +123,27 @@ class Events_Cockpit {
 	  
         $contacts_id = $this->ci->contacts_m->insert_update($contacts_data, 'eb_contacts');
 
-        $p_data['contacts_id'] = $contacts_id;
-        $p_data['name'] = '';
 
-        $this->ci->contacts_m->insert_update($p_data, 'eb_persons');
-        $this->ci->contacts_m->insert_update(array('contacts_id'=>$contacts_id), 'eb_addresses');
+        
+        $addr_data['contacts_id'] = $contacts_id;
+        $addr_data['str'] = $usrInf->strasse;
+        $addr_data['no'] = $usrInf->haus_nr;
+        $addr_data['plz'] = str_pad($usrInf->plz,5,0,STR_PAD_LEFT);
+        $addr_data['city'] = $usrInf->ort;
+        $this->ci->contacts_m->insert_update($addr_data, 'eb_addresses');
+
+
+
+        $personal_data['contacts_id'] = $contacts_id;
+        $personal_data['name'] = $usrInf->last_name;
+        $personal_data['firstname'] = $usrInf->first_name;
+        $personal_data['tel'] = $usrInf->telefon;
+        $personal_data['email'] = $usrInf->email;
+        $personal_data['name_phonetic'] = '';
+        $personal_data['fax'] = '';
+        $personal_data['mobile'] = '';
+
+        $this->ci->contacts_m->insert_update($personal_data, 'eb_persons');
 
         
     }
@@ -134,7 +154,8 @@ class Events_Cockpit {
      */
     public function usercheck()
     {
-        // is_logged_in(); eigentlich besser 
+
+        // is_logged_in(); @todo eigentlich besser 
 
         if(($this->ci->uri->segment(3) == 'register') || ($this->ci->uri->segment(2) == 'calc')) // usercheck auf affilliate/register nicht durchführen
         {

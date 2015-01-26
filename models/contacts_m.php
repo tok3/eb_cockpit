@@ -39,7 +39,7 @@ class contacts_m extends MY_Model
    {
 
 
-	  $id = '';
+       $id = '';
 
 	  if(isset($_data['id']))
 		 {

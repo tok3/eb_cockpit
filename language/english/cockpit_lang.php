@@ -2,7 +2,8 @@
 
 $lang['cockpit:success']			=	'It worked';
 
-$lang['cockpit:heading_grid_contacts'] = array( 'Kontakt erstellt', 'Vorname','Name','PLZ','Ort','Firma','Tel.','Mobil','');
+$lang['cockpit:heading_grid_contacts'] = array( 'Kontakt erstellt','ID', 'Vorname','Name','PLZ','Ort','Firma','Tel.','Mobil','');
+
 
 
 $lang['cockpit:contact_info']  = 'Kontaktinfo';
