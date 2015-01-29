@@ -90,6 +90,7 @@ public function gewerbeenergie()
             ->append_js('module::contacts_grid.js') 
             ->append_js('module::modules.js')
             ->set('content', $content)
+            ->set('tab_navigation',$this->navigation->load('promo_tabs')->get_tabs())
             ->build('default')
             ;
 

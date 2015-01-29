@@ -1,14 +1,6 @@
-<?
-if(!isset($_GET['type']))
-{
-$_GET['type'] = 'e';
-}
-?>
-{{ session:messages success="small-box bg-green" notice="notice-box" error="error-box" }}
 
-{{streams:form stream="leads_energy" mode="new" return="cockpit/calc/success" required="<span>*</span>"  notify_a=variables:mail_rec_energieausweis  notify_template_a="gewerbeenergie" notify_from_a=settings:server_email error_start="<label class=\"error\">" error_end="</label>" failure_message="No!"  success_message="Vielen Dank, einer unserer Mitarbeiter wird sich mit Ihnen in Verbindung setzen. " form_id="formCalc"}}
-{{ form_open }}
 
+<div class="small-box bg-green">&nbsp;</div>
 
 
 

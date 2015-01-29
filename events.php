@@ -69,6 +69,7 @@ class Events_Cockpit {
     // startseite setzen welche nach login angezeigt wird	
     public function cp_startpage()
     {
+        
         //redirect('cockpit/contact_details/contact/');
         Events::trigger('set_contact_id');
         //	  redirect('cockpit/');

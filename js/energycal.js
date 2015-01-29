@@ -38,19 +38,21 @@ $(function() {
     }    
     if(post['el_branche'] != '' && post['el_verbrauch'] >= 100000)
     {
-	
+		    sessionStorage['subAtt'] = 0; //29.01
 	$('.step1').hide();
 	$('.step2').removeClass('hidden');
 
+	
 	$('form').find('input[type=submit]:last').addClass('yoyogo');
 	$('.yoyogo').click(function(){
+
 	    $('.error').show();
 	    sessionStorage['subAtt'] = 1;
 	});
 
 	$('form').find('input[type=submit]:first').remove();
 	
-	$('#el_verbrauch').clone().prependTo('#paste_verbrauch');
+	$('#el_verbrauch').clone().prependTo('#paste_verbrauch'); // fehler für mindestverbrauchanzeigen
 	$('.error').hide();
 
     }
@@ -59,11 +61,12 @@ $(function() {
     {
     	$('.error').show();
     }
-    if($('.success-box').is(":visible") )
+    if($('.step2').is(":visible") ) //29.01
     {
 	sessionStorage['subAtt'] = 0;
 
     }
+
     // --------------------------------------------------------------------
     /**
      * css class setzen für alle inputs in stream entry form  

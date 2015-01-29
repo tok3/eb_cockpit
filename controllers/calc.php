@@ -23,13 +23,22 @@ class calc extends Public_Controller
 	}
 
 
+       public function gas()
+   {
+       $this->index('gas');
+   }
+           public function strom()
+   {
+       $this->index('e');
+   }
 
 	/**
 	 * Method to register a new user
 	 */
-	public function index()
+	public function index($type = 'e')
 	{
-            
+
+        
 	  $this->template->enable_parser(true);
 	  $this->template->set_layout('calculators.php');
 
@@ -39,6 +48,7 @@ class calc extends Public_Controller
 
 	  $this->template
           ->set('fields',$this->getFields())
+          ->set('type',$type)
           ->build('calc')
 
 		 ;

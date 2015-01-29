@@ -1,14 +1,7 @@
-<?
-if(!isset($_GET['type']))
-{
-$_GET['type'] = 'e';
-}
-?>
 {{ session:messages success="small-box bg-green" notice="notice-box" error="error-box" }}
 
 {{streams:form stream="leads_energy" mode="new" return="cockpit/calc/success" required="<span>*</span>"  notify_a=variables:mail_rec_energieausweis  notify_template_a="gewerbeenergie" notify_from_a=settings:server_email error_start="<label class=\"error\">" error_end="</label>" failure_message="No!"  success_message="Vielen Dank, einer unserer Mitarbeiter wird sich mit Ihnen in Verbindung setzen. " form_id="formCalc"}}
 {{ form_open }}
-
 
 
 
@@ -22,7 +15,7 @@ $_GET['type'] = 'e';
     <p class="hint2">Bitte geben Sie Ihre Daten ein.</p>
     </div>
   <div class="col-xs-2 step1">
-{{asset:image file="module::<?php echo ($_GET['type']  == 'gas' ? 'Gas' : 'Stromstecker');?>.jpg" alt="Logo Strom" class="pull-right ico"}}	
+{{asset:image file="module::<?php echo ($type  == 'gas' ? 'Gas' : 'Stromstecker');?>.jpg" alt="Logo Strom" class="pull-right ico"}}	
     </div>
   
  <div class="col-xs-8">
@@ -39,7 +32,7 @@ $_GET['type'] = 'e';
     </div>
 
 <?
-if($_GET['type']  != 'gas'){
+if($type  != 'gas'){
 ?>
     <div class="form-group">
 
@@ -64,13 +57,13 @@ if($_GET['type']  != 'gas'){
                     <h2 class="price">Ihr Preis*</h2>
 		</div><!-- /col -->
                 <div class="col-xs-3 pull-right">
-{{ asset:image file="module::Stromstecker.jpg" alt="Logo Strom" class="ico"}}	
+{{ asset:image file="module::<?php echo ($type  == 'gas' ? 'Gas' : 'Stromstecker');?>.jpg" alt="Logo energie" class="ico"}}	
                 </div>
 	    </div> <!-- /row -->
 
   <div class="row">
                 <div class="col-xs-8 col-xs-offset-1">
-                    <h1 class="pull-right price"><?php echo ($_GET['type']  == 'gas' ? '{{ variables:Gewerbestrom }}' : '{{ variables:Gewerbestrom }}');?><span class="small">Ct/kWh</span></h1>
+                    <h1 class="pull-right price"><?php echo ($type  == 'gas' ? '{{ variables:Gewerbestrom }}' : '{{ variables:Gewerbestrom }}');?><span class="small">Ct/kWh</span></h1>
 
 </div>
 		</div><!-- /row -->
@@ -124,7 +117,7 @@ if($_GET['type']  != 'gas'){
 
       </div>
       <div class="col-xs-4">
-{{ asset:image file="module::Stromstecker.jpg" alt="Logo Strom" class="pull-right icoSmall"}}	
+{{ asset:image file="module::<?php echo ($type  == 'gas' ? 'Gas' : 'Stromstecker');?>.jpg" alt="Logo Energie" class="pull-right icoSmall"}}	
       </div>
     </div> <!-- /.row -->
     
@@ -203,7 +196,7 @@ if($_GET['type']  != 'gas'){
 	{{ el_interest:input }}
       </div>
     </div> <!-- /.row -->
-    <input type="hidden" name="el_art" value="<?php echo ($_GET['type']  == 'gas' ? 'g' : 'e');?>" id="el_art">
+    <input type="hidden" name="el_art" value="<?php echo ($type  == 'gas' ? 'g' : 'e');?>" id="el_art">
     <div class="row">
       <div class="col-xs-6">
         &nbsp;
