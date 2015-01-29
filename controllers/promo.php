@@ -90,7 +90,6 @@ public function gewerbeenergie()
             ->append_js('module::contacts_grid.js') 
             ->append_js('module::modules.js')
             ->set('content', $content)
-            ->set('tab_navigation',$this->navigation->load('promo_tabs')->get_tabs())
             ->build('default')
             ;
 
@@ -107,6 +106,7 @@ public function gewerbeenergie()
 private function get_calculators()
 {
 
+    
 $data['affiliate_id'] = $this->session->userdata('contact_id');
 
     return $this->load->view('promo/_strom_gas_rechner', $data, TRUE);

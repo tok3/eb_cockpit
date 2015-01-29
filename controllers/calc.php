@@ -44,6 +44,24 @@ class calc extends Public_Controller
 		 ;
 
     }
+    	public function success()
+	{
+            
+	  $this->template->enable_parser(true);
+	  $this->template->set_layout('calculators.php');
+
+      $this->getFields();
+//	  $calcview = $this->load->view('calc', '',true);
+
+
+	  $this->template
+          ->set('success','YEP')
+          ->set('fields',$this->getFields())
+          ->build('calc_success')
+
+		 ;
+
+    }
 // --------------------------------------------------------------------
     function getFields()
     {

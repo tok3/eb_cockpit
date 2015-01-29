@@ -10,6 +10,15 @@ $(function() {
 	$('#contact_aktionscode').val(aktionscode);
 	
     }
+
+
+/**
+* radio firefox bug     el_abnahmestellen
+*/
+
+    $( "#el_verbrauch" ).focus(function() {
+	$( this ).val('100000');
+});
     // --------------------------------------------------------------------
     /*
 

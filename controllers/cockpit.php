@@ -25,7 +25,8 @@ class Cockpit extends Public_Controller
    public function index()
    {
 
-     
+
+       
 /*
        $usrInf = $this->ion_auth->get_user(166);
                 $userdata = (array) $usrInf;        

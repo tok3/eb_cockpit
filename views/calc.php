@@ -1,7 +1,12 @@
-{{ session:messages success="success-box" notice="notice-box" error="error-box" }}
+<?
+if(!isset($_GET['type']))
+{
+$_GET['type'] = 'e';
+}
+?>
+{{ session:messages success="small-box bg-green" notice="notice-box" error="error-box" }}
 
-
-{{streams:form stream="leads_energy" mode="new" return=success_slug required="<span>*</span>"  error_start="<label class=\"error\">" error_end="</label>" notify_a=variables:mail_rec_energieausweis  notify_template_a="energieausweis" notify_from_a=settings:server_email failure_message="No!"  success_message="Vielen Dank, einer unserer Mitarbeiter wird sich mit Ihnen in Verbindung setzen. " form_id="formCalc"}}
+{{streams:form stream="leads_energy" mode="new" return="cockpit/calc/success" required="<span>*</span>"  notify_a=variables:mail_rec_energieausweis  notify_template_a="gewerbeenergie" notify_from_a=settings:server_email error_start="<label class=\"error\">" error_end="</label>" failure_message="No!"  success_message="Vielen Dank, einer unserer Mitarbeiter wird sich mit Ihnen in Verbindung setzen. " form_id="formCalc"}}
 {{ form_open }}
 
 
@@ -17,12 +22,12 @@
     <p class="hint2">Bitte geben Sie Ihre Daten ein.</p>
     </div>
   <div class="col-xs-2 step1">
-{{ asset:image file="module::Stromstecker.jpg" alt="Logo Strom" class="pull-right ico"}}	
+{{asset:image file="module::<?php echo ($_GET['type']  == 'gas' ? 'Gas' : 'Stromstecker');?>.jpg" alt="Logo Strom" class="pull-right ico"}}	
     </div>
   
  <div class="col-xs-8">
 
-    <span class="step1">
+    <div class="step1">
 
     <div class="form-group">
       {{ el_branche:error }}
@@ -33,18 +38,26 @@
       {{ el_verbrauch:input }}
     </div>
 
+<?
+if($_GET['type']  != 'gas'){
+?>
     <div class="form-group">
-      <label for="el_leistung">Leistung kWh (optional)</label> 			{{ el_leistung:error }}
+
+          <label for="el_leistung">Leistung kWh (optional)</label> 			{{ el_leistung:error }}
       {{ el_leistung:input }}
     </div>
+<?
+}
+?>
 
-    <div class="form-group">
-      <label class="radio-inline">
-      </label>{{ el_abnahmestellen:input }}
+    
+  <div class="col-xs-12 step1">
+    {{ el_abnahmestellen:input }}
     </div>
-</span><!-- /step1 -->
 
-<span class="step2">
+</div><!-- /step1 -->
+
+<div class="step2">
 
   <div class="row">
                 <div class="col-xs-9">
@@ -57,8 +70,9 @@
 
   <div class="row">
                 <div class="col-xs-8 col-xs-offset-1">
-                    <h1 class="pull-right price">{{ variables:Gewerbestrom }}<span class="small">Ct/kWh</span></h1>
-		</div>
+                    <h1 class="pull-right price"><?php echo ($_GET['type']  == 'gas' ? '{{ variables:Gewerbestrom }}' : '{{ variables:Gewerbestrom }}');?><span class="small">Ct/kWh</span></h1>
+
+</div>
 		</div><!-- /row -->
 		    <div class="row">
                 <div class="col-xs-10 col-xs-offset-2">
@@ -66,18 +80,14 @@
 		      *Dieser Preis dient als unverbindlicher Richtwert auf Tagespreisbasis abh&auml;ngig von Lastgang, Branche, Anzahl Abnahmestellen, Maximale Jahresleistung, Versorgungsspanung und Anbieter
 		    </p>
 		    <p>
-<center>
 		      <div>KfW F&ouml;rderung bis zu 6.080,-</div>
 		      <span class="displAktionscode"></span>
-</center>
 
-
-		      </p>
                 </div>
 
             </div>
 
-  </span> <!-- /.step2 -->
+  </div> <!-- /.step2 -->
   </div> <!-- /.col-xs-8 -->
   <div class="col-xs-4">Direkt Anfrage<p><span class="bigbold">{{ variables:telefonnummer }}</span></p>Ihre Vorteile
     <ul class="check">
@@ -91,13 +101,13 @@
       <li>DIN EN 16247-1 / ISO 50001</li>
       <li>Steuerersparnis</li>
       <li>Energieaudit</li>
-      <li><b><nobr>KfW F&ouml;rderung bis zu 6.080,- &euro;</nobr></b></li></ul><span class="displAktionscode"></span>
+      <li><b class="nobr">KfW F&ouml;rderung bis zu &euro; 6.080,-</b></li></ul><span class="displAktionscode"></span>
 
     {{ form_submit }}                                                                                                                                                                        </div>  <!-- /.col-xs-4 -->
 </div>  <!-- /.row -->
 
 
-<span class="step2">
+<div class="step2">
 
 <div class="row">
   <div class="col-xs-4">
@@ -193,7 +203,7 @@
 	{{ el_interest:input }}
       </div>
     </div> <!-- /.row -->
-    <input type="hidden" name="el_art" value="e" id="el_art">
+    <input type="hidden" name="el_art" value="<?php echo ($_GET['type']  == 'gas' ? 'g' : 'e');?>" id="el_art">
     <div class="row">
       <div class="col-xs-6">
         &nbsp;
@@ -202,7 +212,7 @@
 	{{ form_submit }}                           
       </div>
     </div> <!-- /.row -->
-</span> <!-- /.step2 -->
+</div> <!-- /.step2 -->
   </div>  <!-- /.col-xs-8 -->
 </div>  <!-- /.row -->
 
@@ -212,7 +222,7 @@
 
 
    echo 		'<input type="hidden" name="el_affiliate_id" value="' . $_COOKIE['ihre_energieberater_af_id'] . '" id="el_affiliate_id">';
-   echo 		'<input type="hidden" name="el_aktionscode" value="' . $this->format->get_aktionscode($_COOKIE['ihre_energieberater_af_id']) . '" id="el_aktionscode">';
+   echo 		'<input type="hidden" name="el_aktions_code" value="' . $this->format->get_aktionscode($_COOKIE['ihre_energieberater_af_id']) . '" id="el_aktions_code">';
 
    }
 
