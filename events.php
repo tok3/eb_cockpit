@@ -179,7 +179,6 @@ class Events_Cockpit {
     public function set_affilite_id()
     {
         //echo "events/set_affilite_id()";
-
         if(isset($_GET['afid']) && !isset($_COOKIE['ihre_energieberater_af_id']))
         {
             setcookie("ihre_energieberater_af_id",$_GET['afid'],time() + $this->cookie_liefetime, '/' );

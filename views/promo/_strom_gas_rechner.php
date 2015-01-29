@@ -1,14 +1,14 @@
 <?
-setcookie('ihre_energieberater_af_id', '', time()-1000);
-setcookie('ihre_energieberater_af_id', '', time()-1000, '/');
-
 $this->cookie_liefetime = (3600*24) * 90; // 90 tagae 
+setcookie('ihre_energieberater_af_id', '', time()-$this->cookie_liefetime);
+setcookie('ihre_energieberater_af_id', '', time()-$this->cookie_liefetime, '/');
+setcookie('ihre_energieberater_af_id', '', time()-$this->cookie_liefetime, '/*');
+setcookie ("ihre_energieberater_af_id", '', time()-$this->cookie_liefetime,site_url('cockpit/calc'));
+
+setcookie('ihre_energieberater_af_id', $affiliate_id,time() + $this->cookie_liefetime);
 setcookie ("ihre_energieberater_af_id",$affiliate_id,time() + $this->cookie_liefetime, '/' );
+setcookie ("ihre_energieberater_af_id",$affiliate_id,time() + $this->cookie_liefetime, '/*' );
 setcookie ("ihre_energieberater_af_id",$affiliate_id,time() + $this->cookie_liefetime,site_url('cockpit/calc'));
-setcookie ("fuck",$affiliate_id,time() + $this->cookie_liefetime, '/' );
-        
-setcookie('ihre_energieberater_af_id', $affiliate_id, time()-1000);
-setcookie('ihre_energieberater_af_id', $affiliate_id, time()-1000, '/');
 
 ?>
 <p>
