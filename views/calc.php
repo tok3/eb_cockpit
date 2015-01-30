@@ -63,7 +63,7 @@ if($type  != 'gas'){
 
   <div class="row">
                 <div class="col-xs-8 col-xs-offset-1">
-                    <h1 class="pull-right price"><?php echo ($type  == 'gas' ? '{{ variables:Gewerbestrom }}' : '{{ variables:Gewerbestrom }}');?><span class="small">Ct/kWh</span></h1>
+                    <h1 class="pull-right price"><?php echo ($type  == 'gas' ? '{{ variables:Gewerbegas }}' : '{{ variables:Gewerbestrom }}');?><span class="small">Ct/kWh</span></h1>
 
 </div>
 		</div><!-- /row -->
